@@ -1,0 +1,41 @@
+<view class="container">
+  <view class="top">
+    <view class="search">
+      <image src="../../imges/搜索.png"  bindtap="onSearch"/>
+      <input type="text" placeholder="搜索职位名称、公司" bindconfirm="onSearch" value="{{keyword}}" bindinput="onInputChange"/>
+    </view>
+  </view>
+  <view class="daohuang">
+    <view class="mulu"><navigator hover-class="none" url="/pages/item/item"><image src="../../imges/附近.png" ></image><view class="text">附近工作</view></navigator></view>
+    <view class="mulu"><navigator hover-class="none"><image src="../../imges/兼职.png"></image><view class="text">热门兼职</view></navigator></view>
+    <view class="mulu"><navigator hover-class="none"><image src="../../imges/高薪.png"></image><view class="text">高薪机会</view></navigator></view>
+    <view class="mulu"><navigator hover-class="none"><image src="../../imges/市场.png"></image><view class="text">行业市场</view></navigator></view>
+    <view class="mulu"><navigator hover-class="none"><image src="../../imges/最新.png"></image><view class="text">最新发布</view></navigator></view>
+  </view>
+
+    <view class="nav-scroll">
+      <scroll-view scroll-x >
+        <block wx:for="{{daohuang}}" wx:key="{{item.id}}">
+        <view class="nav-item {{activeIndex==0?'active':''}}" bindtap="handleNavItemTap" data-index="0">{{item.name}}</view>
+        </block>
+      </scroll-view>
+    </view>
+    <view class="content">
+      <block wx:for="{{ITEM}}" wx:key="{{item.id}}">
+      <view class="item">
+       <navigator hover-class="none" url="/pages/item/item">
+        <view class="item-1">
+          <view class="item-1-1">{{item.zw}}</view>
+          <view class="item-1-2">{{item.xz}}</view>
+        </view>
+        <view class="item-2">{{item.gs}}<text decode="{{true}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>{{item.rs}}</view>
+        <view class="item-3">{{item.yq}}</view>
+        <view class="item-4">
+          <view class="item-4-1"><image src="{{item.image}}"></image><text decode="{{true}}">&nbsp;&nbsp;&nbsp;</text>{{item.mz}}</view>
+          <view class="item-4-2">{{item.dd}}</view>
+          </view>
+         </navigator>
+      </view>
+      </block>
+    </view>
+</view>
