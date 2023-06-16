@@ -1,0 +1,16 @@
+<view class="container">
+  <view class="header">
+    <text style="color: rgb(255, 255, 255);">求职福利大放送
+    </text>
+  </view>
+  <view class="content">
+    <view class="item" wx:for="{{list}}" wx:key="index">
+      <image class="icon" src="{{item.icon}}"></image>
+      <view class="text">
+        <text>{{item.text}}</text>
+        <text style="font-size: 12px; color: rgb(86, 99, 98);">{{item.text2}}</text>
+      </view>
+      <button class="btn" style="width: 200rpx;">{{item.text3}}</button>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,32 @@
+<view class="container">
+ <view class="top">
+  <block wx:if="{{user1}}" >
+      <view class="top-tx" bindtap="top">
+        <!-- <image src="{{user.avatarUrl}}"></image> -->
+        <open-data type="userAvatarUrl"></open-data>
+      </view>
+      <view class="top-xx" bindtap="top">
+        <text>{{user1.nickname}}</text>
+        <text>{{user1.position}}</text>
+        <!-- <open-data type="userNickName"></open-data> -->
+      </view>
+    </block>
+    <block wx:elif="{{!hasUserInfo}}">
+      <button bindtap="login"> 登录 </button>
+    </block>
+  </view> 
+  <view class="jilu">
+    <view class="jilu-1" bindtap="bm"><text>{{bm}}</text><text>已报名</text></view>
+    <view class="jilu-1" bindtap="bm"><text>{{gt}}</text><text>待沟通</text></view>
+    <view class="jilu-1" bindtap="tiaozhuan"><text>{{sc}}</text><text>收藏</text></view>
+  </view>
+  <view class="content">
+    <view class="item" bindtap="dd"><image src="../../image/订单.png" mode="aspectFill"></image><text>订单</text></view>
+    <view class="item" bindtap="jl"><image src="../../image/简历.png" mode="aspectFill"></image><text>简历</text></view>
+    <view class="item" bindtap="bj"><image src="../../image/笔记.png" mode="aspectFill"></image><text>笔记</text></view>
+    <view class="item" bindtap="gj"><image src="../../image/工具.png" mode="aspectFill"></image><text>工具</text></view>
+    <view class="item" bindtap="sz"><image src="../../image/设置.png" mode="aspectFill"></image><text>设置</text></view>
+    <view class="section"><button class="btn" disabled="{{!hasLogin}}" bindtap="handleLogout">退出登录</button>  
+    </view>
+  </view>
+</view>

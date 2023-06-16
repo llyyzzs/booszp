@@ -1,0 +1,8 @@
+<view class="container">
+  <form bindsubmit="onSubmit">
+    <view class="content">
+    <input type="text" name="title" value="{{note.title}}"/>
+    <textarea name="content" value="{{note.content}}" maxlength=""></textarea></view>
+    <button form-type="submit">保存</button>
+  </form>
+</view>

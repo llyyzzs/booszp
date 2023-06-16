@@ -1,0 +1,112 @@
+/* 样式定义 */
+.contact-list{
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+}
+.content{
+  position: relative;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+}
+.contact-item {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(255, 255, 255);
+}
+.contact-item image{
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 12px;
+}
+.contact-info {
+  margin-left: 12px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+}
+.user-name {
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 7rpx;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.last-message {
+  display: flex;
+  font-size: 12px;
+  color: #999;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.note-card-delete-movable {
+  display: flex;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  right: 0;
+  z-index: 1;
+  height: 100rpx;
+  transition: all 0.3s;
+}
+
+.note-card-delete-view {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 60px;
+  background-color: #f00;
+  color: #fff;
+  display: flex;
+  border-radius: 12px;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease-out;
+}
+
+.note-card-delete-text {
+  font-size: 28rpx;
+}
+
+.note-card-delete {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 60px;
+  border-radius: 12px;
+  transition: all 0.3s ease-out;
+}
+/* 滑块从右侧弹出的动画效果 */
+.note-card-delete-movable {
+  transition: all 0.3s;
+}
+
+.note-card-delete-view {
+  transform: translateX(120rpx);
+}
+
+/* 滑块弹回原位置的动画效果 */
+.note-card-delete-movable.reset {
+  transition: all 0.3s;
+}
+
+.note-card-delete-view.reset {
+  transform: translateX(0);
+}
+
+/* 列表项删除时的淡出效果 */
+.note-card.deleted {
+  animation-name: note-card-delete-animation;
+  animation-duration: 0.3s;
+  animation-fill-mode: both;
+}
+

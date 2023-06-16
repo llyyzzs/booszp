@@ -1,0 +1,87 @@
+/* pages/my/my.wxss */
+.container{ 
+  display: flex;
+  height: 100vh;
+  justify-content: flex-start;
+  background: -webkit-linear-gradient(top,#16C4AF ,rgb(253, 250, 250),rgb(253, 250, 250));
+}
+.top{
+  display: flex;
+  width: 100%;
+  height: 200rpx;
+  align-items: center;
+  padding-left: 30px;
+}
+.top-tx{
+  display: flex;
+  height: 120rpx;
+  width: 120rpx;
+  align-items: center;
+  justify-content: center;
+}
+.top-tx image{
+  width: 100%;
+  height:100%;
+  border-radius: 50%;
+}
+.top-xx{
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  flex-direction: column;
+  margin-left: 40rpx;
+}
+.top-xx text{
+  margin-bottom: 10rpx;
+  font-size: 13px;
+}
+.jilu{
+  display: flex;
+  width: 95%;
+  height: 150rpx;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(255, 255, 255);
+  border-radius: 12px;
+}
+.jilu-1{
+  display: flex;
+  width: 33%;
+  height: auto;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.jilu-1 text{
+  font-size: 12px;
+}
+.content{
+  display: flex;
+  width: 95%;
+  height: auto;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  flex-direction: column;
+  margin-top: 12px;
+  background-color: rgb(255, 255, 255);
+}
+.item{
+  display: flex;
+  width: 90%;
+  height: 100rpx;
+  align-items: center;
+  border-bottom: 1px solid #e7e7e7;
+  margin-bottom: 12px;
+}
+.item image{
+  width: 50rpx;
+  height: 50rpx;
+}
+.item text{
+  margin-left: 20px;
+}
+.section button{
+  background-color: rgb(255, 255, 255);
+  color: rgb(61, 57, 57);
+}

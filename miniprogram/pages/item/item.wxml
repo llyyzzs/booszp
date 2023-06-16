@@ -1,0 +1,77 @@
+<view class="container">
+  <view class="top">
+    <view class="top1">
+      <view class="top1-1">{{ITEM.zw}}</view>
+      <view class="top1-2">{{ITEM.xz}}</view>
+    </view>
+    <view class="top2">
+      <view class="top2-1"><image src="../../image/定位.png"></image>
+    <text>{{ITEM.dd}}</text></view>
+    <view class="top2-1"><image src="../../image/经验.png"></image>
+    <text>3-5年</text></view>
+    <view class="top2-1"><image src="../../image/学历.png"></image>
+    <text>本科</text></view>
+    </view>
+  </view>
+  <view class="zpz">
+    <view class="zpz-tx"><image src="{{ITEM.image}}" mode="aspectFill"></image></view>
+    <view class="zpz-xx"><text>{{ITEM.mz}}</text><text>{{ITEM.sf}}</text></view>
+  </view>
+  <view class="content">
+    <view class="zw-top">
+    <view class="{{name=='职位详情' ? 'zw-top1.active' : 'zw-top1'}}" bindtap="qh" data-name='职位详情'>职位详情</view>
+    <view class="{{name=='工作内容' ? 'zw-top1.active' : 'zw-top1'}}" bindtap="qh" data-name="工作内容">工作内容</view>
+    </view>
+    <block wx:if="{{name=='职位详情'}}">
+      <view class="biaoqian"><block wx:for="{{ITEM.yq}}" wx:key="id">
+      <view class="yq"><text>{{item}}</text></view>
+      </block></view>  
+    <view class="nr">
+      <block wx:for="{{ITEM.nr}}" wx:key="id"><text>{{item}}</text>
+      </block>
+    </view>
+  </block>
+  <block wx:if="{{name=='工作内容'}}">
+    <view class="nr">
+      <block wx:for="{{ITEM.nr}}" wx:key="id"><text>{{item}}</text>
+      </block>
+    </view>
+  </block>
+  <view class="gs">
+    <view class="gs-mz">
+      <view class="zpz-tx"><image src="https://img1.baidu.com/it/u=2218666203,2906757692&fm=253&fmt=auto&app=120&f=JPEG?w=500&h=506" mode="aspectFill"></image></view>
+      <view class="zpz-xx"><text>{{ITEM.gs}}</text><text>{{ITEM.rs}}</text></view>
+    </view>
+    <view class="gs-dd">
+      <map id="myMap" longitude="{{longitude}}" latitude="{{latitude}}"  scale="16" bindtap="chooseLocation"   include-points="{{[{latitude: latitude, longitude: longitude}]}}"/>
+    </view>
+  </view>
+  </view>
+  <view class="content">
+    <view style="text-align: center; margin-bottom: 12px;">猜你喜欢</view>
+      <block wx:for="{{filteredItems}}" wx:key="id">
+      <view class="item" bindtap="tiaozhuan" data-id="{{item.id}}">
+       <!-- <navigator hover-class="none" url="/pages/item/item"> -->
+        <view class="item-1">
+          <view class="item-1-1">{{item.zw}}</view>
+          <view class="item-1-2">{{item.xz}}</view>
+        </view>
+        <view class="item-2">{{item.gs}}<text decode="{{true}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>{{item.rs}}</view>
+        <view class="item-3"><block wx:for="{{item.yq}}" wx:key="id"><text>{{item}}</text></block></view>
+        <view class="item-4">
+          <view class="item-4-1"><image src="{{item.image}}" mode="aspectFill"></image><text decode="{{true}}">&nbsp;&nbsp;&nbsp;{{item.mz}} {{item.sf}}</text></view>
+          <view class="item-4-2">{{item.dd}}</view>
+          </view>
+      </view>
+      </block>
+    </view>
+  <view class="btn-wrapper">
+    <view class="btn-1">
+    <image src="{{bm}}" mode="aspectFill" bindtap="bm"></image>
+    <text>{{state}}</text></view>
+    <view class="btn-1">
+    <image src="{{sc}}" mode="aspectFill" bindtap="sc"></image>
+    <text>{{!isCollected ? '收藏' : '已收藏'}}</text></view>
+    <view class="btn-2" bindtap="gt"><button type="primary" >立刻沟通</button></view>
+  </view>
+</view>

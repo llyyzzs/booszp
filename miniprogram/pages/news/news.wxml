@@ -1,0 +1,39 @@
+<view class="container">
+<!-- 聊天消息区域 -->
+  <scroll-view class="message-list" scroll-y="true" scroll-with-animation="true" 	:scroll-into-view="{{toView}}">
+   
+    <!-- 循环渲染消息列表 -->
+    <view class="message-item" wx:for="{{messageList}}" wx:key="index">
+      <view class="right" wx:if="{{item.id===openid}}">
+      <!-- 根据消息类型渲染不同的样式 -->
+      <!-- 文本消息 -->
+      <view class="message-item1" wx:if="{{item.type === 'text'}}"><text class="content-txt" >{{item.content}}</text><open-data type="userAvatarUrl"></open-data></view>
+      <!-- 图片消息 -->
+      <view class="message-item1" wx:if="{{item.type === 'image'}}" ><image src="{{item.content}}" class="content-img" mode="aspectFit"/><open-data type="userAvatarUrl"></open-data></view>
+      <!-- 表情消息 -->
+      <view class="message-item1" wx:if="{{item.type === 'emoji'}}"><image src="{{item.content}}" class="content-emoji" /><open-data type="userAvatarUrl"></open-data></view>
+      <!-- 其它消息类型以此类推 -->
+    </view>
+    <view class="left" wx:if="{{item.id!=openid}}">
+      <image src="{{avatar}}"></image><view class="message-item2" wx:if="{{item.type === 'text'}}"><text class="content-txt2" >{{item.content}}</text></view>
+      <!-- 图片消息 -->
+      <view class="message-item2" wx:if="{{item.type === 'image'}}" ><image src="{{item.content}}" class="content-img" mode="aspectFit"/></view>
+      <!-- 表情消息 -->
+      <view class="message-item2" wx:if="{{item.type === 'emoji'}}"><image src="{{item.content}}" class="content-emoji" /></view>
+    </view>
+    </view>
+    <!-- 发送消息后自动滚动到底部 -->
+    <view id="{{toView}}"></view>
+  </scroll-view>
+  <!-- 输入框 -->
+  <view class="input-box">
+    <!-- 表情按钮 -->
+    <image src="../../image/表情.png" class="input-btn" bindtap="showEmoji" />
+    <!-- 相册按钮 -->
+    <image src="../../image/照片.png" class="input-btn" bindtap="chooseImage"/>
+    <!-- 输入框 -->
+    <textarea class="input-area" placeholder="请输入聊天内容" bindinput="inputText" value="{{inputVal}}"></textarea>
+    <!-- 发送按钮 -->
+    <button class="send-btn" bindtap="sendMessage" size="mini">发送</button>
+    </view>
+</view>

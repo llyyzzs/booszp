@@ -1,0 +1,59 @@
+<view class="container">
+  <form bindsubmit="onSubmit">
+    <view class="input-group">
+      <text class="label">头像：</text>
+      <open-data type="userAvatarUrl"></open-data>
+    </view>
+    <view class="input-group">
+      <text class="label">姓名：</text>
+      <input type="text" name="nickname" value="{{user.nickname}}" />
+    </view>
+    <view class="input-group">
+      <text class="label">身份：</text>
+      <input type="text" name="position" value="{{user.position}}" />
+    </view>
+    <view class="input-group">
+      <text class="label">性别：</text>
+      <radio-group name="gender">
+        <block wx:if="{{checked}}">
+        <label class="radio-label">
+          <radio value="男" checked/>男
+        </label>
+        <label class="radio-label">
+          <radio value="女" />女
+        </label></block>
+        <block wx:else="{{!checked}}">
+          <label class="radio-label">
+          <radio value="男" />男
+        </label>
+        <label class="radio-label">
+          <radio value="女" checked/>女
+        </label></block>
+      </radio-group>
+    </view>
+    <view class="input-group">
+      <text class="label">出生日期：</text>
+      <picker mode="date" name="date" start="1900-01-01" end="{{ currentDate }}" value="{{ birthDate }}" bindchange="onDateChange">
+        <view class="picker">{{ birthDate }}</view>
+      </picker>
+    </view>
+    <view class="input-group">
+      <text class="label">联系电话：</text>
+      <input type="number" name="phone" value="{{user.phone}}" />
+    </view>
+    <view class="input-group">
+      <text class="label">电子邮件：</text>
+      <input type="email" name="email" value="{{user.email}}" />
+    </view>
+    <view class="input-group">
+      <text class="label">家庭住址：</text>
+      <input name="address" value="{{user.address}}"></input>
+    </view>
+    <view class="input-group">
+      <text class="label">毕业学校：</text>
+      <input name="school" value="{{user.school}}"></input>
+    </view>
+    <button form-type='submit'>提交</button>
+  </form>
+</view>
+

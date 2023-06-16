@@ -1,0 +1,41 @@
+<view class="container">
+    <view class="top">
+    <view class="search">
+      <image src="../../../image/搜索.png"  bindtap="onSearch"/>
+      <input  type="text" placeholder="输入关键词" bindconfirm="onSearch" value="{{keyword}}" bindinput="onInputChange" />
+     </view>
+    </view>
+    <swiper class="swiper" indicator-dots="true" autoplay="true" interval="{{3000}}" duration="{{1000}}" 	indicator-active-color='rgb(26, 209, 169)'>
+      <block wx:for="{{swiperList}}" wx:key="*this">
+        <swiper-item>
+          <image src="{{item.imgUrl}}" mode="heightFix"></image>
+        </swiper-item>
+      </block>
+    </swiper>
+    <view class="nav-scroll">
+      <scroll-view scroll-x scrollbar="true">
+        <block wx:for="{{daohuang}}" wx:key="id">
+        <view class="{{name==item.name ? 'nav-item.active' : 'nav-item'}}"  bindtap="handleNavItemTap" data-name="{{item.name}}">{{item.name}}</view>
+        </block>
+      </scroll-view>
+    </view>
+    <view class="content">
+      <block wx:for="{{filteredItems}}" wx:key="id">
+      <view class="item" bindtap="tiaozhuan" data-id="{{item.id}}">
+       <!-- <navigator hover-class="none" url="/pages/item/item"> -->
+        <view class="item-1">
+          <view class="item-1-1">{{item.zw}}</view>
+          <view class="item-1-2">{{item.xz}}</view>
+        </view>
+        <view class="item-2">{{item.gs}}<text decode="{{true}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>{{item.rs}}</view>
+        <view class="item-3"><block wx:for="{{item.yq}}" wx:key="id"><text>{{item}}</text></block></view>
+        <view class="item-4">
+          <view class="item-4-1"><image src="{{item.image}}" mode="aspectFill"></image><text decode="{{true}}">&nbsp;&nbsp;&nbsp;{{item.mz}} {{item.sf}}</text></view>
+          <view class="item-4-2">{{item.dd}}</view>
+          </view>
+         <!-- </navigator> -->
+      </view>
+      </block>
+    </view>
+    
+</view>

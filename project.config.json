@@ -6,6 +6,7 @@
   },
   "miniprogramRoot": "miniprogram/",
   "compileType": "miniprogram",
+  "appid": "wx0f22b975cb7b9c65",
   "projectname": "ts-demo",
   "setting": {
     "useCompilerPlugins": [
@@ -16,13 +17,18 @@
       "disablePlugins": [],
       "outputPath": ""
     },
-    "condition": false
+    "condition": true,
+    "postcss": true,
+    "es6": true,
+    "enhance": true,
+    "minified": true,
+    "ignoreUploadUnusedFiles": true,
+    "uglifyFileName": true
   },
   "simulatorType": "wechat",
   "simulatorPluginLibVersion": {},
   "condition": {},
   "srcMiniprogramRoot": "miniprogram/",
-  "appid": "wx0f22b975cb7b9c65",
   "libVersion": "2.31.0",
   "editorSetting": {
     "tabIndent": "insertSpaces",

@@ -1,5 +1,7 @@
 {
   "usingComponents": {},
   "component": true,
-  "navigationBarBackgroundColor": "#16C4AF"
+  "navigationBarBackgroundColor": "#43c5b6",
+  "navigationBarTitleText": "Boos特聘"
+
 }

@@ -1,25 +1,59 @@
 {
   "pages": [
+    "pages/home/home",
     "pages/index/index",
     "pages/logs/logs",
-    "pages/home/home"
+    "pages/item/item",
+    "pages/my/my",
+    "pages/wude/sc/sc",
+    "pages/wude/jl/jl",
+    "pages/wude/dd/dd",
+    "pages/wude/bj/bj",
+    "pages/wude/sz/sz",
+    "pages/wude/gj/gj",
+    "pages/daohang/fj/fj",
+    "pages/daohang/qz/qz",
+    "pages/daohang/gx/gx",
+    "pages/daohang/hy/hy",
+    "pages/daohang/zx/zx",
+    "pages/wude/wd/wd",
+    "pages/news/news",
+    "pages/wude/bm/bm",
+    "pages/wude/tjbj/tjbj",
+    "pages/newslist/newslist",
+    "pages/company/company"
   ],
   "tabBar": {
     "list": [
       {
         "pagePath": "pages/home/home",
-        "text":"首页",
+        "text": "首页",
         "iconPath": "image/首页.png",
-        "selectedIconPath": "image/首页.2png"
+        "selectedIconPath": "image/首页2.png"
+      },
+      {
+        "pagePath": "pages/newslist/newslist",
+        "text": "消息",
+        "iconPath": "image/沟通.png",
+        "selectedIconPath": "image/沟通2.png"
+      },
+      {
+        "pagePath": "pages/my/my",
+        "text": "我的",
+        "iconPath": "image/我的.png",
+        "selectedIconPath": "image/我的2.png"
       }
     ]
   },
   "window": {
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#fff",
+    "navigationBarBackgroundColor": "#ffff",
     "navigationBarTitleText": "Weixin",
     "navigationBarTextStyle": "black"
   },
   "style": "v2",
-  "sitemapLocation": "sitemap.json"
+  "sitemapLocation": "sitemap.json",
+  "requiredPrivateInfos": [
+    "chooseLocation"
+  ]
 }

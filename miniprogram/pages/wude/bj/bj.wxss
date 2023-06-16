@@ -1,0 +1,165 @@
+.note-list {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 20rpx;
+  justify-content: center;
+  align-items: center;
+}
+
+.top{
+  display: flex;
+  width: 100%;
+  height: 30px;
+  margin-left: 10px;
+}
+.search{
+  width: 100%;
+  display: flex;
+  height: 30px;
+}
+.search image{
+  width:30px ;
+  height:30px ;
+  background-color: rgb(241, 243, 243);
+  border-radius: 12px  0px  0px 12px ;
+}
+.search input{
+  width: 80%;
+  height: 30px;
+  background-color: rgb(241, 243, 243);
+  border-radius:   0px 12px 12px 0px  ;
+  font-size: 12px;
+  margin-left: -15px;
+}
+
+.note-scroll {
+  flex: 1;
+  margin-top: 20rpx;
+  justify-content: center;
+  align-items: center;
+  width: 100%; /* 设置滚动区域宽度为屏幕宽度 */
+  background-color: #fff;
+}
+
+.note-card {
+  padding: 25rpx;
+  position: relative;
+  border-bottom: 1px solid #ebebeb;
+  cursor: pointer;
+  border-radius: 12px;
+  margin-bottom: 20rpx;
+  background-color: rgb(241, 243, 243);
+}
+
+.note-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: rgb(54, 49, 49);
+  margin-bottom: 10rpx;
+  font-weight: 500;
+}
+
+.note-content {
+  font-size: 28rpx;
+  color: #999;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  margin-bottom: 10rpx;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.add-note-btn {
+  position: fixed;
+  right: 40rpx;
+  bottom: 60rpx;
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  background-color: #1296db;
+  cursor: pointer;
+  box-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.2);
+}
+
+.add-note-btn image {
+  display: block;
+  margin: auto;
+  width: 40rpx;
+  height: 40rpx;
+}
+.bottom{
+  display: flex;
+  width: 100rpx;
+  height: 100rpx;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  bottom: 70rpx;
+}
+.bottom image{
+  width: 100rpx;
+  height: 100rpx;
+}
+.note-card-delete-movable {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 1;
+  transition: all 0.3s;
+}
+
+.note-card-delete-view {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 60px;
+  background-color: #f00;
+  color: #fff;
+  display: flex;
+  border-radius: 12px;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease-out;
+}
+
+.note-card-delete-text {
+  font-size: 28rpx;
+}
+
+.note-card-delete {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 60px;
+  border-radius: 12px;
+  transition: all 0.3s ease-out;
+}
+/* 滑块从右侧弹出的动画效果 */
+.note-card-delete-movable {
+  transition: all 0.3s;
+}
+
+.note-card-delete-view {
+  transform: translateX(120rpx);
+}
+
+/* 滑块弹回原位置的动画效果 */
+.note-card-delete-movable.reset {
+  transition: all 0.3s;
+}
+
+.note-card-delete-view.reset {
+  transform: translateX(0);
+}
+
+/* 列表项删除时的淡出效果 */
+.note-card.deleted {
+  animation-name: note-card-delete-animation;
+  animation-duration: 0.3s;
+  animation-fill-mode: both;
+}

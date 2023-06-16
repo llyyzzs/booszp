@@ -1,40 +1,40 @@
 <view class="container">
   <view class="top">
     <view class="search">
-      <image src="../../imges/搜索.png"  bindtap="onSearch"/>
-      <input type="text" placeholder="搜索职位名称、公司" bindconfirm="onSearch" value="{{keyword}}" bindinput="onInputChange"/>
+      <image src="../../image/搜索.png"  bindtap="onSearch"/>
+      <input  type="text" placeholder="输入关键词" bindconfirm="onSearch" value="{{keyword}}" bindinput="onInputChange" />
     </view>
   </view>
   <view class="daohuang">
-    <view class="mulu"><navigator hover-class="none" url="/pages/item/item"><image src="../../imges/附近.png" ></image><view class="text">附近工作</view></navigator></view>
-    <view class="mulu"><navigator hover-class="none"><image src="../../imges/兼职.png"></image><view class="text">热门兼职</view></navigator></view>
-    <view class="mulu"><navigator hover-class="none"><image src="../../imges/高薪.png"></image><view class="text">高薪机会</view></navigator></view>
-    <view class="mulu"><navigator hover-class="none"><image src="../../imges/市场.png"></image><view class="text">行业市场</view></navigator></view>
-    <view class="mulu"><navigator hover-class="none"><image src="../../imges/最新.png"></image><view class="text">最新发布</view></navigator></view>
+    <view class="mulu"><navigator hover-class="none" url="/pages/daohang/fj/fj"><image src="../../image/附近.png" mode="widthFix"></image><view class="text">附近工作</view></navigator></view>
+    <view class="mulu"><navigator hover-class="none" url="/pages/daohang/qz/qz"><image src="../../image/兼职.png" mode="widthFix"></image><view class="text">热门兼职</view></navigator></view>
+    <view class="mulu"><navigator hover-class="none" url="/pages/daohang/gx/gx"><image src="../../image/高薪.png" mode="widthFix"></image><view class="text">高薪机会</view></navigator></view>
+    <view class="mulu"><navigator hover-class="none" url="/pages/daohang/hy/hy"><image src="../../image/市场.png" mode="widthFix"></image><view class="text">企业洞察</view></navigator></view>
+    <!-- <view class="mulu"><navigator hover-class="none" url="/pages/daohang/zx/zx"><image src="../../image/最新.png" mode="widthFix"></image><view class="text">最新发布</view></navigator></view> -->
   </view>
 
     <view class="nav-scroll">
-      <scroll-view scroll-x >
-        <block wx:for="{{daohuang}}" wx:key="{{item.id}}">
-        <view class="nav-item {{activeIndex==0?'active':''}}" bindtap="handleNavItemTap" data-index="0">{{item.name}}</view>
+      <scroll-view scroll-x scrollbar="true">
+        <block wx:for="{{daohuang}}" wx:key="id">
+        <view class="{{name==item.name ? 'nav-item.active' : 'nav-item'}}"  bindtap="handleNavItemTap" data-name="{{item.name}}">{{item.name}}</view>
         </block>
       </scroll-view>
     </view>
     <view class="content">
-      <block wx:for="{{ITEM}}" wx:key="{{item.id}}">
-      <view class="item">
-       <navigator hover-class="none" url="/pages/item/item">
+      <block wx:for="{{filteredItems}}" wx:key="id">
+      <view class="item" bindtap="tiaozhuan" data-id="{{item.id}}">
+       <!-- <navigator hover-class="none" url="/pages/item/item"> -->
         <view class="item-1">
           <view class="item-1-1">{{item.zw}}</view>
           <view class="item-1-2">{{item.xz}}</view>
         </view>
         <view class="item-2">{{item.gs}}<text decode="{{true}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>{{item.rs}}</view>
-        <view class="item-3">{{item.yq}}</view>
+        <view class="item-3"><block wx:for="{{item.yq}}" wx:key="id"><text>{{item}}</text></block></view>
         <view class="item-4">
-          <view class="item-4-1"><image src="{{item.image}}"></image><text decode="{{true}}">&nbsp;&nbsp;&nbsp;</text>{{item.mz}}</view>
+          <view class="item-4-1"><image src="{{item.image}}" mode="aspectFill"></image><text decode="{{true}}">&nbsp;&nbsp;&nbsp;{{item.mz}} {{item.sf}}</text></view>
           <view class="item-4-2">{{item.dd}}</view>
           </view>
-         </navigator>
+         <!-- </navigator> -->
       </view>
       </block>
     </view>
