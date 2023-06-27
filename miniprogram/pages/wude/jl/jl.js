@@ -16,7 +16,7 @@ Page({
     this.setData({JL:formData})
     // TODO: 将表单数据提交到后台进行处理
     wx.request({
-      url: 'http://localhost:8800/jl/savejl', // 请求后端的 URL
+      url: '/jl/savejl', // 请求后端的 URL
       method: 'POST',
       data:  JSON.stringify(this.data.JL),
       header: {
@@ -45,7 +45,7 @@ Page({
    */
   onLoad:function() {
     wx.request({
-      url: 'http://localhost:8800/jl/findjl',
+      url: '/jl/findjl',
       data: {
         openid: app.globalData.user1.openid, 
       },

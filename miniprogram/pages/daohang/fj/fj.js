@@ -36,7 +36,7 @@ Page({
   onSearch:function(e){
     const that=this
     wx.request({
-      url: 'http://localhost:8800/text',
+      url: '/text',
       data: {
         keyword: this.data.keyword, 
       },   

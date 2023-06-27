@@ -36,7 +36,7 @@ Page({
    */
   onShow:function() {
     wx.request({
-      url: 'http://localhost:8800/text/findsc',
+      url: '/text/findsc',
       success: res=> {
         this.setData({
           ITEM: res.data.data,

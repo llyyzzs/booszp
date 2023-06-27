@@ -2,16 +2,16 @@
   <form bindsubmit="onSubmit">
     <view class="input-group">
       <text class="label">头像：</text>
-      <open-data type="userAvatarUrl"></open-data>
+      <image src="{{avatarUrl}}" mode="aspectFill"></image>
     </view>
     <view class="input-group">
       <text class="label">姓名：</text>
-      <input type="text" name="nickname" value="{{user.nickname}}" />
+      <input type="text" name="name" value="{{user.name}}" />
     </view>
-    <view class="input-group">
+    <!-- <view class="input-group">
       <text class="label">身份：</text>
       <input type="text" name="position" value="{{user.position}}" />
-    </view>
+    </view> -->
     <view class="input-group">
       <text class="label">性别：</text>
       <radio-group name="gender">
@@ -33,7 +33,7 @@
     </view>
     <view class="input-group">
       <text class="label">出生日期：</text>
-      <picker mode="date" name="date" start="1900-01-01" end="{{ currentDate }}" value="{{ birthDate }}" bindchange="onDateChange">
+      <picker mode="date" name="birthday" start="1900-01-01" end="{{ currentDate }}" value="{{ birthDate }}" bindchange="onDateChange">
         <view class="picker">{{ birthDate }}</view>
       </picker>
     </view>
@@ -46,13 +46,20 @@
       <input type="email" name="email" value="{{user.email}}" />
     </view>
     <view class="input-group">
+      <text class="label">学历：</text>
+      <!-- <input type="text" name="degree" value="{{user.degree}}" /> -->
+      <picker mode="selector" range="{{selectorItems}}" bindchange="handleSelect">
+      <view class="select-value">{{selectedValue}}</view>
+    </picker>
+    </view>
+    <!-- <view class="input-group">
       <text class="label">家庭住址：</text>
       <input name="address" value="{{user.address}}"></input>
-    </view>
-    <view class="input-group">
+    </view> -->
+    <!-- <view class="input-group">
       <text class="label">毕业学校：</text>
       <input name="school" value="{{user.school}}"></input>
-    </view>
+    </view> -->
     <button form-type='submit'>提交</button>
   </form>
 </view>

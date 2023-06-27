@@ -21,7 +21,7 @@ Page({
     app.globalData.note=formData
     // TODO：将表单数据保存到数据库中，跳转到便签列表页面等等操作
     // wx.request({
-    //   url: 'http://localhost:8800/user/savebj', // 请求后端的 URL
+    //   url: '/user/savebj', // 请求后端的 URL
     //   method: 'GET',
     //   data: formData,
     //   header: {

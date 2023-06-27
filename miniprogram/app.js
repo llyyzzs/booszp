@@ -23,6 +23,7 @@ App({
     messageList:null,
     avatar:null,
     ITEM:null,
-    company:null
+    company:null,
+    baseurl:'http://192.168.0.228:8800'
   }
 })

@@ -94,9 +94,8 @@ Page({
     }
   },
   deleteNote(e){
-    const { noteList } = this.data;
     // 移除列表项，并更新滑块容器的 left 值和删除状态
-      const newList = noteList.filter((item, index) => index !== this.data.activeIndex);
+      const newList = this.data.noteList.filter((item, index) => index !== this.data.activeIndex);
       this.setData({
         noteList: newList,
         movableAreaLeft: 0,
@@ -105,7 +104,6 @@ Page({
       app.globalData.user1.bj=this.data.noteList
       console.log(app.globalData.user1.bj)
       this.show()
-      wx.setStorageSync('token', app.globalData.user1)
   },
   /**
    * 生命周期函数--监听页面加载
@@ -117,7 +115,7 @@ Page({
   },
   show(){
     wx.request({
-      url: 'http://localhost:8800/user/savebj', // 请求后端的 URL
+      url: '/user/savebj', // 请求后端的 URL
       method: 'POST',
       data:  {noteList:JSON.stringify(this.data.noteList) ,id:app.globalData.user1.id},
       header: {
@@ -150,6 +148,7 @@ Page({
    */
   onShow() {
     var NoteList=this.data.noteList
+    if(app.globalData.noteid!=null){
     if(app.globalData.noteid===this.data.noteList.length){
       NoteList.push(app.globalData.note)
       this.setData({
@@ -162,6 +161,7 @@ Page({
       noteList:NoteList
     })
   }
+}
     console.log(this.data.noteList)
     app.globalData.user1.bj=this.data.noteList
     // TODO：将表单数据保存到数据库中，跳转到便签列表页面等等操作
@@ -179,7 +179,7 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload() {
-    
+    app.globalData.noteid=null
   },
 
   /**

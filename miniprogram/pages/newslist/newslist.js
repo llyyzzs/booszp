@@ -6,6 +6,7 @@ const movableAreaWidth = 120;
 const deletableWidth = 60;
 Page({
   data: {
+    timer: null, // 定时器对象
     contactList: [
       { id: 111, name: '小明', avatar: '../../image/11.png' },
       { id: 211, name: '小红', avatar: '../../image/12.png' },
@@ -19,6 +20,41 @@ Page({
     deletableWidth: deletableWidth, // 滑块的宽度
     // 当前活跃的滑块索引
     activeIndex: -1, 
+  },
+  startTimer: function () {
+    const that = this;
+    const interval = 5000; // 定时器间隔，单位为毫秒
+
+    // 设置定时器
+    const timer = setInterval(function() {
+      that.sendRequest(); // 发送网络请求的函数
+    }, interval);
+
+    this.setData({ timer: timer });
+  },
+
+  clearTimer: function () {
+    const timer = this.data.timer;
+    if (timer) {
+      clearInterval(timer);
+    }
+  },
+
+  sendRequest: function () {
+    const token=wx.getStorageSync('token') 
+    wx.request({
+      url: 'http://localhost:8800/chat/getConversations', // 替换成你的请求地址
+      method: 'GET', // 请求方法，这里示例使用 GET
+      header:{
+        'Authorization':'Bearer ' + token,
+      },
+      success: function (res) {
+        console.log('请求成功', res.data);
+      },
+      fail: function (error) {
+        console.error('请求失败', error);
+      }
+    });
   },
   goToChat: function (event) {
     /**
@@ -134,7 +170,8 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-     
+     // 开始定时器，每隔一段时间执行网络请求
+    this.startTimer();
   },
 
   /**
@@ -199,7 +236,8 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload() {
-
+    // 页面卸载时清除定时器
+    this.clearTimer();
   },
 
   /**

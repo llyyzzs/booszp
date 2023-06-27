@@ -1,4 +1,5 @@
 const app=getApp()
+const baseurl=app.globalData.baseurl
 Page({
 
   /**
@@ -57,46 +58,48 @@ Page({
     wx.getUserProfile({
       desc: '必须授权才能使用',
       success:res=>{
-      let user=res.userInfo
-      this.setData({
-      user:user,
-      encryptedData: res.encryptedData,
-      iv: res.iv
-      })
-      var encryptedData=res.encryptedData;
-      var iv=res.iv;
       wx.login({
         success:(res)=>{
           if(res.code){
             wx.request({
-              url: 'http://localhost:8800/user/login',
-              method:'POST',
+              url: baseurl+'/user/login',
+              method:'GET',
               header:{
                 'content-type':'application/x-www-form-urlencoded',
               },
               data: {
                 code: res.code,
-                encryptedData:encryptedData,
-                iv:iv,
               },
               success(res){
               wx.setStorageSync('token', res.data.data)
-              app.globalData.user1=res.data.data
-              that.setData({
-                user1:res.data.data,
-                hasLogin:true
-              })        
+              console.log(res.data.data)
+              const token=wx.getStorageSync('token') 
+              wx.request({
+                url: baseurl+'/user/get',
+                method:'GET',
+                header:{
+                  'Authorization':'Bearer ' + token,
+                },
+                success(res){
+                  app.globalData.user1=res.data.data
+                  that.setData({
+                    user1:res.data.data,
+                    hasLogin:true
+                 })
+                 console.log(that.data.user1)
+                }
+                
+              })    
               },
-            })
+            })        
           }
         }
       })
       },
-      
       fall:res=>{
         console.log('失败',res)
       }
-    }) 
+    })
   },
 
   // getUserProfile(e) {
@@ -154,7 +157,7 @@ Page({
       user1:app.globalData.user1
     })
     wx.request({
-      url: 'http://localhost:8800/text',
+      url: '/text',
       data: {
         keyword:'', 
       },   

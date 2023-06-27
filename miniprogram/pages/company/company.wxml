@@ -1,17 +1,17 @@
 <view class="container">
   <view class="item-top">
-      <view class="item-left">
-        <view class="item-left1">{{company.name}}</view>
-        <view class="item-left2">{{company.address}} {{company.type}} {{company.date}} {{company.scale}}</view>
-      </view>
-      <view class="item-right">
-        <image src="{{company.src}}" mode="aspectFill"></image>
-      </view>
+    <view class="item-left">
+      <view class="item-left1">{{company.name}}</view>
+      <view class="item-left2">{{company.address}} {{company.type}} {{company.date}} {{company.scale}}</view>
+    </view>
+    <view class="item-right">
+      <image src="{{company.src}}" mode="aspectFill"></image>
+    </view>
   </view>
   <view class="item-top1">
-    <view class="item-top1-1"><text>法定代表人</text><text style="color: rgb(255, 94, 0);">小明</text></view>
-    <view class="item-top1-1"><text>注册资本</text><text style="color: rgb(255, 94, 0);">3422万</text></view>
-    <view class="item-top1-1"><text>成立日期</text><text style="color: rgb(255, 94, 0);">2001.03.08</text></view>
+    <view class="item-top1-1"><text>法定代表人</text><text style="color: rgb(255, 94, 0);">{{company.boss}}</text></view>
+    <view class="item-top1-1"><text>注册资本</text><text style="color: rgb(255, 94, 0);">{{company.capital}}万</text></view>
+    <view class="item-top1-1"><text>成立日期</text><text style="color: rgb(255, 94, 0);">{{company.join}}</text></view>
   </view>
   <view class="content">
     <view class="title">公司简介</view>
@@ -19,21 +19,21 @@
       <view><text decode="{{true}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>{{item}}</view>
     </view>
     <view class="title">公司福利</view>
-    <scroll-view class="nav-scroll" enable-flex  scroll-x="true"  scrollbar="true">
+    <scroll-view class="nav-scroll" enable-flex scroll-x="true" scrollbar="true">
       <block wx:for="{{fuli}}" wx:key="id">
         <view class="nav-item">
-        <image src="{{item.src}}" mode="aspectFit"></image>
-        <text style="font-size: 12px;">{{item.name}}</text>
+          <image src="{{item.src}}" mode="aspectFit"></image>
+          <text style="font-size: 12px;">{{item.name}}</text>
         </view>
       </block>
     </scroll-view>
     <view class="title">公司地址</view>
     <view class="intro">广东省深圳市南山区海天二路33号腾讯滨海大厦</view>
     <view class="gs-dd">
-      <map id="myMap" longitude="{{company.longitude}}" latitude="{{company.latitude}}" scale="16" bindtap="chooseLocation"/>
+      <map id="myMap" longitude="{{company.longitude}}" latitude="{{company.latitude}}" scale="16" bindtap="chooseLocation" />
     </view>
     <view class="title">公司风采</view>
-    <swiper class="swiper" indicator-dots="true" autoplay="true" interval="{{3000}}" duration="{{1000}}" 	indicator-active-color='rgb(26, 209, 169)'>
+    <swiper class="swiper" indicator-dots="true" autoplay="true" interval="{{3000}}" duration="{{1000}}" indicator-active-color='rgb(26, 209, 169)'>
       <block wx:for="{{swiperList}}" wx:key="*this">
         <swiper-item>
           <image src="{{item.imgUrl}}" mode="widthFix"></image>

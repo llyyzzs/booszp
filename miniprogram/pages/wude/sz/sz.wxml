@@ -1,2 +1,90 @@
-<!--pages/sz/sz.wxml-->
-<text>pages/sz/sz.wxml</text>
+<view class="container">
+  <form bindsubmit="onSubmit">
+    <view class="input-group">
+      <text class="label">姓名：</text>
+      <input type="text" name="name" value="{{JL.name}}" />
+    </view>
+    <view class="input-group">
+      <text class="label">身份：</text>
+      <input type="text" name="position" value="{{JL.position}}" />
+    </view>
+    <view class="input-group">
+      <text class="label">性别：</text>
+      <radio-group name="gender">
+        <block wx:if="{{checked}}">
+        <label class="radio-label">
+          <radio value="男" checked/>男
+        </label>
+        <label class="radio-label">
+          <radio value="女" />女
+        </label></block>
+        <block wx:else="{{!checked}}">
+          <label class="radio-label">
+          <radio value="男" />男
+        </label>
+        <label class="radio-label">
+          <radio value="女" checked/>女
+        </label></block>
+      </radio-group>
+    </view>
+    <view class="input-group">
+      <text class="label">出生日期：</text>
+      <picker mode="date" name="date" start="1900-01-01" end="{{ currentDate }}" value="{{ birthDate }}" bindchange="onDateChange">
+        <view class="picker">{{ birthDate }}</view>
+      </picker>
+    </view>
+    <view class="input-group">
+      <text class="label">联系电话：</text>
+      <input type="number" name="phone" value="{{JL.phone}}" />
+    </view>
+    <view class="input-group">
+      <text class="label">电子邮件：</text>
+      <input type="email" name="email" value="{{JL.email}}" />
+    </view>
+    <view class="input-group">
+      <text class="label">毕业学校：</text>
+      <input name="school" value="{{JL.school}}"></input>
+    </view>
+    <view class="input-group">
+      <text class="label">所在城市：</text>
+      <input type="text" name="city" value="{{JL.city}}" required />
+    </view>
+    <view class="input-group">
+      <text class="label">学历：</text>
+      <input type="text" name="education" value="{{JL.education}}" required />
+    </view>
+    <view class="input-group">
+      <text class="label">专业：</text>
+      <input type="text" name="major" value="{{JL.major}}" required />
+    </view>
+    <view class="input-group2">
+      <text class="label">求职意向：</text>
+      <textarea maxlength="-1" name="job" value="{{JL.job}}" required></textarea>
+    </view>
+    <view class="input-group2">
+      <text class="label">教育经历：</text>
+      <textarea maxlength="-1" name="experience" value="{{JL.experience}}" required></textarea>
+    </view>
+
+    <view class="input-group2">
+      <text class="label">工作经历：</text>
+      <textarea maxlength="-1" name="jobexperience" value="{{JL.jobexperience}}" required></textarea>
+    </view>
+
+    <view class="input-group2">
+      <text class="label">职业技能：</text>
+      <textarea maxlength="-1"  name="skill" value="{{JL.skill}}" required />
+    </view>
+
+    <view class="input-group2">
+      <text class="label">荣誉与奖励：</text>
+      <textarea maxlength="-1" name="honor" value="{{JL.honor}}" required></textarea>
+    </view>
+    <view class="input-group2">
+      <text class="label">自我评价：</text>
+      <textarea maxlength="-1" name="self" value="{{JL.self}}" required></textarea>
+    </view>
+    <button form-type='submit'>提交</button>
+  </form>
+</view>
+

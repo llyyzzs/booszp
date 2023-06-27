@@ -1,5 +1,5 @@
 // pages/daohang/gx/gx.ts
-const app=getApp()
+const app = getApp()
 Page({
 
   /**
@@ -8,17 +8,17 @@ Page({
   data: {
 
   },
-  tiaozhuan:function(e){
+  tiaozhuan: function (e) {
     wx.navigateTo({
       url: '/pages/item/item?item',
     })
-    var id=e.currentTarget.dataset.id
-    var finditem=this.data.ITEM.find(item=>item.id===id)
-    app.globalData.item=finditem
-    console.log(finditem) 
-    },
-    qiehuan:function(){
-      // 获取ITEM数组长度
+    var id = e.currentTarget.dataset.id
+    var finditem = this.data.ITEM.find(item => item.id === id)
+    app.globalData.item = finditem
+    console.log(finditem)
+  },
+  qiehuan: function () {
+    // 获取ITEM数组长度
     const len = app.globalData.ITEM.length;
     // 定义一个空数组来存储随机选择出来的值
     const arr = [];
@@ -28,10 +28,10 @@ Page({
       arr.push(app.globalData.ITEM[index]);
     }
     this.setData({
-      ITEM:arr,
+      ITEM: arr,
     })
     console.log(this.data.ITEM)
-    },
+  },
   /**
    * 生命周期函数--监听页面加载
    */

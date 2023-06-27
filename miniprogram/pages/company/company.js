@@ -1,13 +1,13 @@
 // pages/company/company.ts
-const app=getApp()
+const app = getApp()
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    longitude:113.941779,
-    latitude:22.540822,
+    longitude: 113.941779,
+    latitude: 22.540822,
     swiperList: [
       {
         imgUrl: 'https://img1.baidu.com/it/u=784327516,2527449485&fm=253&fmt=auto&app=120&f=JPEG?w=1080&h=653'
@@ -28,25 +28,25 @@ Page({
         imgUrl: 'https://img2.baidu.com/it/u=123601112,3361570788&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=314'
       }
     ],
-      fuli:[
-        {src:"../../image/时间.png",name:"9:00-18:00"},
-        {src:"../../image/双休.png",name:"双休"},
-        {src:"../../image/保险.png",name:"五险一金"},
-        {src:"../../image/医疗.png",name:"医疗保险"},
-        {src:"../../image/年终奖.png",name:"年终奖"},
-        {src:"../../image/餐补.png",name:"餐补"},
-        {src:"../../image/车.png",name:"免费班车"},
-        ]
+    fuli: [
+      { src: "../../image/时间.png", name: "9:00-18:00" },
+      { src: "../../image/双休.png", name: "双休" },
+      { src: "../../image/保险.png", name: "五险一金" },
+      { src: "../../image/医疗.png", name: "医疗保险" },
+      { src: "../../image/年终奖.png", name: "年终奖" },
+      { src: "../../image/餐补.png", name: "餐补" },
+      { src: "../../image/车.png", name: "免费班车" },
+    ]
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    const id=options.id
-    const company=app.globalData.company.filter((item) => item.id==id);
+    const id = options.id
+    const company = app.globalData.company.filter((item) => item.id == id);
     this.setData({
-      company:company[0]
+      company: company[0]
     })
     console.log(company)
   },

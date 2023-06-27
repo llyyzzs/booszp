@@ -39,7 +39,7 @@ Page({
   
   onSearch:function(e){
     wx.request({
-      url: 'http://localhost:8800/company',
+      url: '/company',
       data: {
         keyword: this.data.keyword, 
       },   

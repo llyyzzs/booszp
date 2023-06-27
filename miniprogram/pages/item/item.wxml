@@ -33,7 +33,7 @@
   </block>
   <block wx:if="{{name=='工作内容'}}">
     <view class="nr">
-      <block wx:for="{{ITEM.nr}}" wx:key="id"><text>{{item}}</text>
+      <block wx:for="{{job}}" wx:key="id"><text>{{index+1}}:{{item}}</text>
       </block>
     </view>
   </block>

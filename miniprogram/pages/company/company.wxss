@@ -1,5 +1,5 @@
 /* pages/company/company.wxss */
-.container{
+.container {
   display: flex;
   width: 100%;
   height: 100%;
@@ -8,7 +8,8 @@
   align-items: center;
   overflow: hidden;
 }
-.item-top{
+
+.item-top {
   display: flex;
   width: 100%;
   flex-direction: row;
@@ -17,32 +18,38 @@
   justify-content: space-between;
   align-items: flex-end;
 }
-.item-left{
+
+.item-left {
   display: flex;
   flex-direction: column;
   font-size: 20px;
 }
-.item-left1{
+
+.item-left1 {
   display: flex;
   margin-bottom: 8rpx;
 }
-.item-left2{
+
+.item-left2 {
   display: flex;
   font-size: 10px;
   margin-bottom: 8rpx;
   color: rgb(172, 164, 164);
 }
-.item-right{
+
+.item-right {
   display: flex;
   height: 100%;
   justify-content: center;
   align-items: center;
 }
-.item-right image{
+
+.item-right image {
   width: 100rpx;
   height: 100rpx;
 }
-.item-top1{
+
+.item-top1 {
   display: flex;
   width: 100%;
   font-size: 10px;
@@ -53,7 +60,8 @@
   margin-top: 12rpx;
   border-bottom: 1rpx solid rgb(219, 216, 216);
 }
-.item-top1-1{
+
+.item-top1-1 {
   display: flex;
   width: 33%;
   flex-direction: column;
@@ -61,29 +69,34 @@
   align-items: center;
   margin-bottom: 10px;
 }
-.content{
+
+.content {
   display: flex;
   flex-direction: column;
   width: 100%;
   padding-bottom: 30px;
 }
-.title{
+
+.title {
   display: flex;
   margin-top: 12px;
   margin-bottom: 12px;
 }
-.intro{
+
+.intro {
   display: flex;
   font-size: 10px;
   font-weight: 300;
   flex-direction: column;
 }
+
 .nav-scroll {
   display: flex;
   height: 25px;
   white-space: nowrap;
   flex-direction: row;
 }
+
 .nav-item {
   display: flex;
   height: 100%;
@@ -93,12 +106,14 @@
   flex-direction: row;
   margin-right: 12px;
 }
-.nav-item image{
+
+.nav-item image {
   width: 18px;
   height: 18px;
   margin-right: 10rpx;
 }
-.gs-dd{
+
+.gs-dd {
   display: flex;
   width: 100%;
   height: 300px;
@@ -106,16 +121,19 @@
   align-items: center;
   margin-top: 10px;
 }
-.gs-dd map{
+
+.gs-dd map {
   width: 100%;
   height: 100%;
 }
+
 .swiper {
   display: flex;
   width: 100%;
   height: 200px;
-  }
-.swiper image{
+}
+
+.swiper image {
   width: 100%;
   height: 200px;
 }
