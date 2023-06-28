@@ -6,7 +6,6 @@
     "pages/item/item",
     "pages/my/my",
     "pages/wude/sc/sc",
-    "pages/wude/jl/jl",
     "pages/wude/dd/dd",
     "pages/wude/bj/bj",
     "pages/wude/sz/sz",
@@ -21,7 +20,10 @@
     "pages/wude/bm/bm",
     "pages/wude/tjbj/tjbj",
     "pages/newslist/newslist",
-    "pages/company/company"
+    "pages/company/company",
+    "pages/wude/jl/addjl/addjl",
+    "pages/wude/jl/jldetails/jldetails",
+    "pages/wude/jl/jllist/jllist"
   ],
   "tabBar": {
     "list": [

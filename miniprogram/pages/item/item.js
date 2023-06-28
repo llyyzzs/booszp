@@ -74,6 +74,24 @@ Page({
     })
     console.log(this.data.ITEM)
   },
+  // 获取所有招聘信息
+  getitem(){
+    const token=wx.getStorageSync('token')
+    wx.request({
+      url: baseurl+'/resume/getAll',
+      method:'GET',
+      header:{
+        'Authorization':'Bearer ' + token,
+      },
+      success:res=>{    
+        this.setData({
+          resumeList:res.data.data
+        }) 
+       console.log(res.data)
+      }
+      
+    }) 
+  },
   /**
    * 生命周期函数--监听页面加载
    */

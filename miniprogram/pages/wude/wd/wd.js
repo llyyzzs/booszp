@@ -7,11 +7,45 @@ Page({
    * 页面的初始数据
    */
   data: {
-    user:undefined,
+    user: undefined,
     currentDate: new Date().toISOString().slice(0, 10), // 当前日期
     birthDate: new Date().toISOString().slice(0, 10), // 出生日期
     selectorItems: ['初中', '中专及中技', '高中', '大专', '本科', '硕士', '博士', '博士后'], // 选择框中的选项列表
     selectedValue: '无' // 当前选择的值
+  },
+  /**
+   * 选择图片事件
+   */
+  chooseImage: function () {
+    wx.chooseImage({
+      count: 1,
+      success: (res) => {
+        this.uploadImage(res.tempFilePaths[0]);
+      },
+    });
+  },
+  uploadImage(imagePath){
+    const {user}=this.data
+    console.log(user)
+    const token = wx.getStorageSync('token')       
+    wx.uploadFile({
+      url: baseurl + '/file/upload',
+      method: 'POST',
+      header: {
+        'Authorization': 'Bearer ' + token,
+      },
+      filePath: imagePath,
+      name:"file",
+      success:(res) => {
+        const Json=JSON.parse(res.data)
+        this.setData({
+          avatar:Json.data
+        })
+        user.avatar=this.data.avatar
+        console.log(user)
+      }
+    })
+    this.getAvatar()
   },
   handleSelect(e) {
     const index = e.detail.value; // 获取选中的索引值
@@ -21,10 +55,9 @@ Page({
   onSubmit: function (e) {
     const formData = e.detail.value;
     formData.degree = this.data.selectedValue;
-    formData.phone=parseInt(formData.phone)
-    formData.id=this.data.user.id;
-    formData.avatar=this.data.user.avatar
-    console.log(formData,this.data.user.id)
+    formData.phone = parseInt(formData.phone)
+    formData.id = this.data.user.id;
+    formData.avatar = this.data.user.avatar
     const token = wx.getStorageSync('token')
     wx.request({
       url: baseurl + '/user/update',
@@ -33,12 +66,8 @@ Page({
         'Authorization': 'Bearer ' + token,
         'content-type': 'application/json'
       },
-      data:JSON.stringify(formData),
-      success:(res)=> {
-        // app.globalData.user1 = res.data.data
-        // this.setData({
-        //   user: res.data.data,
-        // })
+      data: JSON.stringify(formData),
+      success: (res) => {
         console.log(this.data.user)
       }
     })
@@ -52,12 +81,8 @@ Page({
     this.setData({
       avatarUrl: baseurl + '/file/download/' + this.data.user.avatar
     })
-
   },
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function () {
+  getuser(){
     const token = wx.getStorageSync('token')
     wx.request({
       url: baseurl + '/user/get',
@@ -68,6 +93,7 @@ Page({
       success: res => {
         this.setData({
           user: res.data.data,
+          avatar:res.data.data.avatar
         })
         // 解析返回数据
         if (res.data.data.degree != null) {
@@ -102,6 +128,12 @@ Page({
 
   },
   /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function () {
+    this.getuser()
+  },
+  /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
@@ -126,7 +158,6 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-    const app = getApp()
     app.globalData.user1 = this.data.user
     console.log(app.globalData.user1)
   },

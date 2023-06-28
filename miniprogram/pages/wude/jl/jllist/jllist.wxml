@@ -1,0 +1,27 @@
+<view class="note-list">
+  <view class="top">
+    <view class="search">
+      <image src="../../../../image/搜索.png"  bindtap="onSearch"/>
+      <input style="font-size: 12px;font-weight: 300;" type="text" placeholder="输入便签标题" bindconfirm="onSearch" value="{{keyword}}" bindinput="onInputChange" />
+    </view>
+  </view>
+  <scroll-view class="note-scroll">
+  <view wx:for="{{resumeList}}" wx:key="id" class="note-card" data-id="{{index}}" >
+    <!-- 可滑动的滑块 -->
+    <view class="note-card-delete-movable" wx:if="{{index === activeIndex}}" bindtap="deleteNote">
+      <view class="note-card-delete-view" style="left:{{movableAreaLeft}}px;"> 
+        <view class="note-card-delete-text" >删除</view>
+      </view>
+    </view>
+    <view class="note-card-delete" style="width:{{deletableWidth}}px;"></view>
+    <!-- 笔记内容 -->
+    <view bindtap="onCardTap" data-id="{{index}}" bindtouchstart="handleTouchStart"
+    bindtouchmove="handleTouchMove" >
+      <view class="note-title">{{item.name}}</view>
+      <view class="note-content">{{item.address.city}}</view>
+      <view style="font-weight: 350;font-size: 24rpx;color: rgb(107, 95, 95);">{{item.date}}</view>
+    </view> 
+  </view>
+</scroll-view>
+  <view class="bottom" bindtap="tianjia"><image src="../../../../image/添加.png"></image></view>
+</view>
