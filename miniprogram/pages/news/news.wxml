@@ -1,26 +1,67 @@
 <view class="container">
-<!-- 聊天消息区域 -->
-  <scroll-view class="message-list" scroll-y="true" scroll-with-animation="true" 	:scroll-into-view="{{toView}}">
-   
+  <!-- 聊天消息区域 -->
+  <scroll-view class="message-list" scroll-y="true" scroll-with-animation="true" :scroll-into-view="{{toView}}">
     <!-- 循环渲染消息列表 -->
     <view class="message-item" wx:for="{{messageList}}" wx:key="index">
-      <view class="right" wx:if="{{item.id===openid}}">
-      <!-- 根据消息类型渲染不同的样式 -->
-      <!-- 文本消息 -->
-      <view class="message-item1" wx:if="{{item.type === 'text'}}"><text class="content-txt" >{{item.content}}</text><open-data type="userAvatarUrl"></open-data></view>
-      <!-- 图片消息 -->
-      <view class="message-item1" wx:if="{{item.type === 'image'}}" ><image src="{{item.content}}" class="content-img" mode="aspectFit"/><open-data type="userAvatarUrl"></open-data></view>
-      <!-- 表情消息 -->
-      <view class="message-item1" wx:if="{{item.type === 'emoji'}}"><image src="{{item.content}}" class="content-emoji" /><open-data type="userAvatarUrl"></open-data></view>
-      <!-- 其它消息类型以此类推 -->
-    </view>
-    <view class="left" wx:if="{{item.id!=openid}}">
-      <image src="{{avatar}}"></image><view class="message-item2" wx:if="{{item.type === 'text'}}"><text class="content-txt2" >{{item.content}}</text></view>
-      <!-- 图片消息 -->
-      <view class="message-item2" wx:if="{{item.type === 'image'}}" ><image src="{{item.content}}" class="content-img" mode="aspectFit"/></view>
-      <!-- 表情消息 -->
-      <view class="message-item2" wx:if="{{item.type === 'emoji'}}"><image src="{{item.content}}" class="content-emoji" /></view>
-    </view>
+      <view class="right" wx:if="{{item.sender_id===userID}}">
+        <!-- 根据消息类型渲染不同的样式 -->
+        <!-- 图片消息 -->
+        <view class="message-item1" wx:if="{{item.type === 'image'}}">
+          <view style="position:relative;width: 30px;flex-shrink: 0;">
+            <text class="is-read" wx:if="{{item.is_read===false}}">未读</text>
+            <text class="is-read" wx:else>已读</text>
+          </view>
+          <image src="{{baseurl+'/file/download/'+item.content}}" class="content-img" mode="widthFix" bindtap="previewImage" data-src="{{baseurl+'/file/download/'+item.content}}"	lazy-load="true"/>
+          <image class="avatar" src="{{baseurl+'/file/download/'+myAvatar}}"></image>
+        </view>
+        <!-- 表情消息 -->
+        <view class="message-item1" wx:if="{{item.type === 'emoji'}}">
+          <view style="position:relative;width: 30px;flex-shrink: 0;">
+            <text class="is-read" wx:if="{{item.is_read===false}}">未读</text>
+            <text class="is-read" wx:else>已读</text>
+          </view>
+          <image src="{{item.content}}" class="content-emoji" />
+          <image class="avatar" src="{{baseurl+'/file/download/'+myAvatar}}"></image>
+        </view>
+        <!-- 文本消息 -->
+        <view class="message-item1" wx:if="{{item.type === 'text'}}">
+          <view style="position:relative;width: 30px;flex-shrink: 0;">
+            <text class="is-read" wx:if="{{item.is_read===false}}">未读</text>
+            <text class="is-read" wx:else>已读</text>
+          </view>
+          <text class="content-txt">{{item.content}}</text>
+          <image class="avatar" src="{{baseurl+'/file/download/'+myAvatar}}"></image>
+        </view>
+        <!-- 其它消息类型以此类推 -->
+      </view>
+      <view class="left" wx:if="{{item.sender_id!=userID}}">
+        <!-- 图片消息 -->
+        <view class="message-item2" wx:if="{{item.type === 'image'}}">
+          <image class="avatar" src="{{baseurl+'/file/download/'+otherAvater}}"></image>
+          <image src="{{baseurl+'/file/download/'+item.content}}" class="content-img" mode="aspectFit" />
+          <view style="position:relative;width: 30px;flex-shrink: 0;">
+            <text class="is-read" wx:if="{{item.is_read===false}}">未读</text>
+            <text class="is-read" wx:else>已读</text>
+          </view>
+        </view>
+        <!-- 表情消息 -->
+        <view class="message-item2" wx:if="{{item.type === 'emoji'}}">
+          <image class="avatar" src="{{baseurl+'/file/download/'+otherAvater}}"></image>
+          <image src="{{item.content}}" class="content-emoji" />
+          <view style="position:relative;width: 30px;flex-shrink: 0;">
+            <text class="is-read" wx:if="{{item.is_read===false}}">未读</text>
+            <text class="is-read" wx:else>已读</text>
+          </view>
+        </view>
+        <view class="message-item2"  wx:if="{{item.type === 'text'}}">
+          <image class="avatar" src="{{baseurl+'/file/download/'+otherAvater}}"></image>
+          <text class="content-txt2">{{item.content}}</text>
+          <view style="position:relative;width: 30px;flex-shrink: 0;">
+            <text class="is-read" wx:if="{{item.is_read===false}}">未读</text>
+            <text class="is-read" wx:else>已读</text>
+          </view>
+        </view>
+      </view>
     </view>
     <!-- 发送消息后自动滚动到底部 -->
     <view id="{{toView}}"></view>
@@ -30,10 +71,10 @@
     <!-- 表情按钮 -->
     <image src="../../image/表情.png" class="input-btn" bindtap="showEmoji" />
     <!-- 相册按钮 -->
-    <image src="../../image/照片.png" class="input-btn" bindtap="chooseImage"/>
+    <image src="../../image/照片.png" class="input-btn" bindtap="chooseImage" />
     <!-- 输入框 -->
     <textarea class="input-area" placeholder="请输入聊天内容" bindinput="inputText" value="{{inputVal}}"></textarea>
     <!-- 发送按钮 -->
-    <button class="send-btn" bindtap="sendMessage" size="mini">发送</button>
-    </view>
+    <button class="send-btn" bindtap="sendTextMessage" size="mini">发送</button>
+  </view>
 </view>

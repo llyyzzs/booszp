@@ -24,6 +24,21 @@ Page({
       },
     });
   },
+  uploadInfo:function(data){
+    const token = wx.getStorageSync('token')
+    wx.request({
+      url: baseurl + '/user/update',
+      method: 'POST',
+      header: {
+        'Authorization': 'Bearer ' + token,
+        'content-type': 'application/json'
+      },
+      data: data,
+      success: (res) => {
+        console.log(this.data.user)
+      }
+    })
+  },
   uploadImage(imagePath){
     const {user}=this.data
     console.log(user)
@@ -37,12 +52,12 @@ Page({
       filePath: imagePath,
       name:"file",
       success:(res) => {
-        const Json=JSON.parse(res.data)
+        const json=JSON.parse(res.data)
         this.setData({
-          avatar:Json.data
+          avatar:json.data
         })
         user.avatar=this.data.avatar
-        console.log(user)
+        this.uploadInfo(user)
       }
     })
     this.getAvatar()
@@ -58,19 +73,7 @@ Page({
     formData.phone = parseInt(formData.phone)
     formData.id = this.data.user.id;
     formData.avatar = this.data.user.avatar
-    const token = wx.getStorageSync('token')
-    wx.request({
-      url: baseurl + '/user/update',
-      method: 'POST',
-      header: {
-        'Authorization': 'Bearer ' + token,
-        'content-type': 'application/json'
-      },
-      data: JSON.stringify(formData),
-      success: (res) => {
-        console.log(this.data.user)
-      }
-    })
+    this.uploadInfo(JSON.stringify(formData))
   },
   onDateChange: function (e) {
     this.setData({
@@ -96,10 +99,13 @@ Page({
           avatar:res.data.data.avatar
         })
         // 解析返回数据
-        if (res.data.data.degree != null) {
+        if (res.data.data.degree != "") {
           this.setData({
             selectedValue: res.data.data.degree
           })
+        }
+        else{
+          this.setData({selectedValue:"无"})
         }
         if (res.data.data.gender === null) {
           console.log("gender为空");

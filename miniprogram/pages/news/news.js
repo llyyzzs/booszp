@@ -1,18 +1,23 @@
-// pages/news/news.ts
-const app=getApp()
+// pages/news/news.js
+const app = getApp()
+const baseurl = app.globalData.baseurl
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
+    baseurl: app.globalData.baseurl,
+    myAvatar:app.globalData.user1.avatar,
     // 消息列表
     messageList: [],
     // 输入框内容
     inputVal: '',
     // 记录scroll-view的生命周期id，用于控制滚动到底部
     toView: 'dibu',
-    // 记录每个联系人的聊天信息
+    userID: "",
+    id: "",
+    otherAvatar:"",
   },
   /**
    * 输入框输入事件
@@ -22,60 +27,122 @@ Page({
       inputVal: event.detail.value
     });
   },
-
+  messageRead:function(){
+    wx.request({
+      url: baseurl+'/chat/messagesRead',
+      data:{
+        conversation_id: this.data.id
+      },
+      header: {
+        'Authorization':'Bearer ' + wx.getStorageSync('token'),
+      },
+      success:(res)=>{
+        this.getMessage(this.data.id)
+      }
+    })
+  },
+  getMessage: function (id) {
+    wx.request({
+      url: baseurl+'/chat/getMessages',
+      data: {
+        conversation_id: id
+      },
+      header: {
+        'Authorization':'Bearer ' + wx.getStorageSync('token'),
+      },
+      success: (res) => {
+        this.setData({
+          messageList: res.data.data,
+          inputVal: ""
+        })
+      }
+    })
+  },
+  sendMessage: function (content,type) {
+    let message = {
+      conversation_id: this.data.id,
+      type: type,
+      content: content,
+    };
+    wx.request({
+      url: baseurl+'/chat/sendMessage',
+      method:'POST',
+      header: {
+        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
+      },
+      data: message,
+      success: res => {
+        this.getMessage(this.data.id)
+      }
+    })
+  },
   /**
    * 发送消息事件
    */
-  sendMessage: function () {
-    let message = {
-      id: app.globalData.user1.openid,
-      type: 'text',
-      content: this.data.inputVal,
-    };
-    if(this.data.inputVal===""){
+  sendTextMessage: function () {
+    if (this.data.inputVal === "") {
       return;
     }
-    this.data.messageList.push(message);  
-    this.setData({
-      messageList: this.data.messageList,
-      inputVal: '',
-      toView: 'msg-' + message.id, // 发送消息后滚动到底部
-    });
-    app.globalData.messageList=this.data.messageList
+    this.sendMessage(this.data.inputVal,'text')
   },
 
   /**
    * 选择图片事件
    */
   chooseImage: function () {
-    wx.chooseImage({
+    wx.chooseMedia({
       count: 1,
       success: (res) => {
-        let message = {
-          id: app.globalData.user1.openid,
-          type: 'image',
-          content: res.tempFilePaths[0],
-        };
-        this.data.messageList.push(message);       
-        this.setData({
-          messageList: this.data.messageList,
-          toView: 'msg-' + message.id, // 发送图片后滚动到底部
-        });
+        wx.uploadFile({
+          filePath: res.tempFiles[0].tempFilePath,
+          name: 'file',
+          url: baseurl+'/file/upload',
+          header:{
+            'Authorization': 'Bearer ' + wx.getStorageSync('token'),
+          },
+          success:(data)=>{
+            res=JSON.parse(data.data)
+            console.log(res.data)
+            this.sendMessage(res.data,'image')
+          }
+        })
       },
     });
-    app.globalData.messageList=this.data.messageList
+    app.globalData.messageList = this.data.messageList
+  },
+  previewImage:function(event){
+    let currentUrl = [event.currentTarget.dataset.src]
+    wx.previewImage({
+      urls:currentUrl
+    })
+  },
+  startTimer: function () {
+    const that = this;
+    const interval = 20000; // 定时器间隔，单位为毫秒
+
+    // 设置定时器
+    const timer = setInterval(function () {
+      that.messageRead(that.data.id); // 发送网络请求的函数
+    }, interval);
+
+    this.setData({
+      timer: timer
+    });
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    // 获取 messageList 和 contact 参数
-    const messageList = JSON.parse(options.messageList);
-    this.setData({ 
-      messageList:messageList,
-      avatar:app.globalData.avatar,
+    const {
+      id,avatar
+    } = options;
+    this.setData({
+      id: id,
+      otherAvatar: avatar,
+      myAvatar:app.globalData.user1.avatar,
     })
-    console.log(this.data.messageList,this.data.avatar)
+    this.getMessage(id)
+    this.startTimer()
   },
 
   /**
@@ -89,8 +156,9 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-    this.setData({openid:app.globalData.user1.openid})
-    
+    this.setData({
+      userID: app.globalData.user1.id
+    })
   },
 
   /**
@@ -104,7 +172,7 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload() {
-
+    clearTimeout(this.data.timer)
   },
 
   /**

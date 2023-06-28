@@ -120,7 +120,6 @@ Page({
     this.setData({
       hasLogin: true,
     })
-
     }
   },
 

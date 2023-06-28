@@ -6,10 +6,16 @@ App({
     logs.unshift(Date.now())
     wx.setStorageSync('logs', logs)
 
-    // 登录
-    wx.login({
-      success: res => {
-        // 发送 res.code 到后台换取 openId, sessionKey, unionId
+    const baseurl = this.globalData.baseurl
+    const token = wx.getStorageSync('token')
+    wx.request({
+      url: baseurl+'/user/get',
+      method:'GET',
+      header:{
+        'Authorization':'Bearer ' + token,
+      },
+      success:(res)=>{
+        this.globalData.user1=res.data.data
       }
     })
   },

@@ -110,3 +110,16 @@
   animation-fill-mode: both;
 }
 
+.not-read {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  min-width: 18px;
+  line-height: 18px;
+  background-color: red;
+  color: white;
+  border-radius:15px;
+  text-align: center;
+  padding: 4px;
+  font-size: 14px;
+}
