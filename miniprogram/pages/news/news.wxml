@@ -1,6 +1,6 @@
 <view class="container">
   <!-- 聊天消息区域 -->
-  <scroll-view class="message-list" scroll-y="true" scroll-with-animation="true" :scroll-into-view="{{toView}}">
+  <scroll-view class="message-list" scroll-y="true" scroll-into-view="{{toView}}">
     <!-- 循环渲染消息列表 -->
     <view class="message-item" wx:for="{{messageList}}" wx:key="index">
       <view class="right" wx:if="{{item.sender_id===userID}}">
@@ -37,8 +37,8 @@
       <view class="left" wx:if="{{item.sender_id!=userID}}">
         <!-- 图片消息 -->
         <view class="message-item2" wx:if="{{item.type === 'image'}}">
-          <image class="avatar" src="{{baseurl+'/file/download/'+otherAvater}}"></image>
-          <image src="{{baseurl+'/file/download/'+item.content}}" class="content-img" mode="aspectFit" />
+          <image class="avatar" src="{{baseurl+'/file/download/'+otherAvatar}}"></image>
+          <image src="{{baseurl+'/file/download/'+item.content}}" class="content-img" mode="widthFix" bindtap="previewImage" data-src="{{baseurl+'/file/download/'+item.content}}"	lazy-load="true"/>
           <view style="position:relative;width: 30px;flex-shrink: 0;">
             <text class="is-read" wx:if="{{item.is_read===false}}">未读</text>
             <text class="is-read" wx:else>已读</text>
@@ -46,7 +46,7 @@
         </view>
         <!-- 表情消息 -->
         <view class="message-item2" wx:if="{{item.type === 'emoji'}}">
-          <image class="avatar" src="{{baseurl+'/file/download/'+otherAvater}}"></image>
+          <image class="avatar" src="{{baseurl+'/file/download/'+otherAvatar}}"></image>
           <image src="{{item.content}}" class="content-emoji" />
           <view style="position:relative;width: 30px;flex-shrink: 0;">
             <text class="is-read" wx:if="{{item.is_read===false}}">未读</text>
@@ -54,7 +54,7 @@
           </view>
         </view>
         <view class="message-item2"  wx:if="{{item.type === 'text'}}">
-          <image class="avatar" src="{{baseurl+'/file/download/'+otherAvater}}"></image>
+          <image class="avatar" src="{{baseurl+'/file/download/'+otherAvatar}}"></image>
           <text class="content-txt2">{{item.content}}</text>
           <view style="position:relative;width: 30px;flex-shrink: 0;">
             <text class="is-read" wx:if="{{item.is_read===false}}">未读</text>

@@ -3,11 +3,12 @@
     <view class="contact-item" bindtap="goToChat" data-id="{{item.conversation_id}}" data-index="{{index}}" bindtouchstart="handleTouchStart" bindtouchmove="handleTouchMove">
       <view style="position: relative">
         <image src="{{baseurl+'/file/download/'+item.avatar}}"/>
-        <text class="not-read">{{item.not_read}}</text>
+        <text class="not-read" wx:if="{{item.not_read!=0}}">{{item.not_read}}</text>
       </view>
       <view class="contact-info">
         <view class="user-name">{{item.chat_name}}</view>
-        <view class="last-message">{{item.last_message.content}}</view>
+        <view class="last-message" wx:if="{{item.last_message.type===image}}">[图片]</view>
+        <view class="last-message" wx:else>{{item.last_message.content}}</view>
       </view>
     </view>
     <!-- 可滑动的滑块 -->

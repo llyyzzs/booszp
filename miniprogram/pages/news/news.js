@@ -8,7 +8,7 @@ Page({
    */
   data: {
     baseurl: app.globalData.baseurl,
-    myAvatar:app.globalData.user1.avatar,
+    myAvatar: app.globalData.user1.avatar,
     // 消息列表
     messageList: [],
     // 输入框内容
@@ -17,7 +17,7 @@ Page({
     toView: 'dibu',
     userID: "",
     id: "",
-    otherAvatar:"",
+    otherAvatar: "",
   },
   /**
    * 输入框输入事件
@@ -27,30 +27,42 @@ Page({
       inputVal: event.detail.value
     });
   },
-  messageRead:function(){
+  getScollBottom: function () {
+    this.setData({
+      toView: 'dibu'
+    })
+  },
+  messageRead: function () {
     wx.request({
-      url: baseurl+'/chat/messagesRead',
-      data:{
+      url: baseurl + '/chat/messagesRead',
+      data: {
         conversation_id: this.data.id
       },
       header: {
-        'Authorization':'Bearer ' + wx.getStorageSync('token'),
+        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
       },
-      success:(res)=>{
+      success: (res) => {
         this.getMessage(this.data.id)
       }
     })
   },
   getMessage: function (id) {
     wx.request({
-      url: baseurl+'/chat/getMessages',
+      url: baseurl + '/chat/getMessages',
       data: {
         conversation_id: id
       },
       header: {
-        'Authorization':'Bearer ' + wx.getStorageSync('token'),
+        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
       },
       success: (res) => {
+        if (res.data.data.length > this.data.messageList.length) {
+          this.setData({
+            messageList: res.data.data,
+          }, () => {
+            this.getScollBottom()
+          })
+        }
         this.setData({
           messageList: res.data.data,
           inputVal: ""
@@ -58,21 +70,22 @@ Page({
       }
     })
   },
-  sendMessage: function (content,type) {
+  sendMessage: function (content, type) {
     let message = {
       conversation_id: this.data.id,
       type: type,
       content: content,
     };
     wx.request({
-      url: baseurl+'/chat/sendMessage',
-      method:'POST',
+      url: baseurl + '/chat/sendMessage',
+      method: 'POST',
       header: {
         'Authorization': 'Bearer ' + wx.getStorageSync('token'),
       },
       data: message,
       success: res => {
         this.getMessage(this.data.id)
+        this.getScollBottom()
       }
     })
   },
@@ -83,7 +96,10 @@ Page({
     if (this.data.inputVal === "") {
       return;
     }
-    this.sendMessage(this.data.inputVal,'text')
+    this.sendMessage(this.data.inputVal, 'text')
+    this.setData({
+      inputVal:""
+    })
   },
 
   /**
@@ -96,24 +112,24 @@ Page({
         wx.uploadFile({
           filePath: res.tempFiles[0].tempFilePath,
           name: 'file',
-          url: baseurl+'/file/upload',
-          header:{
+          url: baseurl + '/file/upload',
+          header: {
             'Authorization': 'Bearer ' + wx.getStorageSync('token'),
           },
-          success:(data)=>{
-            res=JSON.parse(data.data)
+          success: (data) => {
+            res = JSON.parse(data.data)
             console.log(res.data)
-            this.sendMessage(res.data,'image')
+            this.sendMessage(res.data, 'image')
           }
         })
       },
     });
     app.globalData.messageList = this.data.messageList
   },
-  previewImage:function(event){
+  previewImage: function (event) {
     let currentUrl = [event.currentTarget.dataset.src]
     wx.previewImage({
-      urls:currentUrl
+      urls: currentUrl
     })
   },
   startTimer: function () {
@@ -134,12 +150,13 @@ Page({
    */
   onLoad: function (options) {
     const {
-      id,avatar
+      id,
+      avatar
     } = options;
     this.setData({
       id: id,
       otherAvatar: avatar,
-      myAvatar:app.globalData.user1.avatar,
+      myAvatar: app.globalData.user1.avatar,
     })
     this.getMessage(id)
     this.startTimer()
