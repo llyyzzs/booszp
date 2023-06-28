@@ -98,7 +98,7 @@ Page({
     }
     this.sendMessage(this.data.inputVal, 'text')
     this.setData({
-      inputVal:""
+      inputVal: ""
     })
   },
 
