@@ -1,10 +1,12 @@
 const app = getApp()
 const baseurl = app.globalData.baseurl
+const baseWsUrl = app.globalData.baseWsUrl
 // 记录当前滑动的列表项的索引
 let currentDeleteIndex = -1;
 // 记录滑块容器的可滑动范围和滑块的宽度
 const movableAreaWidth = 120;
 const deletableWidth = 60;
+let socketTask = undefined
 Page({
   data: {
     baseurl: app.globalData.baseurl,
@@ -18,12 +20,16 @@ Page({
     activeIndex: -1,
   },
   startTimer: function () {
-    const that = this;
-    const interval = 50000; // 定时器间隔，单位为毫秒
+    const interval = 30000; // 定时器间隔，60秒一次
 
     // 设置定时器
     const timer = setInterval(function () {
-      that.sendRequest(); // 发送网络请求的函数
+      socketTask.send({
+        data: "heartbeat",
+        success: (res) => {
+          console.log(res)
+        }
+      }); // 发送心跳请求
     }, interval);
 
     this.setData({
@@ -139,7 +145,21 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    // 开始定时器，每隔一段时间执行网络请求
+    const token = wx.getStorageSync('token')
+    socketTask = wx.connectSocket({
+      url: baseWsUrl+'/chat/messageNotify',
+      header: {
+        'Authorization': 'Bearer ' + token,
+      },
+      success: (res) => {
+        console.log(res);
+      },
+      fail: (res) => console.log(res)
+    })
+    socketTask.onMessage((res) => {
+      console.log(res)
+      this.sendRequest()
+    })
     this.startTimer();
   },
 
@@ -168,6 +188,9 @@ Page({
   onUnload() {
     // 页面卸载时清除定时器
     this.clearTimer();
+    socketTask.close({
+      data: 'close'
+    })
   },
 
   /**

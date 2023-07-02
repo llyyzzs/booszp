@@ -39,27 +39,15 @@
         <view class="message-item2" wx:if="{{item.type === 'image'}}">
           <image class="avatar" src="{{baseurl+'/file/download/'+otherAvatar}}"></image>
           <image src="{{baseurl+'/file/download/'+item.content}}" class="content-img" mode="widthFix" bindtap="previewImage" data-src="{{baseurl+'/file/download/'+item.content}}"	lazy-load="true"/>
-          <view style="position:relative;width: 30px;flex-shrink: 0;">
-            <text class="is-read" wx:if="{{item.is_read===false}}">未读</text>
-            <text class="is-read" wx:else>已读</text>
-          </view>
         </view>
         <!-- 表情消息 -->
         <view class="message-item2" wx:if="{{item.type === 'emoji'}}">
           <image class="avatar" src="{{baseurl+'/file/download/'+otherAvatar}}"></image>
           <image src="{{item.content}}" class="content-emoji" />
-          <view style="position:relative;width: 30px;flex-shrink: 0;">
-            <text class="is-read" wx:if="{{item.is_read===false}}">未读</text>
-            <text class="is-read" wx:else>已读</text>
-          </view>
         </view>
         <view class="message-item2"  wx:if="{{item.type === 'text'}}">
           <image class="avatar" src="{{baseurl+'/file/download/'+otherAvatar}}"></image>
           <text class="content-txt2">{{item.content}}</text>
-          <view style="position:relative;width: 30px;flex-shrink: 0;">
-            <text class="is-read" wx:if="{{item.is_read===false}}">未读</text>
-            <text class="is-read" wx:else>已读</text>
-          </view>
         </view>
       </view>
     </view>

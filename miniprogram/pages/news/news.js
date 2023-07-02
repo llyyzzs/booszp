@@ -1,6 +1,8 @@
 // pages/news/news.js
 const app = getApp()
 const baseurl = app.globalData.baseurl
+const baseWsUrl = app.globalData.baseWsUrl
+let socketTask = undefined
 Page({
 
   /**
@@ -158,7 +160,21 @@ Page({
       otherAvatar: avatar,
       myAvatar: app.globalData.user1.avatar,
     })
-    this.getMessage(id)
+    const token = wx.getStorageSync('token')
+    socketTask = wx.connectSocket({
+      url: baseWsUrl+'/chat/messageNotify',
+      header: {
+        'Authorization': 'Bearer ' + token,
+      },
+      success: (res) => {
+        console.log(res);
+      },
+      fail: (res) => console.log(res)
+    })
+    socketTask.onMessage((res) => {
+      console.log(res)
+      this.messageRead(id);
+    })
     this.startTimer()
   },
 

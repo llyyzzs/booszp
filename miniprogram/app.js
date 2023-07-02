@@ -30,6 +30,7 @@ App({
     avatar:null,
     ITEM:null,
     company:null,
-    baseurl:'http://192.168.0.228:8800'
+    baseurl:'https://294u2z7697.imdo.co',
+    baseWsUrl:'wss://294u2z7697.imdo.co'
   }
 })
