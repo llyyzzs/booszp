@@ -8,8 +8,19 @@
       <text class="label">薪资：</text>
       <input type="text" name="price" value="{{job.price}}" />
     </view>
+    <view class="input-group" >
+    <text class="label">工作类型：</text>
+      <radio-group name="job_type">
+      <label class="radio-label">
+          <radio value="全职" checked/>全职
+        </label>
+        <label class="radio-label">
+          <radio value="兼职" />兼职
+        </label>
+      </radio-group>
+    </view>
     <view class="input-group">
-      <text class="label">工作类型：</text>
+      <text class="label">岗位类型：</text>
       <input type="text" name="type" value="{{job.tpye}}" />
     </view>
     <view class="input-group">
@@ -23,12 +34,16 @@
       <input type="text" name="degree" value="{{job.degree}}" />
     </view>
     <view class="input-group">
+      <text class="label">工作经验要求：</text>
+      <input type="text" name="work_experience" value="{{job.work_experience}}" />
+    </view>
+    <view class="input-group">
       <text class="label">岗位标签：</text>
       <input type="text" name="tags" placeholder="用空格分开"/>
     </view>
     <view class="input-group2">
       <text class="label">工作要求：</text>
-      <textarea maxlength="-1" name="require" value="{{job.require}}" />
+      <textarea maxlength="-1" name="requirement" value="{{job.require}}" />
     </view>
     <view class="input-group2">
       <text class="label">工作内容：</text>

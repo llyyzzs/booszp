@@ -7,7 +7,7 @@
         <swiper-item>
           <view class="item" bindtap="tiaozhuan" data-id="{{item.id}}">
           <view class="item-0">
-            <view class="item-0-1"><image src="{{item.image}}" mode="aspectFill"></image><text decode="{{true}}">&nbsp;&nbsp;&nbsp;{{item.name}} {{item.sf}}</text></view>
+            <view class="item-0-1"><image src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fsafe-img.xhscdn.com%2Fbw1%2Fae175b96-62b4-4c48-ae36-a278a8a27e2c%3FimageView2%2F2%2Fw%2F1080%2Fformat%2Fjpg&refer=http%3A%2F%2Fsafe-img.xhscdn.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1691652715&t=6228d4a516cbc8580b05d5075d1ea10b" mode="aspectFill"></image><text decode="{{true}}">&nbsp;&nbsp;&nbsp;招聘者名字 身份</text></view>
             <view class="item-0-2">{{item.position.city}}</view>
           </view>
           <view class="item-1">
@@ -17,7 +17,13 @@
           <view class="item-2">{{item.company.name}}<text decode="{{true}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>{{item.company.scale}}</view>
           <view class="item-3"><block wx:for="{{item.tags}}" wx:key="id"><text>{{item}}</text></block></view>
           <view class="nr">
-           <text>{{description}}</text>
+           <text>工作描述</text>
+           <text>工作描述</text>
+           <text>工作描述</text>
+           <text>工作描述</text>
+           <text>工作描述</text>
+           <text>工作描述</text>
+           <text>工作描述</text>
           </view>          
           </view>
         </swiper-item>

@@ -112,7 +112,7 @@ Page({
         'Authorization': 'Bearer ' + token,
       },
       success: res => {
-        const itemlist = res.data.data.filter(item=>{return item.job_type==="全职"})
+        const itemlist = res.data.data.filter(item=>{return item.job_type==="兼职"})
         const updatedList = this.data.contentList.concat(itemlist);
         console.log(updatedList)
         this.setData({

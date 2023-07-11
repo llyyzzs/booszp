@@ -152,6 +152,7 @@
   height: auto;
   justify-content: space-between;
   align-items: center;
+  color: rgb(112, 110, 110);
 }
 .item-4-1{
   display: flex;

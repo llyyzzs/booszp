@@ -14,7 +14,7 @@ Page({
     isCollected3: false,
     defaultIndex: 0,
     page:1,
-    region: '东莞',
+    region: '东莞市',
     selector1: '不限',
     selector2: '不限',
     selectorItems1: ['不限', '兼职', '全职'],
@@ -126,8 +126,7 @@ Page({
     })
     console.log(item)
   },
-  regionChange: function (e) {
-    let str = e.detail.value[1];//获得选择的省市区
+  selectregion:function(str){
     let region = str;
     this.setData({ region: region });
     console.log(this.data.selector2, this.data.selector1, this.data.region);
@@ -160,6 +159,10 @@ Page({
     })
     console.log(this.data.item)
   },
+  regionChange: function (e) {
+    let str = e.detail.value[1];//获得选择的省市区
+    this.selectregion(str)
+  },
   tiaozhuan: function (e) {
     // var id = contentList[e.currentTarget.dataset.id].id
     const id = e.currentTarget.dataset.id
@@ -184,6 +187,7 @@ Page({
           page: page + 1,
           loading: false
         });
+        this.selectregion(this.data.region)
       }
     })
   },
