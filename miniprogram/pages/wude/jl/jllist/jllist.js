@@ -19,131 +19,7 @@ Page({
     // 当前活跃的滑块索引
     activeIndex: -1, 
     hidden:true ,
-    resumeList:[{
-      "projetc_exp_list": [
-          {
-              "name": "头都根习音",
-              "start_date": "2017-07-25",
-              "content": "adipisicing incididunt",
-              "role": "aliquip ex Duis",
-              "performance": "elit sint",
-              "end_date": "1990-04-30"
-          }
-      ],
-      "advantage": "dolor id nulla",
-      "work_exp_list": [
-          {
-              "name": "正信数长达关",
-              "role": "consequat",
-              "start_date": "1991-06-16",
-              "performance": "ea pariatur dolore irure incididunt",
-              "industry": "irure mollit",
-              "end_date": "2019-02-04",
-              "department": "labore cupidatat deserunt consectetur",
-              "content": "deserunt"
-          },
-          {
-              "name": "准内式民矿低代",
-              "role": "incididunt do officia Excepteur",
-              "start_date": "1978-08-25",
-              "department": "quis dolore",
-              "end_date": "1993-11-16",
-              "content": "dolore dolor",
-              "industry": "culpa exercitation esse pariatur aliquip",
-              "performance": "dolor ad proident mollit"
-          },
-          {
-              "name": "电断间少义",
-              "role": "aliquip",
-              "start_date": "1991-01-08",
-              "industry": "quis culpa tempor dolore in",
-              "end_date": "1976-02-21",
-              "performance": "do ut sint pariatur",
-              "content": "dolor mollit incididunt ipsum",
-              "department": "fugiat"
-          },
-          {
-              "name": "即力什",
-              "role": "magna in adipisicing velit irure",
-              "start_date": "2012-06-18",
-              "industry": "in Excepteur aliquip sed",
-              "performance": "nisi do qui laboris",
-              "content": "aliquip fugiat et",
-              "department": "velit",
-              "end_date": "1976-05-21"
-          },
-          {
-              "name": "信素小支示价加",
-              "role": "mollit fugiat sed labore",
-              "start_date": "2016-06-27",
-              "performance": "exercitation irure dolor",
-              "end_date": "2017-11-28",
-              "department": "magna",
-              "content": "ullamco Duis pariatur amet",
-              "industry": "magna labore Lorem ad"
-          }
-      ],
-      "name": "走精写声",
-      "address": {
-          "province": "广东省",
-          "city": "迪庆藏族自治州"
-      },
-      "certification_list": [
-          {
-              "name": "列至林少片据证",
-              "date": "1996-06-26"
-          }
-      ],
-      "id": "64",
-      "education_exp_list": [
-          {
-              "major": "commodo quis",
-              "type": 0,
-              "degree": "id mollit",
-              "start_date": "2015-05-02",
-              "end_date": "1975-09-12",
-              "name": "五同府效基任",
-              "content": "ea laboris commodo eiusmod nostrud",
-              "thesis_content": "et esse Duis",
-              "thesis_title": "中把近团意律"
-          },
-          {
-              "major": "culpa",
-              "type": 0,
-              "degree": "proident eiusmod",
-              "start_date": "1993-08-12",
-              "end_date": "1980-11-20",
-              "name": "以白水构断书",
-              "thesis_title": "教上议革反",
-              "content": "aliquip do occaecat sint ut",
-              "thesis_content": "non ea"
-          },
-          {
-              "major": "eiusmod officia",
-              "type": 0,
-              "degree": "sit eu",
-              "start_date": "1981-12-04",
-              "end_date": "2013-06-10",
-              "name": "治般毛用铁过",
-              "thesis_content": "elit eiusmod cupidatat",
-              "thesis_title": "实共史此标听",
-              "content": "minim labore dolore"
-          }
-      ],
-      "user": {
-          "name": "级素就金省式",
-          "gender": "女",
-          "birthday": "1973-07-26",
-          "degree": "ad magna sunt consequat proident",
-          "phone": 18142496947,
-          "openid": "6",
-          "email": "k.piocx@qq.com",
-          "avatar": "(KuhaLR",
-          "id": "31"
-      }
-  },
-    ]
-  },
+ },
   onCardTap(e) {
     const noteId = e.currentTarget.dataset.id
     const resume = this.data.resumeList[noteId]
@@ -238,7 +114,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad() {
-  //  this.getjl()
+   this.getjl()
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -251,7 +127,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-    
+    this.getjl()
   },
 
   /**

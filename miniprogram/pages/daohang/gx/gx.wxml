@@ -3,22 +3,21 @@
   <view class="top" >猜你喜欢
   </view>
   <swiper class="swiper"  interval="{{3000}}" duration="{{1000}}" >
-      <block wx:for="{{ITEM}}" wx:key="*this">
+      <block wx:for="{{contentList}}" wx:key="*this">
         <swiper-item>
           <view class="item" bindtap="tiaozhuan" data-id="{{item.id}}">
           <view class="item-0">
-            <view class="item-0-1"><image src="{{item.image}}" mode="aspectFill"></image><text decode="{{true}}">&nbsp;&nbsp;&nbsp;{{item.mz}} {{item.sf}}</text></view>
-            <view class="item-0-2">{{item.dd}}</view>
+            <view class="item-0-1"><image src="{{item.image}}" mode="aspectFill"></image><text decode="{{true}}">&nbsp;&nbsp;&nbsp;{{item.name}} {{item.sf}}</text></view>
+            <view class="item-0-2">{{item.position.city}}</view>
           </view>
           <view class="item-1">
-            <view class="item-1-1">{{item.zw}}</view>
-            <view class="item-1-2">{{item.xz}}</view>
+            <view class="item-1-1">{{item.name}}</view>
+            <view class="item-1-2">{{item.price}}</view>
           </view>
-          <view class="item-2">{{item.gs}}<text decode="{{true}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>{{item.rs}}</view>
-          <view class="item-3"><block wx:for="{{item.yq}}" wx:key="id"><text>{{item}}</text></block></view>
+          <view class="item-2">{{item.company.name}}<text decode="{{true}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>{{item.company.scale}}</view>
+          <view class="item-3"><block wx:for="{{item.tags}}" wx:key="id"><text>{{item}}</text></block></view>
           <view class="nr">
-           <block wx:for="{{item.nr}}" wx:key="id"><text>{{item}}</text>
-           </block>
+           <text>{{description}}</text>
           </view>          
           </view>
         </swiper-item>

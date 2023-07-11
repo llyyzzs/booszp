@@ -1,4 +1,7 @@
 // pages/sc/sc.ts
+const app = getApp()
+const baseurl = app.globalData.baseurl
+const token = wx.getStorageSync('token')
 Page({
 
   /**
@@ -7,21 +10,33 @@ Page({
   data: {
 
   },
-  tiaozhuan:function(e){
-    wx.navigateTo({
-      url: '/pages/item/item?item',
+  // 获取用户收藏
+  getcollection() {
+    wx.request({
+      url: baseurl + '/job/collection/getAll',
+      method: 'GET',
+      header: {
+        'Authorization': 'Bearer ' + token,
+      },
+      success: res => {
+        console.log(res.data.data)
+        this.setData({
+          ITEM:res.data.data
+        })
+      }
     })
-    var app=getApp()
-    var id=e.currentTarget.dataset.id
-    var finditem=this.data.ITEM.find(item=>item.id===id)
-    app.globalData.item=finditem
-    console.log(finditem) 
-    },
+  },
+  tiaozhuan: function (e) {
+    const id =e.currentTarget.dataset.id
+    wx.navigateTo({
+      url: `/pages/item/item?id=${id}`,
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad() {
-
+  onLoad:function() {
+    console.log("?")
   },
 
   /**
@@ -35,15 +50,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow:function() {
-    wx.request({
-      url: '/text/findsc',
-      success: res=> {
-        this.setData({
-          ITEM: res.data.data,
-        });
-        console.log(this.data.sc)
-      }
-    })
+    this.getcollection()
   },
 
   /**

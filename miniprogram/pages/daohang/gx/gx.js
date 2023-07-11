@@ -1,42 +1,65 @@
 // pages/daohang/gx/gx.ts
 const app = getApp()
+const baseurl = app.globalData.baseurl
+const token = wx.getStorageSync('token')
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
+    page:1,
 
   },
   tiaozhuan: function (e) {
+    // var id = contentList[e.currentTarget.dataset.id].id
+    const id = e.currentTarget.dataset.id
     wx.navigateTo({
-      url: '/pages/item/item?item',
+      url: `/pages/item/item?id=${id}`,
     })
-    var id = e.currentTarget.dataset.id
-    var finditem = this.data.ITEM.find(item => item.id === id)
-    app.globalData.item = finditem
-    console.log(finditem)
   },
-  qiehuan: function () {
-    // 获取ITEM数组长度
-    const len = app.globalData.ITEM.length;
-    // 定义一个空数组来存储随机选择出来的值
-    const arr = [];
-    // 循环10次，每次随机选择一个ITEM的值并添加到数组中
-    for (let i = 0; i < 10; i++) {
-      const index = Math.floor(Math.random() * len);
-      arr.push(app.globalData.ITEM[index]);
-    }
-    this.setData({
-      ITEM: arr,
+  // 获取招聘信息详情
+  jobdetails(id) {
+    wx.request({
+      url: baseurl + '/job/get',
+      method: 'GET',
+      data: { id: id },
+      header: {
+        'Authorization': 'Bearer ' + token,
+      },
+      success: res => {
+        this.setData({
+          description:res.data.data.description
+        });
+      }
     })
-    console.log(this.data.ITEM)
+  },
+  // 切换
+  qiehuan(){
+    this.getjob(this.data.page)
+  },
+  getjob(page) {
+    wx.request({
+      url: baseurl + '/job/getAll',
+      method: 'GET',
+      data: { page: page },
+      header: {
+        'Authorization': 'Bearer ' + token,
+      },
+      success: res => {
+        // this.jobdetails(res.data.data[0].id)
+        this.setData({
+          contentList: res.data.data,
+          page: page + 1,
+          loading: false
+        });
+      }
+    })
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad() {
-    this.qiehuan()
   },
 
   /**
@@ -50,7 +73,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-
+    this.getjob(this.data.page)
   },
 
   /**

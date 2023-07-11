@@ -1,5 +1,6 @@
 const app=getApp()
 const baseurl=app.globalData.baseurl
+const token=wx.getStorageSync('token')
 Page({
 
   /**
@@ -48,13 +49,42 @@ Page({
       url: '../../pages/wude/bj/bj',
     })
   },
+  addjob:function(){
+    wx.navigateTo({
+      url: '../../pages/wude/addjob/addjob',
+    })
+  },
   sz:function(){
     wx.navigateTo({
       url: '../../pages/wude/sz/sz',
     })
   },
+  getAvatar() { 
+    if(this.data.user!=null){
+    this.setData({
+      avatarUrl: baseurl + '/file/download/' + this.data.user.avatar
+    })
+  }
+  },
+  getuser(){
+    const token=wx.getStorageSync('token') 
+    wx.request({
+      url: baseurl+'/user/get',
+      method:'GET',
+      header:{
+        'Authorization':'Bearer ' + token,
+      },
+      success:res=>{
+        this.setData({
+          user:res.data.data,
+          hasLogin:true
+       })
+       console.log(this.data.user)
+       this.getAvatar()
+      } 
+    }) 
+  },
   login(){
-    var that=this
     wx.getUserProfile({
       desc: '必须授权才能使用',
       success:res=>{
@@ -70,25 +100,10 @@ Page({
               data: {
                 code: res.code,
               },
-              success(res){
+              success:res=>{
               wx.setStorageSync('token', res.data.data)
               console.log(res.data.data)
-              const token=wx.getStorageSync('token') 
-              wx.request({
-                url: baseurl+'/user/get',
-                method:'GET',
-                header:{
-                  'Authorization':'Bearer ' + token,
-                },
-                success(res){
-                  app.globalData.user1=res.data.data
-                  that.setData({
-                    user1:res.data.data,
-                    hasLogin:true
-                 })
-                 console.log(that.data.user1)
-                } 
-              })    
+              this.getuser()
               },
             })        
           }
@@ -103,12 +118,27 @@ Page({
   handleLogout: function() {
     // 清除缓存并跳转到登录页面
     wx.clearStorageSync()
-    app.globalData.user1=null,
+    app.globalData.user=null,
     this.setData({
-      user1:null,
+      user:null,
       hasLogin:false
     })
-    console.log(this.data.user1)
+    console.log(this.data.user)
+  },
+  // 获取用户收藏
+  getcollection() {
+    wx.request({
+      url: baseurl + '/job/collection/getAll',
+      method: 'GET',
+      header: {
+        'Authorization': 'Bearer ' + token,
+      },
+      success: res => {
+        this.setData({
+          sc:res.data.data.length
+        })
+      }
+    })
   },
   /**
    * 生命周期函数--监听页面加载
@@ -134,36 +164,36 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow:function() {
-    this.setData({
-      user1:app.globalData.user1
-    })
-    wx.request({
-      url: '/text',
-      data: {
-        keyword:'', 
-      },   
-    success: res=> {
-      // 解析返回数据
-      const item1 = res.data.data;
-      app.globalData.ITEM=item1
-      const itembm =item1.filter(order => {     
-          return order.state ==='已报名'   
-      })
-      const itemgt =item1.filter(order => {     
-        return order.state ==='待沟通'   
-      })
-      const itemsc =item1.filter(order => {     
-        return order.zt ===true   
-      })
-      // 将新闻列表存储在小程序的数据模型中
-      this.setData({
-        bm:itembm.length,
-        gt:itemgt.length,
-        sc:itemsc.length,
-      });
-    }
-    })
-    console.log(this.data.user1)
+    this.getuser()
+    if(token){this.getcollection()}
+    
+    // wx.request({
+    //   url: '/text',
+    //   data: {
+    //     keyword:'', 
+    //   },   
+    // success: res=> {
+    //   // 解析返回数据
+    //   const item1 = res.data.data;
+    //   app.globalData.ITEM=item1
+    //   const itembm =item1.filter(order => {     
+    //       return order.state ==='已报名'   
+    //   })
+    //   const itemgt =item1.filter(order => {     
+    //     return order.state ==='待沟通'   
+    //   })
+    //   const itemsc =item1.filter(order => {     
+    //     return order.zt ===true   
+    //   })
+    //   // 将新闻列表存储在小程序的数据模型中
+    //   this.setData({
+    //     bm:itembm.length,
+    //     gt:itemgt.length,
+    //     sc:itemsc.length,
+    //   });
+    // }
+    // })
+    // console.log(this.data.user)
   },
 
   /**

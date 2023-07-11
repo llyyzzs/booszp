@@ -23,7 +23,8 @@
     "pages/company/company",
     "pages/wude/jl/addjl/addjl",
     "pages/wude/jl/jldetails/jldetails",
-    "pages/wude/jl/jllist/jllist"
+    "pages/wude/jl/jllist/jllist",
+    "pages/wude/addjob/addjob"
   ],
   "tabBar": {
     "list": [
@@ -51,7 +52,8 @@
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#ffff",
     "navigationBarTitleText": "Weixin",
-    "navigationBarTextStyle": "black"
+    "navigationBarTextStyle": "black",
+    "onReachBottomDistance": 0
   },
   "style": "v2",
   "sitemapLocation": "sitemap.json",

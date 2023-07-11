@@ -31,10 +31,6 @@ Page({
   },
   tianjia(e) {
     const note = { title: "标题", content: "内容" }
-    const noteId = this.data.noteList.length
-    app.globalData.noteid = noteId
-    app.globalData.note = note
-    console.log(noteId)
     wx.navigateTo({
       url: `../../wude/tjbj/tjbj?note=${JSON.stringify(note)}`,
     })
@@ -97,7 +93,7 @@ Page({
     wx.request({
       url: baseurl + '/note/delete',
       method: 'POST',
-      data: JSON.stringify({id:this.data.noteList[this.data.activeIndex].id}),
+      data: JSON.stringify({ id: this.data.noteList[this.data.activeIndex].id }),
       header: {
         'Authorization': 'Bearer ' + token,
       },
@@ -137,15 +133,16 @@ Page({
       },
       success: res => {
         console.log(res.data)
-        const convertedNoteList = res.data.data.map(note => ({
-          ...note,
-          date: this.convertTimestampToTime(note.date)
+        if (res.data.data != null) {
+          const convertedNoteList = res.data.data.map(note => ({
+            ...note,
+            date: this.convertTimestampToTime(note.date)
+          }
+          ));
+          this.setData({
+            noteList: convertedNoteList
+          })
         }
-        ));
-        this.setData({
-          noteList: convertedNoteList
-        })
-        console.log(convertedNoteList)
       }
     })
   },

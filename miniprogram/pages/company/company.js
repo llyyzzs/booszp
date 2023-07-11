@@ -1,5 +1,7 @@
 // pages/company/company.ts
 const app = getApp()
+const baseurl = app.globalData.baseurl
+const token = wx.getStorageSync('token')
 Page({
 
   /**
@@ -8,6 +10,7 @@ Page({
   data: {
     longitude: 113.941779,
     latitude: 22.540822,
+    baseurl:baseurl,
     swiperList: [
       {
         imgUrl: 'https://img1.baidu.com/it/u=784327516,2527449485&fm=253&fmt=auto&app=120&f=JPEG?w=1080&h=653'
@@ -36,19 +39,42 @@ Page({
       { src: "../../image/年终奖.png", name: "年终奖" },
       { src: "../../image/餐补.png", name: "餐补" },
       { src: "../../image/车.png", name: "免费班车" },
-    ]
+    ],
+    item:{
+      name:"",
+      avatar:"",
+      city:"",
+      type:"",
+      date:"", 
+      scale:"",
+      user:{},
+      capital:"",
+      address:{},
+    }
   },
-
+  // 获取公司详情
+  getcompany(id) {
+    wx.request({
+      url: baseurl + '/company/get',
+      method: 'GET',
+      data: { id: id },
+      header: {
+        'Authorization': 'Bearer ' + token,
+      },
+      success: res => {
+        console.log(res.data.data)
+        this.setData({
+          company:res.data.data
+        })
+      }
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
     const id = options.id
-    const company = app.globalData.company.filter((item) => item.id == id);
-    this.setData({
-      company: company[0]
-    })
-    console.log(company)
+    this.getcompany(id)
   },
 
   /**

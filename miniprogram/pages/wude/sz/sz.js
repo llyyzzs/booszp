@@ -12,7 +12,7 @@ Page({
   onSubmit: function (e) {
     var formData = e.detail.value;
     formData.id=this.data.JL.id;
-    formData.openid=(app.globalData.user1.openid)
+    formData.openid=(app.globalData.user.openid)
     this.setData({JL:formData})
     // TODO: 将表单数据提交到后台进行处理
     wx.request({
@@ -47,7 +47,7 @@ Page({
     wx.request({
       url: '/jl/findjl',
       data: {
-        openid: app.globalData.user1.openid, 
+        openid: app.globalData.user.openid, 
       },
     success: res=> {
       // 解析返回数据

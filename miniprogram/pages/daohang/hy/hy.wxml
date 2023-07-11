@@ -2,7 +2,7 @@
     <view class="top">
       <view class="search">
         <image src="../../../image/搜索.png"  bindtap="onSearch"/>
-        <input  type="text" placeholder="输入关键词" bindconfirm="onSearch" value="{{keyword}}" bindinput="onInputChange" />
+        <input  type="text" placeholder="输入关键词" bindconfirm="onSearch" value="{{keywords}}" bindinput="onInputChange" />
        </view>
     </view>
     <view class="nav-scroll">

@@ -2,6 +2,7 @@
   "usingComponents": {},
   "component": true,
   "navigationBarBackgroundColor": "#43c5b6",
-  "navigationBarTitleText": "Boos特聘"
+  "navigationBarTitleText": "Boos特聘", 
+  "onReachBottomDistance": 150
 
 }

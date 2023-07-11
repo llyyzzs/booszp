@@ -1,5 +1,7 @@
 // pages/daohang/hy/hy.ts
-const app=getApp()
+const app = getApp()
+const baseurl = app.globalData.baseurl
+const token = wx.getStorageSync('token')
 Page({
 
   /**
@@ -16,14 +18,29 @@ Page({
         {id:7,name:"上市"},
       ],
       name:"热门",
-      keyword:""
+      keywords:"",
+      list:[
+        {
+        id:"",
+        name:"",
+        avatar:"",
+        city:"",
+        type:"",
+        date:"", 
+        scale:"",
+        heat:"",//公司热度
+        start:"",//在招岗位
+        salary:""//平均薪资
+      }
+    ]
   },
   handleNavItemTap:function(e){
     const name=e.currentTarget.dataset.name
-    const filteredItems = this.data.company.filter((item) => item.bq.includes(name));
+    // const filteredItems = this.data.company.filter((item) => item.type.includes(name));
     this.setData({ 
       name: name,
-      filteredItems: filteredItems })
+      // filteredItems: filteredItems })
+    })
   },
   //跳转到公司详情
   tiaozhuan:function(e){
@@ -34,31 +51,24 @@ Page({
   },
   //搜索点击事件
   onInputChange: function (event) {
-    this.setData({ keyword: event.detail.value })
+    this.setData({ keywords: event.detail.value })
   },
   
   onSearch:function(e){
+    console.log(this.data.keywords)
     wx.request({
-      url: '/company',
-      data: {
-        keyword: this.data.keyword, 
-      },   
-    success: res=> {
-      // 解析返回数据
-      let company = res.data.data;
-      const filteredItems =company.filter((item) => item.bq.includes(this.data.name));
-      // 将新闻列表存储在小程序的数据模型中
-      this.setData({
-        company: company,
-        filteredItems:company
-      });
-      if(this.data.keyword==""){
-        app.globalData.company=res.data.data,
-        this.setData({ 
-          filteredItems: filteredItems })
-          }
-      console.log(app.globalData.company,filteredItems)
-    }
+      url: baseurl + '/company/search',
+      method: 'GET',
+      data: { keywords: this.data.keywords },
+      header: {
+        'Authorization': 'Bearer ' + token,
+      },
+      success: res => {
+        console.log(res.data.data)
+        this.setData({
+          filteredItems:res.data.data
+        })
+      }
     })
   },
   /**

@@ -15,14 +15,14 @@ App({
         'Authorization':'Bearer ' + token,
       },
       success:(res)=>{
-        this.globalData.user1=res.data.data
+        this.globalData.user=res.data.data
       }
     })
   },
   globalData: {
     userInfo: null,
     item:'',
-    user1:'',
+    user:'',
     note:null,
     noteid:null,
     contactId:null,

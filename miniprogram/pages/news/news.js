@@ -10,7 +10,7 @@ Page({
    */
   data: {
     baseurl: app.globalData.baseurl,
-    myAvatar: app.globalData.user1.avatar,
+    myAvatar: app.globalData.user.avatar,
     // 消息列表
     messageList: [],
     // 输入框内容
@@ -158,7 +158,7 @@ Page({
     this.setData({
       id: id,
       otherAvatar: avatar,
-      myAvatar: app.globalData.user1.avatar,
+      myAvatar: app.globalData.user.avatar,
     })
     const token = wx.getStorageSync('token')
     socketTask = wx.connectSocket({
@@ -190,7 +190,7 @@ Page({
    */
   onShow() {
     this.setData({
-      userID: app.globalData.user1.id
+      userID: app.globalData.user.id
     })
   },
 
@@ -205,7 +205,7 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload() {
-    clearTimeout(this.data.timer)
+    clearInterval(this.data.timer)
   },
 
   /**

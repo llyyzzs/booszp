@@ -58,9 +58,9 @@ Page({
         })
         user.avatar=this.data.avatar
         this.uploadInfo(user)
+        this.getAvatar()
       }
     })
-    this.getAvatar()
   },
   handleSelect(e) {
     const index = e.detail.value; // 获取选中的索引值
@@ -96,7 +96,7 @@ Page({
       success: res => {
         this.setData({
           user: res.data.data,
-          avatar:res.data.data.avatar
+          avatar:res.data.data.avatar,
         })
         // 解析返回数据
         if (res.data.data.degree != "") {
@@ -107,7 +107,10 @@ Page({
         else{
           this.setData({selectedValue:"无"})
         }
-        if (res.data.data.gender === null) {
+        if(res.data.data.birthday!=""){
+          this.setData({birthDate:res.data.data.birthday})
+        }
+        if (res.data.data.gender === "") {
           console.log("gender为空");
           var gender = "男"
         }
@@ -131,7 +134,6 @@ Page({
         this.getAvatar()
       },
     })
-
   },
   /**
    * 生命周期函数--监听页面加载
@@ -164,8 +166,7 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-    app.globalData.user1 = this.data.user
-    console.log(app.globalData.user1)
+    app.globalData.user= this.data.user
   },
 
   /**

@@ -1,6 +1,7 @@
 // pages/jl/jl.ts
 const app = getApp()
 const baseurl = app.globalData.baseurl
+const token = wx.getStorageSync('token')
 Page({
 
   /**
@@ -14,44 +15,49 @@ Page({
   regionChange(e) {
     this.setData(
       {
-        address: e.detail.value[0] + e.detail.value[1],
+        address: e.detail.value[0] + e.detail.value[1]+e.detail.value[2],
         province: e.detail.value[0],
-        city: e.detail.value[1]
+        city: e.detail.value[1],
+        region: e.detail.value[2]
       }
     )
   },
-  updata(formData){
-    const token = wx.getStorageSync('token')
+  addjob(formData) {
     wx.request({
-      url: baseurl+'/resume/update',
-      method:'POST',
-      data:formData,
-      header:{
-        'Authorization':'Bearer ' + token,
+      url: baseurl + '/job/update',
+      method: 'POST',
+      data: formData,
+      header: {
+        'Authorization': 'Bearer ' + token,
         'content-type': 'application/json'
       },
-      success:res=>{     
-       console.log(res.data)
+      success: res => {
+        console.log(res.data)
       }
-    }) 
+    })
   },
   onSubmit: function (e) {
     var formData = e.detail.value;
-    formData.address={};
-    formData.address.city=this.data.city;
-    formData.address.province=this.data.province;
+    formData.position = {};
+    formData.position.city = this.data.city;
+    formData.position.province = this.data.province;
+    formData.position.region=this.data.region;
+    formData.position.sub_district="";
+    formData.tags=formData.tags.split(" ")
     console.log(formData)
-    this.updata(formData)
+    this.addjob(formData)
   },
   onDateChange: function (e) {
     this.setData({
       birthDate: e.detail.value,
     });
   },
+  
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    
   },
 
   /**
