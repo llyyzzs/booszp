@@ -11,19 +11,19 @@
       </view>
       <view class="top2-1">
         <image src="../../image/经验.png"></image>
-        <text>3-5年</text>
+        <text>{{ITEM.work_experience}}</text>
       </view>
       <view class="top2-1">
         <image src="../../image/学历.png"></image>
-        <text>本科</text>
+        <text>{{ITEM.degree}}</text>
       </view>
     </view>
   </view>
   <view class="zpz">
     <view class="zpz-tx">
-      <image src="{{ITEM.image}}" mode="aspectFill"></image>
+      <image src="{{baseurl+'/file/download/'+company.user.avatar}}" mode="aspectFill"></image>
     </view>
-    <view class="zpz-xx"><text>{{ITEM.name}}</text><text>{{sf}}</text></view>
+    <view class="zpz-xx"><text>{{company.user.name}}</text><text>{{sf}}</text></view>
   </view>
   <view class="content">
     <view class="zw-top">
@@ -37,25 +37,26 @@
         </block>
       </view>
       <view class="nr">
-        <text>{{ITEM.description}}</text>
+        <text>{{ITEM.requirement}}</text>
       </view>
     </block>
     <block wx:if="{{name=='工作内容'}}">
       <view class="nr">
-        <block wx:for="{{job}}" wx:key="id"><text>{{index+1}}:{{item}}</text>
-        </block>
+        <text>{{ITEM.description}}</text>
       </view>
     </block>
     <view class="gs">
       <view class="gs-mz" bindtap="company">
         <view class="zpz-tx">
-          <image src="{{baseurl+'/file/download/'+ITEM.company.avatar}}" mode="aspectFill"></image>
+          <image src="{{baseurl+'/file/download/'+company.avatar}}" mode="aspectFill"></image>
         </view>
-        <view class="zpz-xx"><text>{{ITEM.company.name}}</text><text>1000人以上</text></view>
-        <view class="zpz-xx"><text>{{ITEM.position.province}}{{ITEM.position.city}}{{ITEM.position.sub_district}}</text></view>
+        <view class="zpz-xx">
+          <text>{{ITEM.company.name}} 111人</text>
+          <text>地址：{{ITEM.position.province}}{{ITEM.position.city}}{{ITEM.position.sub_district}}</text>
+        </view>
       </view>
       <view class="gs-dd">
-        <map id="myMap" longitude="{{ITEM.company.address.longitude}}" latitude="{{ITEM.company.address.latitude}}" scale="12" bindtap="chooseLocation" include-points="{{[{latitude: latitude, longitude: longitude}]}}" />
+        <map id="myMap" longitude="{{ITEM.company.address.longitude}}" latitude="{{ITEM.company.address.latitude}}" scale="12" bindtap="chooseLocation"/>
       </view>
     </view>
   </view>
@@ -81,10 +82,12 @@
     </block>
   </view>
   <view class="btn-wrapper">
-    <view class="btn-1">
-      <image src="{{bm}}" mode="aspectFill" bindtap="bm"></image>
-      <text>{{state}}</text>
-    </view>
+      <picker mode='selector' range='{{resumeList}}' bindchange='select'>
+      <view class="btn-1">
+        <image src="{{bm}}" mode="aspectFill"></image>
+        <text>{{state? '已投递' : '投递'}}</text>
+      </view>
+      </picker>
     <view class="btn-1">
       <image src="{{sc}}" mode="aspectFill" bindtap="sc"></image>
       <text>{{isCollected ? '已收藏' : '收藏'}}</text>

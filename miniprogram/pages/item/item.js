@@ -7,20 +7,15 @@ Page({
    * 页面的初始数据
    */
   data: {
-    item: [],
+    ITEM:{
+      id:"1"
+    },
+    bm: "../../image/未报名.png",
+    sc: "../../image/收藏.png",
+    defaultIndex:0,
     name: "职位详情",
     baseurl:baseurl,
-    job: [
-      "与设计师、后端工程师和产品经理合作，理解产品需求和UI设计",
-      "使用HTML/CSS/JavaScript等前端技术，完成Web页面及交互功能的开发",
-      "根据产品和用户反馈进行调整和优化网站性能",
-      "研究并掌握前端新技术和框架，保持技术更新",
-      "与后端工程师配合完成数据交互和业务逻辑",
-      "编写模块化、可重用代码，确保代码质量和易于维护",
-      "负责确保网站在不同浏览器和设备上的兼容性",
-      "与QA人员协同工作，确保项目的质量和稳定性",
-      "参与团队的知识分享和技术交流，促进团队技术水平的提高"
-    ],
+    state:false,
     markers: [{
       id: 1,
       latitude: 23.1314,
@@ -31,19 +26,6 @@ Page({
         content: '腾讯'
       }
     }],
-    biaoqian: ["多线程", "Springboot", "vue3", "MySQL"],
-    nr: ["任职要求:", "1、具有扎实的计算机基础理论知识、多线程编程、网络编程、熟练应用成熟的分布式缓存、分布式存储技术方案；", "2、拥有两年以上Java相关开发经验；", "3、熟练使用Spring，Hibernate，Mybatis等开源框架进行开发；", "4、熟悉基于MySQL、Orcale 等关系型数据库的设计和开发；", "5、熟悉Linux命令，有Linux环境下开发经验与技能优先；", "6、有Redis，MongoDB等开源NoSQL数据库的相关知识或技能优先；", "7、有财经、金融互联网网站开发经验者优先。"],
-    item:{
-      name:"",
-      price:"",
-      position:{},
-      company:{
-      },
-      id:"",
-      degree:"",
-      description:"",
-      work:"",
-    }
   },
   getRandomSF: function () {
     var sf = ["HR", "人事经理", "部长"];
@@ -118,13 +100,33 @@ Page({
       success: res => {
         console.log(res.data.data)
         this.getcollection()
+        this.getjobResume()
+        this.getjl()
         this.setData({
           ITEM: res.data.data,
-          latitude: res.data.data.company.address.latitude,
-          longitude: res.data.data.company.address.longitude
+          // latitude: res.data.data.company.address.latitude,
+          // longitude: res.data.data.company.address.longitude
         });
         this.getcompanyjob()
         this.getRandomSF()
+        this.getcompany(res.data.data.company.id)
+      }
+    })
+  },
+  // 获取公司详情
+  getcompany(id) {
+    wx.request({
+      url: baseurl + '/company/get',
+      method: 'GET',
+      data: { id: id },
+      header: {
+        'Authorization': 'Bearer ' + token,
+      },
+      success: res => {
+        console.log(res.data.data)
+        this.setData({
+          company:res.data.data
+        })
       }
     })
   },
@@ -145,35 +147,12 @@ Page({
       })
     }
   },
-  bm: function () {
-    if (this.data.state === '已报名') {
-      this.setData({
-        bm: "../../image/未报名.png",
-        isCollected1: !this.data.isCollected1,
-        state: '未报名'
-      })
-    }
-    else {
-      this.setData({
-        bm: "../../image/已报名.png",
-        isCollected1: !this.data.isCollected1,
-        state: '已报名'
-      })
-    }
-    wx.request({
-      url: '/text/state',
-      data: {
-        id: this.data.ITEM.id,
-        state: this.data.state
-      },
-      success: res => {
-        // 解析返回数据
-        console.log(res.data)
-      }
-    })
-
-    // console.log(this.data.sc)
+  select: function (e) {
+    const resumeid=this.data.resume[e.detail.value].id
+    console.log(resumeid)
+    this.postjobResume(resumeid)
   },
+
   gt: function () {
     wx.setStorageSync('id', this.data.ITEM.id)
     wx.setStorageSync('name', this.data.ITEM.mz)
@@ -184,6 +163,7 @@ Page({
   },
   // 获取用户收藏
   getcollection() {
+    if(token){
     wx.request({
       url: baseurl + '/job/collection/getAll',
       method: 'GET',
@@ -208,9 +188,11 @@ Page({
         }
       }
     })
+  }
   },
   // 新增用户收藏
   addcollection(job_id) {
+    if(token){
     wx.request({
       url: baseurl + '/job/collection/add',
       method: 'POST',
@@ -223,9 +205,11 @@ Page({
         console.log(this.data.user)
       }
     })
+  }
   },
   // 删除用户收藏
   deletecollection(id) {
+    if(token){
     wx.request({
       url: baseurl + '/job/collection/delete',
       method: 'POST',
@@ -237,7 +221,82 @@ Page({
         console.log(res.data.data)
       }
     })
+  }
   },
+  // 获取简历投递状态
+  getjobResume() {
+    if(token){
+    console.log("获取简历投递状态")
+    wx.request({
+      url: baseurl + '/jobResume/userGet',
+      method: 'GET',
+      header: {
+        'Authorization': 'Bearer ' + token,
+      },
+      success: res => {
+        console.log(res.data.data)
+        const isCollected=res.data.data.filter(item=>item.job.id===this.data.ITEM.id)
+        console.log(isCollected)
+        if (isCollected.length>0) {
+        this.setData({
+          state:true,
+          bm: "../../image/已报名.png",
+        })
+      }
+      else{
+        this.setData({
+          state:false,
+          bm: "../../image/未报名.png",
+        })
+      }
+      }
+    })
+  }
+  },
+  // 获取所有用户简历信息
+  getjl(){
+    if(token){
+    wx.request({
+      url: baseurl+'/resume/getAll',
+      method:'GET',
+      header:{
+        'Authorization':'Bearer ' + token,
+      },
+      success:res=>{  
+        const resumeList = res.data.data.map(item => item.name);
+        this.setData({
+          resumeList:resumeList,
+          resume:res.data.data
+        }) 
+      }
+    }) 
+  }
+  },
+  // 投递简历
+  postjobResume(resume_id) {
+    if(token){
+    console.log("投递简历")
+    wx.request({
+      url: baseurl + '/jobResume/post',
+      method: 'POST',
+      header: {
+        'Authorization': 'Bearer ' + token,
+      },
+      data:{
+        job_id:this.data.ITEM.id,
+        resume_id:resume_id
+      },
+      success: res => {
+        console.log("投递成功")
+        this.setData({
+          state:true,
+          bm: "../../image/已报名.png",
+        })
+      }
+    })
+  }
+  },
+  
   /**
    * 生命周期函数--监听页面加载
    */

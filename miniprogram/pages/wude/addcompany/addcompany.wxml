@@ -1,0 +1,40 @@
+<view class="container">
+  <form bindsubmit="onSubmit">
+    <view class="input-group">
+      <text class="label">岗位名称：</text>
+      <input type="text" name="name" value="{{job.name}}" />
+    </view>
+    <view class="input-group">
+      <text class="label">薪资：</text>
+      <input type="text" name="price" value="{{job.price}}" />
+    </view>
+    <view class="input-group">
+      <text class="label">工作类型：</text>
+      <input type="text" name="type" value="{{job.tpye}}" />
+    </view>
+    <view class="input-group">
+      <text class="label">工作地点：</text>
+      <picker mode='region' bindchange='regionChange'>
+        <view class="top-1" >{{address}}</view>
+      </picker>
+    </view>
+    <view class="input-group">
+      <text class="label">学历要求：</text>
+      <input type="text" name="degree" value="{{job.degree}}" />
+    </view>
+    <view class="input-group">
+      <text class="label">岗位标签：</text>
+      <input type="text" name="tags" placeholder="用空格分开"/>
+    </view>
+    <view class="input-group2">
+      <text class="label">工作要求：</text>
+      <textarea maxlength="-1" name="require" value="{{job.require}}" />
+    </view>
+    <view class="input-group2">
+      <text class="label">工作内容：</text>
+      <textarea maxlength="-1" name="description" value="{{job.description}}" required></textarea>
+    </view>
+    <button form-type='submit'>提交</button>
+  </form>
+</view>
+

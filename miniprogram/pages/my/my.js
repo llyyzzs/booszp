@@ -127,6 +127,7 @@ Page({
   },
   // 获取用户收藏
   getcollection() {
+    if(token){
     wx.request({
       url: baseurl + '/job/collection/getAll',
       method: 'GET',
@@ -139,6 +140,26 @@ Page({
         })
       }
     })
+  }
+  },
+  // 获取简历投递状态
+  getjobResume() {
+    if(token){
+    console.log("获取简历投递状态")
+    wx.request({
+      url: baseurl + '/jobResume/userGet',
+      method: 'GET',
+      header: {
+        'Authorization': 'Bearer ' + token,
+      },
+      success: res => {
+        console.log(res.data.data)
+        this.setData({
+          bm:res.data.data.length
+        })
+      }
+    })
+    }
   },
   /**
    * 生命周期函数--监听页面加载
@@ -165,7 +186,9 @@ Page({
    */
   onShow:function() {
     this.getuser()
-    if(token){this.getcollection()}
+    if(token){
+      this.getcollection()
+      this.getjobResume()}
     
     // wx.request({
     //   url: '/text',

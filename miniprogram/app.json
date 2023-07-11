@@ -24,7 +24,8 @@
     "pages/wude/jl/addjl/addjl",
     "pages/wude/jl/jldetails/jldetails",
     "pages/wude/jl/jllist/jllist",
-    "pages/wude/addjob/addjob"
+    "pages/wude/addjob/addjob",
+    "pages/wude/addcompany/addcompany"
   ],
   "tabBar": {
     "list": [

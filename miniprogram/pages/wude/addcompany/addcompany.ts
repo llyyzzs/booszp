@@ -1,7 +1,4 @@
-// pages/sc/sc.ts
-const app = getApp()
-const baseurl = app.globalData.baseurl
-const token = wx.getStorageSync('token')
+// pages/wude/addcompany/addcompany.ts
 Page({
 
   /**
@@ -10,32 +7,11 @@ Page({
   data: {
 
   },
-  // 获取用户收藏
-  getcollection() {
-    wx.request({
-      url: baseurl + '/job/collection/getAll',
-      method: 'GET',
-      header: {
-        'Authorization': 'Bearer ' + token,
-      },
-      success: res => {
-        console.log(res.data.data)
-        this.setData({
-          ITEM:res.data.data
-        })
-      }
-    })
-  },
-  tiaozhuan: function (e) {
-    const id =e.currentTarget.dataset.id
-    wx.navigateTo({
-      url: `/pages/item/item?id=${id}`,
-    })
-  },
+
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad:function() {
+  onLoad() {
 
   },
 
@@ -49,8 +25,8 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow:function() {
-    this.getcollection()
+  onShow() {
+
   },
 
   /**

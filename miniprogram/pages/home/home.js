@@ -77,7 +77,7 @@ Page({
       url: baseurl + '/job/getAll',
       method: 'GET',
       data: { 
-      page: this.data.page ,
+      page: 1 ,
       keywords:this.data.keyword},
       header: {
         'Authorization': 'Bearer ' + token,

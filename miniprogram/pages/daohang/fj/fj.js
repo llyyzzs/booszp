@@ -1,5 +1,6 @@
 const app = getApp()
 const baseurl=app.globalData.baseurl
+const token = wx.getStorageSync('token')
 Page({
 
   /**
@@ -24,30 +25,22 @@ Page({
     this.setData({ keyword: event.detail.value })
   },
   onSearch: function (e) {
-    const that = this
+    console.log(this.data.keyword)
     wx.request({
-      url: '/text',
-      data: {
-        keyword: this.data.keyword,
+      url: baseurl + '/job/getAll',
+      method: 'GET',
+      data: { 
+      page: 1 ,
+      keywords:this.data.keyword},
+      header: {
+        'Authorization': 'Bearer ' + token,
       },
       success: res => {
-        // 解析返回数据
-        console.log(res.data)
-        let item = res.data.data;
-        // 将新闻列表存储在小程序的数据模型中
         this.setData({
-          ITEM: item,
-          item: item
+          item: res.data.data,
         });
-        const item1 = this.data.ITEM.filter(item => {
-          return item.position.city === that.data.region
-        })
-        this.setData({
-          item: item1,
-        })
       }
     })
-
   },
   selectorChange1: function (e) {
     let i = e.detail.value;//获得选项的数组下标
@@ -69,7 +62,7 @@ Page({
           return (condition2 && condition3);
         }
       } else {
-        let condition1 = item.jobtype === this.data.selector1;
+        let condition1 = item.job_type === this.data.selector1;
         let condition3 = item.position.city === this.data.region;
         if (this.data.selector2 === '不限') {
           return (condition1 && condition3);
@@ -101,7 +94,7 @@ Page({
     console.log(this.data.selector2, this.data.selector1, this.data.region);
     const item = this.data.contentList.filter(item => {
       if (this.data.selector2 === '不限') {
-        let condition2 = item.type === this.data.selector1;
+        let condition2 = item.job_type === this.data.selector1;
         let condition3 = item.position.city === this.data.region;
         if (this.data.selector1 === '不限') {
           return (condition3);
@@ -118,7 +111,7 @@ Page({
         const numberStr = matchArray[1]; // 取出匹配结果中的第一个子串，即前面的数字序列
         const number = parseInt(numberStr, 10); // 将字符串转换为数字
         let condition1 = number >= this.data.number
-        let condition2 = item.type === this.data.selector1;
+        let condition2 = item.job_type === this.data.selector1;
         let condition3 = item.position.city === this.data.region;
         if (this.data.selector1 === '不限') {
           return (condition1 && condition3);
@@ -144,7 +137,7 @@ Page({
       const matchArray = regex.exec(str); // 将正则表达式应用在字符串上，返回匹配数组
       const numberStr = matchArray[1]; // 取出匹配结果中的第一个子串，即前面的数字序列
       const number = parseInt(numberStr, 10); // 将字符串转换为数字
-      const condition1 = item.type === this.data.selector1;
+      const condition1 = item.job_type === this.data.selector1;
       let condition2 = number >= this.data.number
       const condition3 = item.position.city === this.data.region;
       if (this.data.selector1 === '不限') {
@@ -176,7 +169,6 @@ Page({
   },
   // 获取招聘信息
   getjob(page) {
-    const token = wx.getStorageSync('token')
     wx.request({
       url: baseurl + '/job/getAll',
       method: 'GET',

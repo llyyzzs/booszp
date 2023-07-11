@@ -1,6 +1,7 @@
 // pages/daohang/qz/qz.ts
 const app = getApp()
 const baseurl = app.globalData.baseurl
+const token = wx.getStorageSync('token')
 Page({
 
   /**
@@ -19,6 +20,7 @@ Page({
       { id: 7, name: "副业" },
       { id: 8, name: "派单" }
     ],
+    name:"热门",
     swiperList: [
       {
         imgUrl: '../../../image/兼职1.png'
@@ -67,7 +69,6 @@ Page({
   },
   onSearch: function (e) {
     console.log(this.data.keyword)
-    const token = wx.getStorageSync('token')
     wx.request({
       url: baseurl + '/job/getAll',
       method: 'GET',
@@ -85,7 +86,6 @@ Page({
     })
   },
   tiaozhuan: function (e) {
-    // var id = contentList[e.currentTarget.dataset.id].id
     const id = e.currentTarget.dataset.id
     wx.navigateTo({
       url: `/pages/item/item?id=${id}`,
@@ -93,8 +93,10 @@ Page({
   },
   handleNavItemTap: function (e) {
     const name = e.currentTarget.dataset.name
+    this.biaoqian(name)
+  },
+  biaoqian:function(name){
     const filteredItems = this.data.contentList.filter((item) => item.type.includes(name));
-    console.log(filteredItems)
     this.setData({
       name: name,
       filteredItems: filteredItems
@@ -102,7 +104,6 @@ Page({
   },
   // 获取招聘信息
   getjob(page) {
-    const token = wx.getStorageSync('token')
     wx.request({
       url: baseurl + '/job/getAll',
       method: 'GET',
@@ -111,13 +112,15 @@ Page({
         'Authorization': 'Bearer ' + token,
       },
       success: res => {
-        const updatedList = this.data.contentList.concat(res.data.data);
+        const itemlist = res.data.data.filter(item=>{return item.job_type==="全职"})
+        const updatedList = this.data.contentList.concat(itemlist);
         console.log(updatedList)
         this.setData({
           contentList: updatedList,
           page: page + 1,
           loading: false
         });
+        this.biaoqian(this.data.name)
       }
     })
   },
@@ -151,6 +154,11 @@ Page({
    */
   onShow() {
     this.getjob(this.data.page);
+    const filteredItems = this.data.contentList.filter((item) => item.type.includes("热门"));
+    console.log(filteredItems)
+    this.setData({
+      filteredItems: filteredItems
+    })
   },
 
   /**

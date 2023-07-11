@@ -3,20 +3,20 @@
     <view class="tab-item {{ activeTabIndex===index?'active':'' }}" bindtap="onTabTap" data-index="{{ index }}" wx:for="{{ tabList }}" wx:key="index">{{ item }}</view>
   </scroll-view>
   <block wx:for="{{ filteredOrders }}" wx:key="id">
-    <view class="item" bindtap="tiaozhuan" data-id="{{item.id}}">
+    <view class="item" bindtap="tiaozhuan" data-id="{{item.job.id}}">
       <view class="order-header">
         <view class="order-number">状态：</view>
-        <view class="order-status">{{ item.state}}</view>
+        <view class="order-status">{{ tabList[item.status+1]}}</view>
       </view>
       <view class="item-1">
-          <view class="item-1-1">{{item.zw}}</view>
-          <view class="item-1-2">{{item.xz}}</view>
+          <view class="item-1-1">{{item.job.name}}</view>
+          <view class="item-1-2">{{item.job.price}}</view>
         </view>
-        <view class="item-2">{{item.gs}}<text decode="{{true}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>{{item.rs}}</view>
-        <view class="item-3"><block wx:for="{{item.yq}}" wx:key="id"><text>{{item}}</text></block></view>
+        <view class="item-2">{{item.company.name}}<text decode="{{true}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>{{item.job.company.scale}}</view>
+        <view class="item-3"><block wx:for="{{item.job.tags}}" wx:key="id"><text>{{item}}</text></block></view>
         <view class="item-4">
-          <view class="item-4-1"><image src="{{item.image}}" mode="aspectFill"></image><text decode="{{true}}">&nbsp;&nbsp;&nbsp;</text>{{item.mz}}</view>
-          <view class="item-4-2">{{item.dd}}</view>
+          <view class="item-4-1"><image src="{{item.image}}" mode="aspectFill"></image><text decode="{{true}}">&nbsp;&nbsp;&nbsp;{{item.mz}} {{item.sf}}</text></view>
+          <view class="item-4-2">{{item.job.position.city}}</view>
           </view>
     </view>
   </block>
