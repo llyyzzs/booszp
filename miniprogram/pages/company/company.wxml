@@ -2,7 +2,7 @@
   <view class="item-top">
     <view class="item-left">
       <view class="item-left1">{{company.name}}</view>
-      <view class="item-left2">{{company.address.name}} {{company.type}} {{company.date}} {{company.scale}}</view>
+      <view class="item-left2">{{company.address.name}} {{company.type}} {{company.date}} {{company.scale}} {{company.is_pass ? '已上市' : '未上市'}}</view>
     </view>
     <view class="item-right">
       <image src="{{baseurl+'/file/download/'+company.user.avatar}}" mode="aspectFill"></image>
@@ -10,8 +10,8 @@
   </view>
   <view class="item-top1">
     <view class="item-top1-1"><text>法定代表人</text><text style="color: rgb(255, 94, 0);">{{company.user.name}}</text></view>
-    <view class="item-top1-1"><text>注册资本</text><text style="color: rgb(255, 94, 0);">{{company.capital}}万</text></view>
-    <view class="item-top1-1"><text>成立日期</text><text style="color: rgb(255, 94, 0);">{{company.user.birthday}}</text></view>
+    <view class="item-top1-1"><text>注册资本</text><text style="color: rgb(255, 94, 0);">{{company.capital}}</text></view>
+    <view class="item-top1-1"><text>成立日期</text><text style="color: rgb(255, 94, 0);">{{company.data}}</text></view>
   </view>
   <view class="content">
     <view class="title">公司简介</view>
