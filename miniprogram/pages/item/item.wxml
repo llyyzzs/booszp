@@ -52,8 +52,34 @@
     </block>
   </view>
   <view class="content" style="margin-bottom: 50px;">
-    <text style="font-size: 18px; margin-bottom: 16px;">工作地点</text>
-    <text>{{ITEM.position.province}}{{ITEM.position.city}}{{ITEM.position.sub_district}}</text>
+    <text style="font-size: 18px; margin-bottom: 16px;">工作地点： {{ITEM.position.province}}{{ITEM.position.city}}{{ITEM.position.sub_district}}</text>
+    <view class="gs-dd">
+      <map id="myMap" longitude="{{company.address.longitude}}" latitude="{{company.address.latitude}}" scale="10" bindtap="chooseLocation" />
+    </view>
+    <view style="margin-top: 20px;margin-bottom: 10px;font-size: 18px;">该公司的其他岗位</view>
+    <block wx:for="{{filteredItems}}" wx:key="id">
+      <view class="item" bindtap="tiaozhuan" data-id="{{item.id}}">
+        <view class="item-1">
+          <view class="item-1-1">{{item.name}}</view>
+          <view class="item-1-2">{{item.price}}</view>
+        </view>
+        <view class="item-2">{{item.position.city}}<text decode="{{true}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>{{item.work_day}}</view>
+        <view class="item-3">
+          <block wx:for="{{item.tags}}" wx:key="id"><text>{{item}}</text></block>
+        </view>
+        <view class="item-4">
+          <view class="item-4-1">
+            <image src="{{baseurl+'/file/download/'+item.company.avatar}}" mode="aspectFill"></image>
+            <view>
+              <view style="margin-left: 10px;font-size: 12px;">{{item.company.name}}</view>
+              <view style="margin-left: 10px; font-size: 10px;">
+                {{item.company.industry}} {{item.company.scale}}
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </block>
   </view>
   <view class="btn-wrapper">
     <picker mode='selector' range='{{resumeList}}' bindchange='select'>

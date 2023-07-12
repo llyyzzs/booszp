@@ -10,6 +10,7 @@ Page({
   data: {
     page: 1,
     contentList: [],
+    baseurl:baseurl,
     daohuang: [
       { id: 1, name: "热门" },
       { id: 2, name: "在家" },
@@ -62,6 +63,17 @@ Page({
       bq: "热门 在家"
     },
     ]
+  },
+  loadMoreData() {
+    if (this.data.loading) return; // 防止重复加载
+    this.setData({
+      loading: true
+    });
+    // 模拟异步加载更多数据
+    setTimeout(() => {
+      // 从服务器请求数据
+      this.getjob(this.data.page)
+    }, 100);
   },
   //搜索点击事件
   onInputChange: function (event) {
@@ -139,7 +151,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad() {
-
+    const filteredItems = app.globalData.ITEM.filter((item) => item.job_type==="兼职");
+    this.setData({
+      contentList:filteredItems
+    })
   },
 
   /**

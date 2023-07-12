@@ -54,6 +54,11 @@ Page({
       url: '../../pages/wude/addjob/addjob',
     })
   },
+  addcompany(){
+    wx.navigateTo({
+      url: '../../pages/wude/addcompany/addcompany',
+    })
+  },
   sz:function(){
     wx.navigateTo({
       url: '../../pages/wude/sz/sz',

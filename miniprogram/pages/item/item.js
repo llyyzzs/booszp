@@ -154,11 +154,11 @@ Page({
   },
 
   gt: function () {
-    wx.setStorageSync('id', this.data.ITEM.id)
-    wx.setStorageSync('name', this.data.ITEM.mz)
-    wx.setStorageSync('image', this.data.ITEM.image)
-    wx.switchTab({
-      url: '/pages/newslist/newslist',
+    const id = this.data.company.user.id;
+    const avatar = this.data.company.user.avatar;
+    // 进入聊天界面的逻辑 
+    wx.navigateTo({
+      url: '../news/news?id=' + id + '&avatar=' + avatar,
     })
   },
   // 获取用户收藏

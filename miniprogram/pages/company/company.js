@@ -40,17 +40,17 @@ Page({
       { src: "../../image/餐补.png", name: "餐补" },
       { src: "../../image/车.png", name: "免费班车" },
     ],
-    item:{
-      name:"",
-      avatar:"",
-      city:"",
-      type:"",
-      date:"", 
-      scale:"",
-      user:{},
-      capital:"",
-      address:{},
-    }
+    // item:{
+    //   name:"",
+    //   avatar:"",
+    //   city:"",
+    //   type:"",
+    //   date:"", 
+    //   scale:"",
+    //   user:{},
+    //   capital:"",
+    //   address:{},
+    // }
   },
   // 获取公司详情
   getcompany(id) {
@@ -62,9 +62,12 @@ Page({
         'Authorization': 'Bearer ' + token,
       },
       success: res => {
-        console.log(res.data.data)
+        var currentDate = new Date();
+        var yearDiff = currentDate.getFullYear() - new Date(res.data.data.data).getFullYear();
+        console.log(res.data.data,yearDiff)
         this.setData({
-          company:res.data.data
+          company:res.data.data,
+          yearDiff:yearDiff
         })
       }
     })

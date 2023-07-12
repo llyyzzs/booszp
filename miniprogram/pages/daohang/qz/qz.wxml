@@ -22,16 +22,25 @@
     <view class="content">
       <block wx:for="{{filteredItems}}" wx:key="id">
         <view class="item" bindtap="tiaozhuan" data-id="{{item.id}}">
-        <view class="item-1">
+          <view class="item-1">
           <view class="item-1-1">{{item.name}}</view>
           <view class="item-1-2">{{item.price}}</view>
         </view>
-        <view class="item-2">{{item.company.name}}<text decode="{{true}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>{{item.company.scale}}</view>
-        <view class="item-3"><block wx:for="{{item.tags}}" wx:key="id"><text>{{item}}</text></block></view>
+        <view class="item-2">{{item.position.city}}<text decode="{{true}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>{{item.work_day}}</view>
+        <view class="item-3">
+          <block wx:for="{{item.tags}}" wx:key="id"><text>{{item}}</text></block>
+        </view>
         <view class="item-4">
-          <view class="item-4-1"><image src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fsafe-img.xhscdn.com%2Fbw1%2Fae175b96-62b4-4c48-ae36-a278a8a27e2c%3FimageView2%2F2%2Fw%2F1080%2Fformat%2Fjpg&refer=http%3A%2F%2Fsafe-img.xhscdn.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1691652715&t=6228d4a516cbc8580b05d5075d1ea10b" mode="aspectFill"></image><text decode="{{true}}">&nbsp;&nbsp;&nbsp;招聘者名字 身份</text></view>
-          <view class="item-4-2">{{item.position.city}}</view>
+          <view class="item-4-1">
+            <image src="{{baseurl+'/file/download/'+item.company.avatar}}" mode="aspectFill"></image>
+            <view>
+              <view style="margin-left: 10px;font-size: 12px;">{{item.company.name}}</view>
+              <view style="margin-left: 10px; font-size: 10px;">
+                {{item.company.industry}} {{item.company.scale}}
+              </view>
+            </view>
           </view>
+        </view>
       </view>
       </block>
     </view>

@@ -54,8 +54,8 @@
           <view class="item-4-1">
             <image src="{{baseurl+'/file/download/'+item.company.avatar}}" mode="aspectFill"></image>
             <view>
-              <view style="margin-left: 10px;font-size: medium;color: black;">{{item.company.name}}</view>
-              <view style="margin-left: 10px;">
+              <view style="margin-left: 10px;font-size: 12px;">{{item.company.name}}</view>
+              <view style="margin-left: 10px; font-size: 10px;">
                 {{item.company.industry}} {{item.company.scale}}
               </view>
             </view>

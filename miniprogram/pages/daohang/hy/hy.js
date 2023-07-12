@@ -8,43 +8,49 @@ Page({
    * 页面的初始数据
    */
   data: {
-    daohuang:[
-        {id:1,name:"热门"},
-        {id:2,name:"国有企业"},
-        {id:3,name:"行业巨头"},
-        {id:4,name:"中小企业"},
-        {id:5,name:"众创空间"},
-        {id:6,name:"高新技术企业"},
-        {id:7,name:"上市"},
-      ],
-      name:"热门",
-      keywords:"",
-      list:[
-        {
-        id:"",
-        name:"",
-        avatar:"",
-        city:"",
-        type:"",
-        date:"", 
-        scale:"",
-        heat:"",//公司热度
-        start:"",//在招岗位
-        salary:""//平均薪资
-      }
-    ]
+    daohuang: [
+      { id: 1, name: "热门" },
+      { id: 0, name: "互联网" },
+      { id: 2, name: "国有企业" },
+      { id: 3, name: "行业巨头" },
+      { id: 4, name: "中小企业" },
+      { id: 5, name: "众创空间" },
+      { id: 6, name: "高新技术企业" },
+      { id: 7, name: "上市" },
+    ],
+    name: "热门",
+    keywords: "",
+    page: 1,
+    baseurl: baseurl,
+    company: [],
+
   },
-  handleNavItemTap:function(e){
-    const name=e.currentTarget.dataset.name
-    // const filteredItems = this.data.company.filter((item) => item.type.includes(name));
-    this.setData({ 
+  loadMoreData() {
+    if (this.data.loading) return; // 防止重复加载
+    this.setData({
+      loading: true,
+      page: this.data.page + 1
+    });
+    // 模拟异步加载更多数据
+    setTimeout(() => {
+      // 从服务器请求数据
+      this.getcompany(this.data.page)
+    }, 100);
+  },
+  handleNavItemTap: function (e) {
+    const name = e.currentTarget.dataset.name
+    this.qiehuan(name)
+  },
+  qiehuan(name) {
+    const filteredItems = this.data.company.filter((item) => item.industry.includes(name));
+    this.setData({
       name: name,
-      // filteredItems: filteredItems })
+      filteredItems: filteredItems
     })
   },
   //跳转到公司详情
-  tiaozhuan:function(e){
-    var id=e.currentTarget.dataset.id
+  tiaozhuan: function (e) {
+    var id = e.currentTarget.dataset.id
     wx.navigateTo({
       url: `../../company/company?id=${id}`,
     })
@@ -53,23 +59,29 @@ Page({
   onInputChange: function (event) {
     this.setData({ keywords: event.detail.value })
   },
-  
-  onSearch:function(e){
-    console.log(this.data.keywords)
+  getcompany(page) {
     wx.request({
       url: baseurl + '/company/search',
       method: 'GET',
-      data: { keywords: this.data.keywords },
+      data: {
+        keywords: this.data.keywords,
+        page: page
+      },
       header: {
         'Authorization': 'Bearer ' + token,
       },
       success: res => {
-        console.log(res.data.data)
+        const company=this.data.company.concat(res.data.data)
         this.setData({
-          filteredItems:res.data.data
+          company: company,
         })
+        this.qiehuan(this.data.name)
       }
     })
+  },
+  onSearch: function (e) {
+    console.log(this.data.keywords)
+    this.getcompany(1)
   },
   /**
    * 生命周期函数--监听页面加载
@@ -117,7 +129,9 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom() {
-
+    // 页面滚动到底部时的操作
+    console.log("触底加载")
+    this.loadMoreData();
   },
 
   /**

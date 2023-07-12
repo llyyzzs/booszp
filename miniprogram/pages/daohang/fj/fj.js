@@ -8,7 +8,7 @@ Page({
    */
   data: {
     keyword: '',
-    contentList:[],
+    baseurl: baseurl,
     isCollected1: false,
     isCollected2: false,
     isCollected3: false,
@@ -131,6 +131,7 @@ Page({
     this.setData({ region: region });
     console.log(this.data.selector2, this.data.selector1, this.data.region);
     const item = this.data.contentList.filter(item => {
+      if(item.price!=''){
       const str = item.price;
       const regex = /^(\d+)/; // 定义一个正则表达式，匹配任意个数字字符
       const matchArray = regex.exec(str); // 将正则表达式应用在字符串上，返回匹配数组
@@ -139,6 +140,7 @@ Page({
       const condition1 = item.job_type === this.data.selector1;
       let condition2 = number >= this.data.number
       const condition3 = item.position.city === this.data.region;
+    
       if (this.data.selector1 === '不限') {
         if (this.data.selector2 === '不限') {
           return (condition3)
@@ -153,11 +155,13 @@ Page({
           return (condition1 && condition2 && condition3)
         }
       }
+    }
     })
     this.setData({
       item: item,
     })
     console.log(this.data.item)
+  
   },
   regionChange: function (e) {
     let str = e.detail.value[1];//获得选择的省市区
@@ -209,7 +213,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function () {
-
+    this.setData({
+      contentList:app.globalData.ITEM
+    })
   },
 
   /**

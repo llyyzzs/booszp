@@ -18,17 +18,19 @@
        <view class="item-top">
         <view class="item-left">
           <view class="item-left1">{{item.name}}</view>
-          <view class="item-left2">{{item.address}} {{item.type}} {{item.date}} {{item.scale}}</view>
-          <view class="item-left3">公司招聘热度 {{item.heat}},超过大部分企业</view>
+          <view class="item-left2">{{item.address.name}} {{item.industry}} {{item.is_pass ? '已上市':'未上市'}} {{item.date}} {{item.scale}}人
+          </view>
+          <view class="item-left3"> 公司招聘热度 {{item.heat}} {{item.heat>10 ? '超过大部分企业':'低于50%企业'}}
+          </view>
         </view>
         <view class="item-right">
-          <image src="{{item.src}}" mode="aspectFill"></image>
+          <image src="{{baseurl+'/file/download/'+item.avatar}}" mode="aspectFill"></image>
         </view>
       </view>
       <view class="item-bottom">
-        <view class="item-bottom1"><text>在招岗位:</text><text style="color: #16C4AF">{{item.state}}</text>
+        <view class="item-bottom1"><text>在招岗位:</text><text style="color: #16C4AF">{{item.job_count}}</text>
         </view>
-        <view class="item-bottom1"><text>平均薪资:</text><text style="color: #16C4AF">{{item.pay}}</text></view>
+        <view class="item-bottom1"><text>平均薪资:</text><text style="color: #16C4AF">{{item.salary}}</text></view>
       </view>
       </view>
       </block>

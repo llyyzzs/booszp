@@ -87,6 +87,7 @@ Page({
         const updatedList = this.data.contentList.concat(res.data.data);
         const filteredItems = updatedList.filter((item) => item.type.includes("热门"));
         console.log(updatedList)
+        app.globalData.ITEM=updatedList
         this.setData({
           contentList: updatedList,
           page: page + 1,

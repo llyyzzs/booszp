@@ -2,10 +2,10 @@
   <view class="item-top">
     <view class="item-left">
       <view class="item-left1">{{company.name}}</view>
-      <view class="item-left2">{{company.address.name}} {{company.type}} {{company.date}} {{company.scale}} {{company.is_pass ? '已上市' : '未上市'}}</view>
+      <view class="item-left2">{{company.address.name}} {{company.type}} {{yearDiff}}年 {{company.scale}} {{company.is_pass ? '已上市' : '未上市'}}</view>
     </view>
     <view class="item-right">
-      <image src="{{baseurl+'/file/download/'+company.user.avatar}}" mode="aspectFill"></image>
+      <image src="{{baseurl+'/file/download/'+company.avatar}}" mode="aspectFill"></image>
     </view>
   </view>
   <view class="item-top1">

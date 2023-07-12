@@ -170,6 +170,7 @@
   width: 100%;
   height: auto;
   justify-content: space-between;
+  flex-direction: row;
   align-items: center;
   color: rgb(112, 110, 110);
 }
