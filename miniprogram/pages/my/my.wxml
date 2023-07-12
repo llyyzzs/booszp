@@ -14,7 +14,7 @@
   </view> 
   <view class="jilu">
     <view class="jilu-1" bindtap="bm"><text>{{bm}}</text><text>已报名</text></view>
-    <view class="jilu-1" bindtap="viewresume"><text>{{toudi}}</text><text>待沟通</text></view>
+    <view class="jilu-1" bindtap="viewresume"><text>{{toudi}}</text><text>投递</text></view>
     <view class="jilu-1" bindtap="tiaozhuan"><text>{{sc}}</text><text>收藏</text></view>
   </view>
   <view class="content">
