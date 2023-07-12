@@ -59,7 +59,7 @@ Page({
       method: 'GET',
       data: { id: id },
       header: {
-        'Authorization': 'Bearer ' + token,
+        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
       },
       success: res => {
         var currentDate = new Date();

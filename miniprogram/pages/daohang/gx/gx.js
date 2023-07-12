@@ -25,7 +25,7 @@ Page({
       method: 'GET',
       data: { id: id },
       header: {
-        'Authorization': 'Bearer ' + token,
+        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
       },
       success: res => {
         this.setData({
@@ -44,7 +44,7 @@ Page({
       method: 'GET',
       data: { page: page },
       header: {
-        'Authorization': 'Bearer ' + token,
+        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
       },
       success: res => {
         // this.jobdetails(res.data.data[0].id)

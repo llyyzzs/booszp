@@ -30,7 +30,7 @@ Page({
       url: baseurl + '/user/update',
       method: 'POST',
       header: {
-        'Authorization': 'Bearer ' + token,
+        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
         'content-type': 'application/json'
       },
       data: data,
@@ -47,7 +47,7 @@ Page({
       url: baseurl + '/file/upload',
       method: 'POST',
       header: {
-        'Authorization': 'Bearer ' + token,
+        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
       },
       filePath: imagePath,
       name:"file",
@@ -91,7 +91,7 @@ Page({
       url: baseurl + '/user/get',
       method: 'GET',
       header: {
-        'Authorization': 'Bearer ' + token,
+        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
       },
       success: res => {
         this.setData({

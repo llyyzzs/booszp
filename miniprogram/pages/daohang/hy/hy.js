@@ -68,7 +68,7 @@ Page({
         page: page
       },
       header: {
-        'Authorization': 'Bearer ' + token,
+        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
       },
       success: res => {
         const company=this.data.company.concat(res.data.data)

@@ -1,7 +1,6 @@
 // pages/item/item.ts
 const app = getApp()
 const baseurl = app.globalData.baseurl
-const token = wx.getStorageSync('token')
 Page({
   /**
    * 页面的初始数据
@@ -77,7 +76,7 @@ Page({
       url: baseurl + '/job/getCompany',
       method: 'GET',
       header: {
-        'Authorization': 'Bearer ' + token,
+        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
       },
       data: {
         id: this.data.ITEM.company.id
@@ -99,7 +98,7 @@ Page({
         id: id
       },
       header: {
-        'Authorization': 'Bearer ' + token,
+        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
       },
       success: res => {
         console.log(res.data.data)
@@ -126,7 +125,7 @@ Page({
         id: id
       },
       header: {
-        'Authorization': 'Bearer ' + token,
+        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
       },
       success: res => {
         console.log(res.data.data)
@@ -177,12 +176,12 @@ Page({
   },
   // 获取用户收藏
   getcollection() {
-    if (token) {
+    if (wx.getStorageSync('token')) {
       wx.request({
         url: baseurl + '/job/collection/getAll',
         method: 'GET',
         header: {
-          'Authorization': 'Bearer ' + token,
+          'Authorization': 'Bearer ' + wx.getStorageSync('token'),
         },
         success: res => {
           console.log(res.data.data)
@@ -205,12 +204,12 @@ Page({
   },
   // 新增用户收藏
   addcollection(job_id) {
-    if (token) {
+    if (wx.getStorageSync('token')) {
       wx.request({
         url: baseurl + '/job/collection/add',
         method: 'POST',
         header: {
-          'Authorization': 'Bearer ' + token,
+          'Authorization': 'Bearer ' + wx.getStorageSync('token'),
           'content-type': 'application/json'
         },
         data: {
@@ -224,13 +223,13 @@ Page({
   },
   // 删除用户收藏
   deletecollection(id) {
-    if (token) {
+    if (wx.getStorageSync('token')) {
       wx.request({
         url: baseurl + '/job/collection/delete',
         method: 'POST',
         data: id,
         header: {
-          'Authorization': 'Bearer ' + token,
+          'Authorization': 'Bearer ' + wx.getStorageSync('token'),
         },
         success: res => {
           console.log(res.data.data)
@@ -240,13 +239,13 @@ Page({
   },
   // 获取简历投递状态
   getjobResume() {
-    if (token) {
+    if (wx.getStorageSync('token')) {
       console.log("获取简历投递状态")
       wx.request({
         url: baseurl + '/jobResume/userGet',
         method: 'GET',
         header: {
-          'Authorization': 'Bearer ' + token,
+          'Authorization': 'Bearer ' + wx.getStorageSync('token'),
         },
         success: res => {
           console.log(res.data.data)
@@ -269,12 +268,12 @@ Page({
   },
   // 获取所有用户简历信息
   getjl() {
-    if (token) {
+    if (wx.getStorageSync('token')) {
       wx.request({
         url: baseurl + '/resume/getAll',
         method: 'GET',
         header: {
-          'Authorization': 'Bearer ' + token,
+          'Authorization': 'Bearer ' + wx.getStorageSync('token'),
         },
         success: res => {
           const resumeList = res.data.data.map(item => item.name);
@@ -288,13 +287,13 @@ Page({
   },
   // 投递简历
   postjobResume(resume_id) {
-    if (token) {
+    if (wx.getStorageSync('token')) {
       console.log("投递简历")
       wx.request({
         url: baseurl + '/jobResume/post',
         method: 'POST',
         header: {
-          'Authorization': 'Bearer ' + token,
+          'Authorization': 'Bearer ' + wx.getStorageSync('token'),
         },
         data: {
           job_id: this.data.ITEM.id,

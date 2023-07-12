@@ -16,7 +16,7 @@ Page({
       url: baseurl + '/job/collection/getAll',
       method: 'GET',
       header: {
-        'Authorization': 'Bearer ' + token,
+        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
       },
       success: res => {
         console.log(res.data.data)

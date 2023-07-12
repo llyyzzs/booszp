@@ -50,7 +50,7 @@ Page({
       url: baseurl + '/chat/getConversations', // 替换成你的请求地址
       method: 'GET', // 请求方法，这里示例使用 GET
       header: {
-        'Authorization': 'Bearer ' + token,
+        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
       },
       success: (res) => {
         this.setData({
@@ -149,7 +149,7 @@ Page({
     socketTask = wx.connectSocket({
       url: baseWsUrl+'/chat/messageNotify',
       header: {
-        'Authorization': 'Bearer ' + token,
+        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
       },
       success: (res) => {
         console.log(res);

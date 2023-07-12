@@ -99,7 +99,7 @@ Page({
       url: baseurl+'/resume/getAll',
       method:'GET',
       header:{
-        'Authorization':'Bearer ' + token,
+        'Authorization':'Bearer ' + wx.getStorageSync('token'),
       },
       success:res=>{    
         this.setData({

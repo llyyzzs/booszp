@@ -33,7 +33,7 @@ Page({
       page: 1 ,
       keywords:this.data.keyword},
       header: {
-        'Authorization': 'Bearer ' + token,
+        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
       },
       success: res => {
         this.setData({
@@ -175,20 +175,16 @@ Page({
     })
   },
   // 获取招聘信息
-  getjob(page) {
+  getjob() {
     wx.request({
       url: baseurl + '/job/getAll',
       method: 'GET',
-      data: { page: page },
       header: {
-        'Authorization': 'Bearer ' + token,
+        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
       },
       success: res => {
-        const updatedList = this.data.contentList.concat(res.data.data);
-        console.log(updatedList)
         this.setData({
-          contentList: updatedList,
-          page: page + 1,
+          contentList: res.data.data,
           loading: false
         });
         this.selectregion(this.data.region)
@@ -213,9 +209,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function () {
-    this.setData({
-      contentList:app.globalData.ITEM
-    })
+    // this.setData({
+    //   contentList:app.globalData.ITEM
+    // })
   },
 
   /**
@@ -230,7 +226,7 @@ Page({
    */
   onShow: function () {
     // this.onSearch()
-    this.getjob(this.data.page);
+    this.getjob();
   },
 
   /**

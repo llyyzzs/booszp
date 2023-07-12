@@ -177,7 +177,7 @@ Page({
     socketTask = wx.connectSocket({
       url: baseWsUrl + '/chat/messageNotify',
       header: {
-        'Authorization': 'Bearer ' + token,
+        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
       },
       success: (res) => {
         console.log(res);

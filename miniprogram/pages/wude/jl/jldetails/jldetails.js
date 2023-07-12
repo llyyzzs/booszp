@@ -23,7 +23,7 @@ Page({
       url: baseurl + '/user/get',
       method: 'GET',
       header: {
-        'Authorization': 'Bearer ' + token,
+        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
       },
       success: res => {
         this.setData({
@@ -83,7 +83,7 @@ Page({
       method: 'POST',
       data: formData,
       header: {
-        'Authorization': 'Bearer ' + token,
+        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
         'content-type': 'application/json'
       },
       success: res => {
@@ -115,7 +115,7 @@ Page({
       method:'GET',
       data:{id:this.data.resume.id},
       header:{
-        'Authorization':'Bearer ' + token,
+        'Authorization':'Bearer ' + wx.getStorageSync('token'),
       },
       success:res=>{    
         this.setData({

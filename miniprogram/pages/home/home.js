@@ -81,7 +81,7 @@ Page({
         page: page
       },
       header: {
-        'Authorization': 'Bearer ' + token,
+        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
       },
       success: res => {
         const updatedList = this.data.contentList.concat(res.data.data);
@@ -108,7 +108,7 @@ Page({
         keywords: this.data.keyword
       },
       header: {
-        'Authorization': 'Bearer ' + token,
+        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
       },
       success: res => {
         this.setData({

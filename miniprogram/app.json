@@ -25,7 +25,8 @@
     "pages/wude/jl/jldetails/jldetails",
     "pages/wude/jl/jllist/jllist",
     "pages/wude/addjob/addjob",
-    "pages/wude/addcompany/addcompany"
+    "pages/wude/addcompany/addcompany",
+    "pages/wude/viewresume/viewresume"
   ],
   "tabBar": {
     "list": [

@@ -64,6 +64,11 @@ Page({
       url: '../../pages/wude/sz/sz',
     })
   },
+  viewresume(){
+    wx.navigateTo({
+      url: '../../pages/wude/viewresume/viewresume',
+    })
+  },
   getAvatar() { 
     if(this.data.user!=null){
     this.setData({
@@ -77,7 +82,7 @@ Page({
       url: baseurl+'/user/get',
       method:'GET',
       header:{
-        'Authorization':'Bearer ' + token,
+        'Authorization':'Bearer ' + wx.getStorageSync('token'),
       },
       success:res=>{
         this.setData({
@@ -108,7 +113,10 @@ Page({
               success:res=>{
               wx.setStorageSync('token', res.data.data)
               console.log(res.data.data)
-              this.getuser()
+              this.getuser()              
+                this.getcollection()
+                this.getjobResume()
+                this.boosgetjobResume()             
               },
             })        
           }
@@ -132,12 +140,11 @@ Page({
   },
   // 获取用户收藏
   getcollection() {
-    if(token){
     wx.request({
       url: baseurl + '/job/collection/getAll',
       method: 'GET',
       header: {
-        'Authorization': 'Bearer ' + token,
+        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
       },
       success: res => {
         this.setData({
@@ -145,17 +152,16 @@ Page({
         })
       }
     })
-  }
+  
   },
   // 获取简历投递状态
   getjobResume() {
-    if(token){
     console.log("获取简历投递状态")
     wx.request({
       url: baseurl + '/jobResume/userGet',
       method: 'GET',
       header: {
-        'Authorization': 'Bearer ' + token,
+        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
       },
       success: res => {
         console.log(res.data.data)
@@ -164,7 +170,25 @@ Page({
         })
       }
     })
-    }
+    
+  },
+  // 获取简历投递状态
+  boosgetjobResume() {
+    console.log("获取简历投递状态")
+    wx.request({
+      url: baseurl + '/jobResume/bossGet',
+      method: 'GET',
+      header: {
+        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
+      },
+      success: res => {
+        console.log(res.data.data)
+        this.setData({
+          toudi:res.data.data.length
+        })
+      }
+    })
+    
   },
   /**
    * 生命周期函数--监听页面加载
@@ -191,44 +215,16 @@ Page({
    */
   onShow:function() {
     this.getuser()
-    if(token){
       this.getcollection()
-      this.getjobResume()}
-    
-    // wx.request({
-    //   url: '/text',
-    //   data: {
-    //     keyword:'', 
-    //   },   
-    // success: res=> {
-    //   // 解析返回数据
-    //   const item1 = res.data.data;
-    //   app.globalData.ITEM=item1
-    //   const itembm =item1.filter(order => {     
-    //       return order.state ==='已报名'   
-    //   })
-    //   const itemgt =item1.filter(order => {     
-    //     return order.state ==='待沟通'   
-    //   })
-    //   const itemsc =item1.filter(order => {     
-    //     return order.zt ===true   
-    //   })
-    //   // 将新闻列表存储在小程序的数据模型中
-    //   this.setData({
-    //     bm:itembm.length,
-    //     gt:itemgt.length,
-    //     sc:itemsc.length,
-    //   });
-    // }
-    // })
-    // console.log(this.data.user)
+      this.getjobResume()
+      this.boosgetjobResume()
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
   onHide:function() {
-
+    
   },
 
   /**

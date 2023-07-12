@@ -48,7 +48,7 @@ Page({
     if(wx.getStorageSync('token')){
     console.log("获取简历投递状态")
     wx.request({
-      url: baseurl + '/jobResume/userGet',
+      url: baseurl + '/jobResume/bossGet',
       method: 'GET',
       header: {
         'Authorization': 'Bearer ' + wx.getStorageSync('token'),

@@ -95,7 +95,7 @@ Page({
       method: 'POST',
       data: JSON.stringify({ id: this.data.noteList[this.data.activeIndex].id }),
       header: {
-        'Authorization': 'Bearer ' + token,
+        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
       },
       success: res => {
         console.log(res.data)
@@ -129,7 +129,7 @@ Page({
       url: baseurl + '/note/getAll',
       method: 'GET',
       header: {
-        'Authorization': 'Bearer ' + token,
+        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
       },
       success: res => {
         console.log(res.data)

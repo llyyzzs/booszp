@@ -88,7 +88,7 @@ Page({
       page: 1 ,
       keywords:this.data.keyword},
       header: {
-        'Authorization': 'Bearer ' + token,
+        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
       },
       success: res => {
         this.setData({
@@ -116,14 +116,18 @@ Page({
   },
   // 获取招聘信息
   getjob(page) {
+    const type='兼职';
     wx.request({
       url: baseurl + '/job/getAll',
       method: 'GET',
-      data: { page: page },
+      data: {
+      page:page,
+      type:type },
       header: {
-        'Authorization': 'Bearer ' + token,
+        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
       },
       success: res => {
+        console.log(res.data)
         const itemlist = res.data.data.filter(item=>{return item.job_type==="兼职"})
         const updatedList = this.data.contentList.concat(itemlist);
         console.log(updatedList)
@@ -151,10 +155,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad() {
-    const filteredItems = app.globalData.ITEM.filter((item) => item.job_type==="兼职");
-    this.setData({
-      contentList:filteredItems
-    })
+    // const filteredItems = app.globalData.ITEM.filter((item) => item.job_type==="兼职");
+    // this.setData({
+    //   contentList:filteredItems
+    // })
   },
 
   /**
