@@ -9,7 +9,6 @@
     </view>
   </view>
   <view class="item-top1">
-    <view class="item-top1-1"><text>法定代表人</text><text style="color: rgb(255, 94, 0);">{{company.user.name}}</text></view>
     <view class="item-top1-1"><text>注册资本</text><text style="color: rgb(255, 94, 0);">{{company.capital}}</text></view>
     <view class="item-top1-1"><text>成立日期</text><text style="color: rgb(255, 94, 0);">{{company.data}}</text></view>
   </view>
