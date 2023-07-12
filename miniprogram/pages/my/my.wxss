@@ -14,14 +14,14 @@
 }
 .top-tx{
   display: flex;
-  height: 120rpx;
-  width: 120rpx;
+  height: 60px;
+  width: 60px;
   align-items: center;
   justify-content: center;
 }
 .top-tx image{
-  width: 150rpx;
-  height:150rpx;
+  width: 60px;
+  height:60px;
   border-radius: 15%;
 }
 .top-xx{
@@ -30,10 +30,7 @@
   justify-content: center;
   flex-direction: column;
   margin-left: 40rpx;
-}
-.top-xx text{
-  margin-bottom: 10rpx;
-  font-size: 13px;
+  font-size: 15px;
 }
 .jilu{
   display: flex;

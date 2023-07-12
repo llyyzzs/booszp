@@ -6,8 +6,6 @@
       </view>
       <view class="top-xx" bindtap="top">
         <text>{{user.name}}</text>
-        <text>{{user.degree}}</text>
-        <!-- <open-data type="userNickName"></open-data> -->
       </view>
     </block>
     <block wx:elif="{{!hasUserInfo}}">

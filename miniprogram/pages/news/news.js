@@ -58,6 +58,9 @@ Page({
         'Authorization': 'Bearer ' + wx.getStorageSync('token'),
       },
       success: (res) => {
+        if (res.data.data == null) {
+          return
+        }
         if (res.data.data.length > this.data.messageList.length) {
           this.setData({
             messageList: res.data.data,
@@ -135,17 +138,27 @@ Page({
     })
   },
   startTimer: function () {
-    const that = this;
     const interval = 20000; // 定时器间隔，单位为毫秒
 
     // 设置定时器
     const timer = setInterval(function () {
-      that.messageRead(that.data.id); // 发送网络请求的函数
+      socketTask.send({
+        data: "heartbeat",
+        success: (res) => {
+          console.log(res)
+        }
+      }); // 发送心跳请求
     }, interval);
 
     this.setData({
       timer: timer
     });
+  },
+  clearTimer: function () {
+    const timer = this.data.timer;
+    if (timer) {
+      clearInterval(timer);
+    }
   },
   /**
    * 生命周期函数--监听页面加载
@@ -162,7 +175,7 @@ Page({
     })
     const token = wx.getStorageSync('token')
     socketTask = wx.connectSocket({
-      url: baseWsUrl+'/chat/messageNotify',
+      url: baseWsUrl + '/chat/messageNotify',
       header: {
         'Authorization': 'Bearer ' + token,
       },
@@ -204,8 +217,11 @@ Page({
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload() {
-    clearInterval(this.data.timer)
+  onUnload() {    // 页面卸载时清除定时器
+    this.clearTimer();
+    socketTask.close({
+      data: 'close'
+    })
   },
 
   /**

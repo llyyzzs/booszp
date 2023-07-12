@@ -7,15 +7,15 @@ Page({
    * 页面的初始数据
    */
   data: {
-    ITEM:{
-      id:"1"
+    ITEM: {
+      id: "1"
     },
     bm: "../../image/未报名.png",
     sc: "../../image/收藏.png",
-    defaultIndex:0,
+    defaultIndex: 0,
     name: "职位详情",
-    baseurl:baseurl,
-    state:false,
+    baseurl: baseurl,
+    state: false,
     markers: [{
       id: 1,
       latitude: 23.1314,
@@ -79,7 +79,9 @@ Page({
       header: {
         'Authorization': 'Bearer ' + token,
       },
-      data: { id: this.data.ITEM.company.id },
+      data: {
+        id: this.data.ITEM.company.id
+      },
       success: res => {
         console.log(res.data)
         this.setData({
@@ -93,7 +95,9 @@ Page({
     wx.request({
       url: baseurl + '/job/get',
       method: 'GET',
-      data: { id: id },
+      data: {
+        id: id
+      },
       header: {
         'Authorization': 'Bearer ' + token,
       },
@@ -118,14 +122,16 @@ Page({
     wx.request({
       url: baseurl + '/company/get',
       method: 'GET',
-      data: { id: id },
+      data: {
+        id: id
+      },
       header: {
         'Authorization': 'Bearer ' + token,
       },
       success: res => {
         console.log(res.data.data)
         this.setData({
-          company:res.data.data
+          company: res.data.data
         })
       }
     })
@@ -138,8 +144,7 @@ Page({
         sc: "../../image/收藏.png",
         isCollected: !this.data.isCollected
       })
-    }
-    else {
+    } else {
       this.addcollection(this.data.ITEM.id)
       this.setData({
         sc: "../../image/收藏2.png",
@@ -148,155 +153,164 @@ Page({
     }
   },
   select: function (e) {
-    const resumeid=this.data.resume[e.detail.value].id
+    const resumeid = this.data.resume[e.detail.value].id
     console.log(resumeid)
     this.postjobResume(resumeid)
   },
 
   gt: function () {
-    const id = this.data.company.user.id;
-    const avatar = this.data.company.user.avatar;
-    // 进入聊天界面的逻辑 
-    wx.navigateTo({
-      url: '../news/news?id=' + id + '&avatar=' + avatar,
-    })
+    wx.request({
+      url: baseurl + '/chat/getConversationID',
+      header: {
+        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
+      },
+      data: {
+        userID: this.data.company.user.id
+      },
+      success: res => {
+        // 进入聊天界面的逻辑 
+        wx.navigateTo({
+          url: '../news/news?id=' + res.data.data + '&avatar=' + this.data.company.user.avatar,
+        })
+      }
+    });
   },
   // 获取用户收藏
   getcollection() {
-    if(token){
-    wx.request({
-      url: baseurl + '/job/collection/getAll',
-      method: 'GET',
-      header: {
-        'Authorization': 'Bearer ' + token,
-      },
-      success: res => {
-        console.log(res.data.data)
-        const isCollected=res.data.data.filter(item=>item.job.id===this.data.ITEM.id)
-        console.log(isCollected)
-        if (isCollected.length>0) {
-          this.setData({
-            sc: "../../image/收藏2.png",
-            isCollected: true
-          })
+    if (token) {
+      wx.request({
+        url: baseurl + '/job/collection/getAll',
+        method: 'GET',
+        header: {
+          'Authorization': 'Bearer ' + token,
+        },
+        success: res => {
+          console.log(res.data.data)
+          const isCollected = res.data.data.filter(item => item.job.id === this.data.ITEM.id)
+          console.log(isCollected)
+          if (isCollected.length > 0) {
+            this.setData({
+              sc: "../../image/收藏2.png",
+              isCollected: true
+            })
+          } else {
+            this.setData({
+              sc: "../../image/收藏.png",
+              isCollected: false
+            })
+          }
         }
-        else {
-          this.setData({
-            sc: "../../image/收藏.png",
-            isCollected: false
-          })
-        }
-      }
-    })
-  }
+      })
+    }
   },
   // 新增用户收藏
   addcollection(job_id) {
-    if(token){
-    wx.request({
-      url: baseurl + '/job/collection/add',
-      method: 'POST',
-      header: {
-        'Authorization': 'Bearer ' + token,
-        'content-type': 'application/json'
-      },
-      data: {job_id},
-      success: (res) => {
-        console.log(this.data.user)
-      }
-    })
-  }
+    if (token) {
+      wx.request({
+        url: baseurl + '/job/collection/add',
+        method: 'POST',
+        header: {
+          'Authorization': 'Bearer ' + token,
+          'content-type': 'application/json'
+        },
+        data: {
+          job_id
+        },
+        success: (res) => {
+          console.log(this.data.user)
+        }
+      })
+    }
   },
   // 删除用户收藏
   deletecollection(id) {
-    if(token){
-    wx.request({
-      url: baseurl + '/job/collection/delete',
-      method: 'POST',
-      data: id,
-      header: {
-        'Authorization': 'Bearer ' + token,
-      },
-      success: res => {
-        console.log(res.data.data)
-      }
-    })
-  }
+    if (token) {
+      wx.request({
+        url: baseurl + '/job/collection/delete',
+        method: 'POST',
+        data: id,
+        header: {
+          'Authorization': 'Bearer ' + token,
+        },
+        success: res => {
+          console.log(res.data.data)
+        }
+      })
+    }
   },
   // 获取简历投递状态
   getjobResume() {
-    if(token){
-    console.log("获取简历投递状态")
-    wx.request({
-      url: baseurl + '/jobResume/userGet',
-      method: 'GET',
-      header: {
-        'Authorization': 'Bearer ' + token,
-      },
-      success: res => {
-        console.log(res.data.data)
-        const isCollected=res.data.data.filter(item=>item.job.id===this.data.ITEM.id)
-        console.log(isCollected)
-        if (isCollected.length>0) {
-        this.setData({
-          state:true,
-          bm: "../../image/已报名.png",
-        })
-      }
-      else{
-        this.setData({
-          state:false,
-          bm: "../../image/未报名.png",
-        })
-      }
-      }
-    })
-  }
+    if (token) {
+      console.log("获取简历投递状态")
+      wx.request({
+        url: baseurl + '/jobResume/userGet',
+        method: 'GET',
+        header: {
+          'Authorization': 'Bearer ' + token,
+        },
+        success: res => {
+          console.log(res.data.data)
+          const isCollected = res.data.data.filter(item => item.job.id === this.data.ITEM.id)
+          console.log(isCollected)
+          if (isCollected.length > 0) {
+            this.setData({
+              state: true,
+              bm: "../../image/已报名.png",
+            })
+          } else {
+            this.setData({
+              state: false,
+              bm: "../../image/未报名.png",
+            })
+          }
+        }
+      })
+    }
   },
   // 获取所有用户简历信息
-  getjl(){
-    if(token){
-    wx.request({
-      url: baseurl+'/resume/getAll',
-      method:'GET',
-      header:{
-        'Authorization':'Bearer ' + token,
-      },
-      success:res=>{  
-        const resumeList = res.data.data.map(item => item.name);
-        this.setData({
-          resumeList:resumeList,
-          resume:res.data.data
-        }) 
-      }
-    }) 
-  }
+  getjl() {
+    if (token) {
+      wx.request({
+        url: baseurl + '/resume/getAll',
+        method: 'GET',
+        header: {
+          'Authorization': 'Bearer ' + token,
+        },
+        success: res => {
+          const resumeList = res.data.data.map(item => item.name);
+          this.setData({
+            resumeList: resumeList,
+            resume: res.data.data
+          })
+        }
+      })
+    }
   },
   // 投递简历
   postjobResume(resume_id) {
-    if(token){
-    console.log("投递简历")
-    wx.request({
-      url: baseurl + '/jobResume/post',
-      method: 'POST',
-      header: {
-        'Authorization': 'Bearer ' + token,
-      },
-      data:{
-        job_id:this.data.ITEM.id,
-        resume_id:resume_id
-      },
-      success: res => {
-        console.log("投递成功")
-        this.setData({
-          state:true,
-          bm: "../../image/已报名.png",
-        })
-      }
-    })
-  }
+    if (token) {
+      console.log("投递简历")
+      wx.request({
+        url: baseurl + '/jobResume/post',
+        method: 'POST',
+        header: {
+          'Authorization': 'Bearer ' + token,
+        },
+        data: {
+          job_id: this.data.ITEM.id,
+          resume_id: resume_id
+        },
+        success: res => {
+          console.log("投递成功")
+          this.setData({
+            state: true,
+            bm: "../../image/已报名.png",
+          })
+        }
+      })
+    }
   },
-  
+
   /**
    * 生命周期函数--监听页面加载
    */
