@@ -72,8 +72,8 @@
     </block>
   </view>
   <view class="btn-wrapper">
-    <picker mode='selector' range='{{resumeList}}' bindchange='select'>
-      <view class="btn-1">
+    <picker mode='selector' range='{{resumeList}}' bindchange='select' disabled="{{state}}">
+      <view class="btn-1" >
         <image src="{{bm}}" mode="aspectFill"></image>
         <text>{{state? '已投递' : '投递'}}</text>
       </view>
