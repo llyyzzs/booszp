@@ -21,7 +21,7 @@
         <view class="item-4-1">地址：</view>
         <view class="item-4-2">{{item.job.position.city}}</view>
       </view>
-      <view class="item-2">应聘者：{{item.resume.name}}<text decode="{{true}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>学历：{{item.resume.major}}</view>
+      <view class="item-2">应聘者：{{item.resume.user.name}}<text decode="{{true}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>学历：{{item.resume.user.degree}} <text decode="{{true}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>专业：{{item.resume.major}}</view>
     </view>
   </block>
 </view>

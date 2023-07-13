@@ -43,7 +43,6 @@
   display: flex;
   width: 90%;
   justify-content: space-between;
-  margin-top: 10px;
   align-items: center;
   margin-bottom: 20rpx;
 }

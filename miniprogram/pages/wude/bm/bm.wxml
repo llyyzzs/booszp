@@ -12,6 +12,7 @@
           <view class="item-1-1">{{item.job.name}}</view>
           <view class="item-1-2">{{item.job.price}}</view>
         </view>
+        <view class="item-2">{{item.job.company.name}} {{item.job.company.scale}} {{item.job.company.industry}} {{item.job.company.is_pass ? '已上市':'未上市'}} 招聘热度：{{item.job.company.heat}}</view>
         <view class="item-3"><block wx:for="{{item.job.tags}}" wx:key="id"><text>{{item}}</text></block></view>
         <view class="item-4">
           <view class="item-4-1">地址：</view>
