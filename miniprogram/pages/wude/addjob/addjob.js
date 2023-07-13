@@ -33,6 +33,11 @@ Page({
       },
       success: res => {
         console.log(res.data)
+        wx.showToast({
+          title: '添加成功',
+          icon: 'success',
+          duration: 2000
+        });
       }
     })
   },

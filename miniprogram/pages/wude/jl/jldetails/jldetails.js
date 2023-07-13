@@ -18,7 +18,6 @@ Page({
     });
   },
   getuser(){
-    const token = wx.getStorageSync('token')
     wx.request({
       url: baseurl + '/user/get',
       method: 'GET',
@@ -63,7 +62,6 @@ Page({
             checked: false
           })
         }
-        this.getAvatar()
       },
     })
   },

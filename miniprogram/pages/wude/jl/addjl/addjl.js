@@ -32,9 +32,10 @@ Page({
       },
       success:res=>{     
         wx.showToast({
-          title: res,
-          icon:res.statusCode==200?'success':'error'
-        })
+          title: '添加成功',
+          icon: 'success',
+          duration: 2000
+        });
        console.log(res.data)
       }
     }) 
