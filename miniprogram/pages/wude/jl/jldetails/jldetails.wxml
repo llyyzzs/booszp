@@ -6,7 +6,7 @@
     </view>
     <view class="input-group" bindtap="toggleDropdown">
       <text class="label">姓名：</text>
-      <input type="text" name="name" value="{{resume.user.name}}" disabled="true"/>
+      <input type="text" name="username" value="{{resume.user.name}}" disabled="true"/>
     </view>
     <view id="dropdown-content" hidden="{{!showDropdown}}">
       <view class="input-group">

@@ -54,6 +54,13 @@ Page({
         'Authorization': 'Bearer ' + wx.getStorageSync('token'),
       },
       success: res => {
+        if(res.statusCode!=200){
+          wx.showToast({
+            title: '不可访问',
+            icon:'error',
+          })
+          return
+        }
         console.log(res.data.data)
         this.setData({
           itemlist:res.data.data,

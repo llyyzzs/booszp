@@ -147,6 +147,12 @@ Page({
         'Authorization': 'Bearer ' + wx.getStorageSync('token'),
       },
       success: res => {
+        if (res.statusCode!=200){
+          this.setData({
+            sc:0
+          })
+          return
+        }
         this.setData({
           sc:res.data.data.length
         })
@@ -163,7 +169,13 @@ Page({
       header: {
         'Authorization': 'Bearer ' + wx.getStorageSync('token'),
       },
-      success: res => {
+      success: res => 
+      {if (res.statusCode!=200){
+        this.setData({
+          bm:0
+        })
+        return
+      }
         console.log(res.data.data)
         this.setData({
           bm:res.data.data.length
@@ -182,6 +194,12 @@ Page({
         'Authorization': 'Bearer ' + wx.getStorageSync('token'),
       },
       success: res => {
+        if (res.statusCode!=200){
+          this.setData({
+            toudi:0
+          })
+          return
+        }
         console.log(res.data.data)
         this.setData({
           toudi:res.data.data.length

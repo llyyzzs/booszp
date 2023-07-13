@@ -31,6 +31,10 @@ Page({
         'content-type': 'application/json'
       },
       success:res=>{     
+        wx.showToast({
+          title: res,
+          icon:res.statusCode==200?'success':'error'
+        })
        console.log(res.data)
       }
     }) 

@@ -5,10 +5,6 @@
       <input type="text" name="name" value="{{resume.name}}" />
     </view>
     <view class="input-group">
-      <text class="label">姓名：</text>
-      <input type="text" value="{{resume.user.name}}" />
-    </view>
-    <view class="input-group">
       <text class="label">求职意向：</text>
       <input type="text" name="want_to" value="{{resume.want_to}}" />
     </view>
