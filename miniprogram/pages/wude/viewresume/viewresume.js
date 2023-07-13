@@ -9,11 +9,35 @@ Page({
   data: {
     orders: [],
     tabList: ['全部', '已报名','待沟通','待面试', '已面试','已通过'], // 标签筛选项
+    resumeList:['已报名','待沟通','待面试', '已面试','已通过'],
     activeTabIndex: 0, // 当前激活的标签索引
   },
-  onTabTap(e) {
-    const index = e.currentTarget.dataset.index
-    console.log(index)
+  //修改简历状态
+  select: function (e) {
+    console.log(this.data.filteredOrders)
+    const job_resume_id = e.currentTarget.dataset.id
+    const status=parseInt(e.detail.value)
+    console.log(status,job_resume_id)
+    this.updatajobResume(job_resume_id,status)
+  },
+  updatajobResume(job_resume_id,status){
+    wx.request({
+      url: baseurl + '/jobResume/change',
+      method: 'POST',
+      data:{
+        job_resume_id:job_resume_id,
+        status:status
+      },
+      header: {
+        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
+      },
+      success: res => {
+        console.log(res)
+        this.getjobResume()
+      }
+    })
+  },
+  qiehuan(index){
     const state = this.data.tabList[index]
     const filteredOrders = this.data.itemlist.filter(order => {
       if (state === '全部') {
@@ -26,6 +50,10 @@ Page({
       activeTabIndex: index,
       filteredOrders: filteredOrders,
     })
+  },
+  onTabTap(e) {
+    const index = e.currentTarget.dataset.index
+    this.qiehuan(index)
   },
   onTabScroll(e) {
     // 左右滑动时设置相关样式
@@ -66,6 +94,7 @@ Page({
           itemlist:res.data.data,
           filteredOrders:res.data.data
         })
+        this.qiehuan(this.data.activeTabIndex)
       }
     })
     }

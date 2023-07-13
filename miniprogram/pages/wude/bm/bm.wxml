@@ -12,10 +12,9 @@
           <view class="item-1-1">{{item.job.name}}</view>
           <view class="item-1-2">{{item.job.price}}</view>
         </view>
-        <view class="item-2">{{item.company.name}}<text decode="{{true}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>{{item.job.company.scale}}</view>
         <view class="item-3"><block wx:for="{{item.job.tags}}" wx:key="id"><text>{{item}}</text></block></view>
         <view class="item-4">
-          <view class="item-4-1"><image src="{{item.image}}" mode="aspectFill"></image><text decode="{{true}}">&nbsp;&nbsp;&nbsp;{{item.mz}} {{item.sf}}</text></view>
+          <view class="item-4-1">地址：</view>
           <view class="item-4-2">{{item.job.position.city}}</view>
           </view>
     </view>
