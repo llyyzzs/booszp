@@ -1,23 +1,27 @@
 <view class="container">
-  <scroll-view class="tab-scroll" enable-flex  scroll-x="true"  bindscroll="onTabScroll" scrollbar="true">
+  <scroll-view class="tab-scroll" enable-flex scroll-x="true" bindscroll="onTabScroll" scrollbar="true">
     <view class="tab-item {{ activeTabIndex===index?'active':'' }}" bindtap="onTabTap" data-index="{{ index }}" wx:for="{{ tabList }}" wx:key="index">{{ item }}</view>
   </scroll-view>
   <block wx:for="{{ filteredOrders }}" wx:key="id">
-    <view class="item" bindtap="tiaozhuan" data-id="{{item.job.id}}">
+    <view class="item" >
       <view class="order-header">
         <view class="order-number">状态：</view>
-        <view class="order-status">{{ tabList[item.status+1]}}</view>
+        <picker mode='selector' range='{{resumeList}}' bindchange='select' data-id="{{item.id}}">
+          <view class="order-status" style="margin-top: 10px;"><button size="mini">{{ tabList[item.status+1]}}</button></view>
+        </picker>
       </view>
       <view class="item-1">
-          <view class="item-1-1">{{item.job.name}}</view>
-          <view class="item-1-2">{{item.job.price}}</view>
-        </view>
-        <view class="item-2">简历名称：{{item.resume.name}}<text decode="{{true}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>学历：{{item.resume.major}}</view>
-        <view class="item-3"><block wx:for="{{item.job.tags}}" wx:key="id"><text>{{item}}</text></block></view>
-        <view class="item-4">
-          <view class="item-4-1"><image src="{{item.image}}" mode="aspectFill"></image><text decode="{{true}}">&nbsp;&nbsp;&nbsp;{{item.mz}} {{item.sf}}</text></view>
-          <view class="item-4-2">{{item.job.position.city}}</view>
-          </view>
+        <view class="item-1-1">{{item.job.name}}</view>
+        <view class="item-1-2">{{item.job.price}}</view>
+      </view>
+      <view class="item-3">
+        <block wx:for="{{item.job.tags}}" wx:key="id"><text>{{item}}</text></block>
+      </view>     
+      <view class="item-4">
+        <view class="item-4-1">地址：</view>
+        <view class="item-4-2">{{item.job.position.city}}</view>
+      </view>
+      <view class="item-2">应聘者：{{item.resume.user.name}}<text decode="{{true}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>学历：{{item.resume.user.degree}} <text decode="{{true}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>专业：{{item.resume.major}}</view>
     </view>
   </block>
 </view>

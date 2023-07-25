@@ -1,13 +1,15 @@
 <!--pages/daohang/gx/gx.wxml-->
 <view class="container">
-  <view class="top" >猜你喜欢
+  <view class="top">猜你喜欢
   </view>
-  <swiper class="swiper"  interval="{{3000}}" duration="{{1000}}" >
-      <block wx:for="{{contentList}}" wx:key="*this">
-        <swiper-item>
-          <view class="item" bindtap="tiaozhuan" data-id="{{item.id}}">
+  <swiper class="swiper" interval="{{3000}}" duration="{{1000}}">
+    <block wx:for="{{contentList}}" wx:key="*this">
+      <swiper-item>
+        <view class="item" bindtap="tiaozhuan" data-id="{{item.id}}">
           <view class="item-0">
-            <view class="item-0-1"><image src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fsafe-img.xhscdn.com%2Fbw1%2Fae175b96-62b4-4c48-ae36-a278a8a27e2c%3FimageView2%2F2%2Fw%2F1080%2Fformat%2Fjpg&refer=http%3A%2F%2Fsafe-img.xhscdn.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1691652715&t=6228d4a516cbc8580b05d5075d1ea10b" mode="aspectFill"></image><text decode="{{true}}">&nbsp;&nbsp;&nbsp;招聘者名字 身份</text></view>
+            <view class="item-0-1">
+              <image src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fsafe-img.xhscdn.com%2Fbw1%2Fae175b96-62b4-4c48-ae36-a278a8a27e2c%3FimageView2%2F2%2Fw%2F1080%2Fformat%2Fjpg&refer=http%3A%2F%2Fsafe-img.xhscdn.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1691652715&t=6228d4a516cbc8580b05d5075d1ea10b" mode="aspectFill"></image><text decode="{{true}}">&nbsp;&nbsp;&nbsp;招聘者名字 身份</text>
+            </view>
             <view class="item-0-2">{{item.position.city}}</view>
           </view>
           <view class="item-1">
@@ -15,19 +17,24 @@
             <view class="item-1-2">{{item.price}}</view>
           </view>
           <view class="item-2">{{item.company.name}}<text decode="{{true}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>{{item.company.scale}}</view>
-          <view class="item-3"><block wx:for="{{item.tags}}" wx:key="id"><text>{{item}}</text></block></view>
-          <view class="nr">
-           <text>工作描述</text>
-           <text>工作描述</text>
-           <text>工作描述</text>
-           <text>工作描述</text>
-           <text>工作描述</text>
-           <text>工作描述</text>
-           <text>工作描述</text>
-          </view>          
+          <view class="item-3">
+            <block wx:for="{{item.tags}}" wx:key="id"><text>{{item}}</text></block>
           </view>
-        </swiper-item>
-      </block>
-    </swiper>
-    <button bindtap="qiehuan">换一批</button>
+          <view class="nr">
+            <text>
+              熟练掌握XXX技术/工具/软件等。
+              具备良好的XXX能力，如沟通能力、协调能力、解决问题能力等。
+              具备出色的XXX能力，如团队合作能力、领导能力等。
+              业务知识：
+
+              深入了解行业动态和市场发展趋势。
+              对XXX领域的相关知识有深入理解和实践经验。
+              职责描述：
+             </text>
+          </view>
+        </view>
+      </swiper-item>
+    </block>
+  </swiper>
+  <button bindtap="qiehuan">换一批</button>
 </view>

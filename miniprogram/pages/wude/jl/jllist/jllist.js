@@ -92,6 +92,30 @@ Page({
         deletableWidth: deletableWidth,
       });
   },
+  deleteNote(e) {
+    const index = this.data.activeIndex
+    console.log(this.data.resumeList[index].id)
+    wx.request({
+      url: baseurl + '/resume/delete',
+      method: 'POST',
+      data: JSON.stringify({ id: this.data.resumeList[this.data.activeIndex].id }),
+      header: {
+        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
+      },
+      success: res => {
+        console.log(res.data)
+        // 移除列表项，并更新滑块容器的 left 值和删除状态
+        const resumeList = this.data.resumeList.filter((item, index) => index !== this.data.activeIndex);
+        this.setData({
+          resumeList: resumeList,
+          movableAreaLeft: 0,
+          deletableWidth: deletableWidth,
+        });
+
+      }
+    })
+
+  },
   // 获取所有简历信息
   getjl(){
     const token=wx.getStorageSync('token')

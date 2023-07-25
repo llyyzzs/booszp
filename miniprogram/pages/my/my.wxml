@@ -13,18 +13,18 @@
     </block>
   </view> 
   <view class="jilu">
-    <view class="jilu-1" bindtap="bm"><text>{{bm}}</text><text>已报名</text></view>
-    <view class="jilu-1" bindtap="viewresume"><text>{{toudi}}</text><text>投递</text></view>
-    <view class="jilu-1" bindtap="tiaozhuan"><text>{{sc}}</text><text>收藏</text></view>
+    <view class="jilu-1" bindtap="bm"><text>{{bm}}</text><text>我的投递</text></view>
+    <view class="jilu-1" bindtap="viewresume"><text>{{toudi}}</text><text>收获投递</text></view>
+    <view class="jilu-1" bindtap="tiaozhuan"><text>{{sc}}</text><text>我的收藏</text></view>
   </view>
   <view class="content">
     <view class="item" bindtap="dd"><image src="../../image/订单.png" mode="aspectFill"></image><text>订单</text></view>
     <view class="item" bindtap="jl"><image src="../../image/简历.png" mode="aspectFill"></image><text>我的简历</text></view>
     <view class="item" bindtap="bj"><image src="../../image/笔记.png" mode="aspectFill"></image><text>笔记</text></view>
     <view class="item" bindtap="gj"><image src="../../image/工具.png" mode="aspectFill"></image><text>工具</text></view>
-    <view class="item" bindtap="addjob"><image src="../../image/招聘.png" mode="aspectFill"></image><text>添加招聘</text></view>
+    <view class="item" bindtap="addjob"><image src="../../image/招聘.png" mode="aspectFill"></image><text>我要招聘</text></view>
     <view class="item" bindtap="addcompany"><image src="../../image/公司.png" mode="aspectFill"></image><text>添加公司</text></view>
-    <view class="item" bindtap="sz"><image src="../../image/设置.png" mode="aspectFill"></image><text>设置</text></view>
+    <view class="item" bindtap=""><image src="../../image/设置.png" mode="aspectFill"></image><text>设置</text></view>
     <view class="section"><button class="btn" disabled="{{!hasLogin}}" bindtap="handleLogout">退出登录</button>  
     </view>
   </view>
