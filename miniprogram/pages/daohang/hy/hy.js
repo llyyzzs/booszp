@@ -9,7 +9,7 @@ Page({
    */
   data: {
     daohuang: [
-      { id: 1, name: "热门" },
+      { id: 1, name: "全部" },
       { id: 0, name: "互联网" },
       { id: 2, name: "国有企业" },
       { id: 3, name: "行业巨头" },
@@ -18,7 +18,7 @@ Page({
       { id: 6, name: "高新技术企业" },
       { id: 7, name: "上市" },
     ],
-    name: "热门",
+    name: "全部",
     keywords: "",
     page: 1,
     baseurl: baseurl,
@@ -42,6 +42,13 @@ Page({
     this.qiehuan(name)
   },
   qiehuan(name) {
+    if(name=="全部"){
+      this.setData({
+        name: name,
+        filteredItems: this.data.company
+      })
+      return
+    }
     const filteredItems = this.data.company.filter((item) => item.industry.includes(name));
     this.setData({
       name: name,

@@ -27,17 +27,8 @@
       </block>
     </scroll-view>
     <view class="title">公司地址</view>
-    <view class="intro">广东省深圳市南山区海天二路33号腾讯滨海大厦</view>
     <view class="gs-dd">
-      <map id="myMap" longitude="{{company.address.longitude}}" latitude="{{company.address.latitude}}" scale="10" bindtap="chooseLocation" />
+      <map id="myMap" longitude="{{company.address.longitude}}" latitude="{{company.address.latitude}}"/>
     </view>
-    <view class="title">公司风采</view>
-    <swiper class="swiper" indicator-dots="true" autoplay="true" interval="{{3000}}" duration="{{1000}}" indicator-active-color='rgb(26, 209, 169)'>
-      <block wx:for="{{swiperList}}" wx:key="*this">
-        <swiper-item>
-          <image src="{{item.imgUrl}}" mode="widthFix"></image>
-        </swiper-item>
-      </block>
-    </swiper>
   </view>
 </view>
