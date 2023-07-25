@@ -53,7 +53,7 @@
   </view>
   <view class="content" style="margin-bottom: 50px;">
     <text style="font-size: 18px; margin-bottom: 16px;">工作地点</text>
-    <text style="font-size: 18px; margin-bottom: 16px;">{{ITEM.position.province}}{{ITEM.position.city}}{{ITEM.position.sub_district}}</text>
+    <text style="font-size: 18px; margin-bottom: 16px;">{{ITEM.position.province}}{{ITEM.position.city}}{{ITEM.position.region}}</text>
     <view class="gs-dd">
       <map id="myMap" longitude="{{company.address.longitude}}" latitude="{{company.address.latitude}}" scale="10" bindtap="chooseLocation" />
     </view>

@@ -15,6 +15,7 @@ Page({
     name: "职位详情",
     baseurl: baseurl,
     state: false,
+    collectID: "",
     markers: [{
       id: 1,
       latitude: 23.1314,
@@ -138,7 +139,7 @@ Page({
   // 获取收藏状态
   sc: function () {
     if (this.data.isCollected) {
-      this.deletecollection(this.data.ITEM.id)
+      this.deletecollection(this.data.collectID)
       this.setData({
         sc: "../../image/收藏.png",
         isCollected: !this.data.isCollected
@@ -188,6 +189,13 @@ Page({
           const isCollected = res.data.data.filter(item => item.job.id === this.data.ITEM.id)
           console.log(isCollected)
           if (isCollected.length > 0) {
+            res.data.data.forEach(item => {
+              if (item.job.id == this.data.ITEM.id) {
+                this.setData({
+                  collectID: item.id
+                })
+              }
+            });
             this.setData({
               sc: "../../image/收藏2.png",
               isCollected: true
@@ -227,7 +235,9 @@ Page({
       wx.request({
         url: baseurl + '/job/collection/delete',
         method: 'POST',
-        data: id,
+        data: {
+          'id': id
+        },
         header: {
           'Authorization': 'Bearer ' + wx.getStorageSync('token'),
         },
