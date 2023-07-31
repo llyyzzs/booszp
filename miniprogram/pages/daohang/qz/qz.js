@@ -24,12 +24,6 @@ Page({
     name:"热门",
     swiperList: [
       {
-        imgUrl: '../../../image/兼职1.png'
-      },
-      {
-        imgUrl: '../../../image/兼职3.png'
-      },
-      {
         imgUrl: '../../../image/兼职2.png'
       },
       {

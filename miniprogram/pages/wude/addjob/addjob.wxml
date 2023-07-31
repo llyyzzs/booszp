@@ -42,12 +42,12 @@
       <input type="text" name="tags" placeholder="用空格分开"/>
     </view>
     <view class="input-group2">
-      <text class="label">工作要求：</text>
-      <textarea maxlength="-1" name="requirement" value="{{job.require}}" />
-    </view>
-    <view class="input-group2">
       <text class="label">工作内容：</text>
       <textarea maxlength="-1" name="description" value="{{job.description}}" required></textarea>
+    </view>
+    <view class="input-group2">
+      <text class="label">职位要求：</text>
+      <textarea maxlength="-1" name="requirement" value="{{job.require}}" />
     </view>
     <button form-type='submit'>提交</button>
   </form>

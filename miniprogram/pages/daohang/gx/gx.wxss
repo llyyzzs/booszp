@@ -1,10 +1,11 @@
 .container{
   display: flex;
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   flex-direction: column;
   align-items: center;
   background: -webkit-linear-gradient(top,#43c5b6 ,rgb(209, 206, 206));
+  background-attachment:fixed;
 }
 .top{
   display: flex;

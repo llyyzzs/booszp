@@ -12,7 +12,7 @@ Page({
     bm: "../../image/未报名.png",
     sc: "../../image/收藏.png",
     defaultIndex: 0,
-    name: "职位详情",
+    name: "工作内容",
     baseurl: baseurl,
     state: false,
     collectID: "",

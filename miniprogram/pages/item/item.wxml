@@ -37,10 +37,10 @@
       </view>
     </view>
     <view class="zw-top">
-      <view class="{{name=='职位详情' ? 'zw-top1.active' : 'zw-top1'}}" bindtap="qh" data-name='职位详情'>职位详情</view>
       <view class="{{name=='工作内容' ? 'zw-top1.active' : 'zw-top1'}}" bindtap="qh" data-name="工作内容">工作内容</view>
+      <view class="{{name=='职位要求' ? 'zw-top1.active' : 'zw-top1'}}" bindtap="qh" data-name='职位要求'>职位要求</view>
     </view>
-    <block wx:if="{{name=='职位详情'}}">
+    <block wx:if="{{name=='职位要求'}}">
       <view class="nr">
         <text>{{ITEM.requirement}}</text>
       </view>

@@ -2,7 +2,6 @@
   "pages": [
     "pages/home/home",
     "pages/index/index",
-    "pages/logs/logs",
     "pages/item/item",
     "pages/my/my",
     "pages/wude/sc/sc",
@@ -53,12 +52,13 @@
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#ffff",
-    "navigationBarTitleText": "Weixin",
+    "navigationBarTitleText": "灵活用工平台",
     "navigationBarTextStyle": "black",
     "onReachBottomDistance": 0
   },
   "style": "v2",
   "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents",
   "requiredPrivateInfos": [
     "chooseLocation"
   ]

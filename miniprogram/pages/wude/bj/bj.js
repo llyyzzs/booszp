@@ -30,7 +30,7 @@ Page({
     })
   },
   tianjia(e) {
-    const note = { title: "标题", content: "内容" }
+    const note = { title: "", content: "" }
     wx.navigateTo({
       url: `../../wude/tjbj/tjbj?note=${JSON.stringify(note)}`,
     })

@@ -1,6 +1,8 @@
 .container {
   display: flex;
   padding: 20rpx;
+  min-height: 100vh;
+  justify-content: start;
   flex-direction: column;
   background-color: rgb(242, 250, 250);
 }

@@ -2,20 +2,22 @@
 .contact-list{
   display: flex;
   width: 100%;
+  min-height: 100vh;
   flex-direction: column;
+  background-color: #F5F5F5;
 }
 .content{
   position: relative;
   padding: 10px;
   display: flex;
   align-items: center;
+  background-color: white;
 }
 .contact-item {
   display: flex;
   width: 100%;
   align-items: center;
   justify-content: center;
-  background-color: rgb(255, 255, 255);
 }
 .contact-item image{
   width: 100rpx;

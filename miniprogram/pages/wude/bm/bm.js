@@ -8,7 +8,7 @@ Page({
    */
   data: {
     orders: [],
-    tabList: ['全部', '已报名','待沟通','待面试', '已面试','已通过'], // 标签筛选项
+    tabList: ['全部', '已投递', '待沟通', '待面试', '已面试', '已通过'], // 标签筛选项
     activeTabIndex: 0, // 当前激活的标签索引
   },
   onTabTap(e) {
@@ -19,7 +19,7 @@ Page({
       if (state === '全部') {
         return true
       } else {
-        return order.status === index-1
+        return order.status === index - 1
       }
     })
     this.setData({
@@ -37,37 +37,37 @@ Page({
       url: `/pages/order-detail/order-detail?id=${orderId}`
     })
   },
-  tiaozhuan:function(e){
+  tiaozhuan: function (e) {
     const id = e.currentTarget.dataset.id
     wx.navigateTo({
       url: `/pages/item/item?id=${id}`,
-    }) 
+    })
   },
   // 获取简历投递状态
   getjobResume() {
-    if(wx.getStorageSync('token')){
-    console.log("获取简历投递状态")
-    wx.request({
-      url: baseurl + '/jobResume/userGet',
-      method: 'GET',
-      header: {
-        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
-      },
-      success: res => {
-        console.log(res.data.data)
-        this.setData({
-          itemlist:res.data.data,
-          filteredOrders:res.data.data
-        })
-      }
-    })
+    if (wx.getStorageSync('token')) {
+      console.log("获取简历投递状态")
+      wx.request({
+        url: baseurl + '/jobResume/userGet',
+        method: 'GET',
+        header: {
+          'Authorization': 'Bearer ' + wx.getStorageSync('token'),
+        },
+        success: res => {
+          console.log(res.data.data)
+          this.setData({
+            itemlist: res.data.data,
+            filteredOrders: res.data.data
+          })
+        }
+      })
     }
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad() {
-    
+
   },
 
   /**

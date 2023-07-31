@@ -21,13 +21,13 @@
     <view class="mulu">
       <navigator hover-class="none" url="/pages/daohang/gx/gx">
         <image src="../../image/高薪.png" mode="widthFix"></image>
-        <view class="text">高薪机会</view>
+        <view class="text">猜你喜欢</view>
       </navigator>
     </view>
     <view class="mulu">
       <navigator hover-class="none" url="/pages/daohang/hy/hy">
         <image src="../../image/市场.png" mode="widthFix"></image>
-        <view class="text">企业洞察</view>
+        <view class="text">企业搜索</view>
       </navigator>
     </view>
   </view>

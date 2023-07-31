@@ -25,7 +25,6 @@ Page({
       formData.id = this.data.note.id
     }
     console.log(formData)
-    const token = wx.getStorageSync('token')
     wx.request({
       url: baseurl+'/note/update',
       method:'POST',
