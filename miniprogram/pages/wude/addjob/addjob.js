@@ -89,7 +89,9 @@ Page({
     this.setData({
       id:id
     })
-    this.getjob(id)
+    if(id!=null){
+       this.getjob(id)
+    }
   },
 
   /**

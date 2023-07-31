@@ -36,6 +36,11 @@ Page({
       data: data,
       success: (res) => {
         console.log(this.data.user)
+        wx.showToast({
+          title: '更新成功',
+          icon: 'success',
+          duration: 2000
+        });
       }
     })
   },
@@ -132,6 +137,7 @@ Page({
           })
         }
         this.getAvatar()
+        
       },
     })
   },

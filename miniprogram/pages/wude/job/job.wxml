@@ -6,7 +6,7 @@
     </view>
   </view>
   <scroll-view class="note-scroll">
-  <view wx:for="{{joblist}}" wx:key="id" class="note-card" data-id="{{item.id}}" >
+  <view wx:for="{{joblist}}" wx:key="id" class="note-card" data-id="{{item.id}}" data-index="{{index}}">
     <!-- 可滑动的滑块 -->
     <view class="note-card-delete-movable" wx:if="{{index === activeIndex}}" bindtap="deleteNote">
       <view class="note-card-delete-view" style="left:{{movableAreaLeft}}px;"> 
@@ -15,7 +15,7 @@
     </view>
     <view class="note-card-delete" style="width:{{deletableWidth}}px;"></view>
     <!-- 笔记内容 -->
-    <view bindtap="onCardTap" data-id="{{item.id}}" bindtouchstart="handleTouchStart"
+    <view bindtap="onCardTap" data-id="{{item.id}}" data-index="{{index}}" bindtouchstart="handleTouchStart"
     bindtouchmove="handleTouchMove" >
     <view class="item">
     <view class="item-1">

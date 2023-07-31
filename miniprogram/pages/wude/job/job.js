@@ -37,7 +37,7 @@ Page({
     const { joblist } = this.data;
     const { currentTarget, touches } = e;
     // 获取当前触摸的列表项的索引
-    const currentDeleteIndex = Number(currentTarget.dataset.id);
+    const currentDeleteIndex = Number(currentTarget.dataset.index);
     // 记录列表项的初始滑动位置和标记删除状态
     joblist[currentDeleteIndex].startX = touches[0].clientX;
     joblist[currentDeleteIndex].startY = touches[0].clientY;
@@ -56,7 +56,7 @@ Page({
     const { joblist } = this.data;
     const { currentTarget, touches } = e;
     // 获取当前触摸的列表项的索引
-    const currentDeleteIndex = Number(currentTarget.dataset.id);
+    const currentDeleteIndex = Number(currentTarget.dataset.index);
     // 滑动距离和方向计算
     const deltaX = touches[0].clientX - joblist[currentDeleteIndex].startX;
     const deltaY = touches[0].clientY - joblist[currentDeleteIndex].startY;
