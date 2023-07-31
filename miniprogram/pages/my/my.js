@@ -51,7 +51,7 @@ Page({
   },
   addjob:function(){
     wx.navigateTo({
-      url: '../../pages/wude/addjob/addjob',
+      url: '../../pages/wude/job/job',
     })
   },
   addcompany(){
@@ -89,6 +89,7 @@ Page({
           user:res.data.data,
           hasLogin:true
        })
+       app.globalData.user=res.data.data;
        console.log(this.data.user)
        this.getAvatar()
       } 

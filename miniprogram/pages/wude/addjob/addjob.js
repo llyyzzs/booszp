@@ -44,6 +44,9 @@ Page({
   onSubmit: function (e) {
     var formData = e.detail.value;
     formData.position = {};
+    if(this.data.id!=null){
+      formData.id=this.data.id
+    }
     formData.position.city = this.data.city;
     formData.position.province = this.data.province;
     formData.position.region=this.data.region;
@@ -57,12 +60,36 @@ Page({
       birthDate: e.detail.value,
     });
   },
-  
+  //获取招聘信息详情
+  getjob(id) {
+    wx.request({
+      url: baseurl + '/job/get',
+      method: 'GET',
+      data: {
+        id: id
+      },
+      header: {
+        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
+      },
+      success: res => {
+        console.log(res.data.data)       
+        this.setData({
+          job: res.data.data,
+          address:res.data.data.position.city
+        });
+      }
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
+    const {id}=options
+    console.log(id)
+    this.setData({
+      id:id
+    })
+    this.getjob(id)
   },
 
   /**

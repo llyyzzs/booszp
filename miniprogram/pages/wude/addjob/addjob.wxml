@@ -21,7 +21,7 @@
     </view>
     <view class="input-group">
       <text class="label">岗位类型：</text>
-      <input type="text" name="type" value="{{job.tpye}}" />
+      <input type="text" name="type" value="{{job.type}}" />
     </view>
     <view class="input-group">
       <text class="label">工作地点：</text>
@@ -39,7 +39,7 @@
     </view>
     <view class="input-group">
       <text class="label">岗位标签：</text>
-      <input type="text" name="tags" placeholder="用空格分开"/>
+      <input type="text" name="tags" value="{{job.tages}}"/>
     </view>
     <view class="input-group2">
       <text class="label">工作内容：</text>
@@ -47,7 +47,7 @@
     </view>
     <view class="input-group2">
       <text class="label">职位要求：</text>
-      <textarea maxlength="-1" name="requirement" value="{{job.require}}" />
+      <textarea maxlength="-1" name="requirement" value="{{job.requirement}}" />
     </view>
     <button form-type='submit'>提交</button>
   </form>

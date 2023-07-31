@@ -23,6 +23,7 @@
     "pages/wude/jl/addjl/addjl",
     "pages/wude/jl/jldetails/jldetails",
     "pages/wude/jl/jllist/jllist",
+    "pages/wude/job/job",
     "pages/wude/addjob/addjob",
     "pages/wude/addcompany/addcompany",
     "pages/wude/viewresume/viewresume"

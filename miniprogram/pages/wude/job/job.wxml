@@ -1,0 +1,45 @@
+<view class="note-list">
+  <view class="top">
+    <view class="search">
+      <image src="../../../image/搜索.png"  bindtap="onSearch"/>
+      <input style="font-size: 12px;font-weight: 300;" type="text" placeholder="输入便签标题" bindconfirm="onSearch" value="{{keyword}}" bindinput="onInputChange" />
+    </view>
+  </view>
+  <scroll-view class="note-scroll">
+  <view wx:for="{{joblist}}" wx:key="id" class="note-card" data-id="{{item.id}}" >
+    <!-- 可滑动的滑块 -->
+    <view class="note-card-delete-movable" wx:if="{{index === activeIndex}}" bindtap="deleteNote">
+      <view class="note-card-delete-view" style="left:{{movableAreaLeft}}px;"> 
+        <view class="note-card-delete-text" >删除</view>
+      </view>
+    </view>
+    <view class="note-card-delete" style="width:{{deletableWidth}}px;"></view>
+    <!-- 笔记内容 -->
+    <view bindtap="onCardTap" data-id="{{item.id}}" bindtouchstart="handleTouchStart"
+    bindtouchmove="handleTouchMove" >
+    <view class="item">
+    <view class="item-1">
+          <view class="item-1-1">{{item.name}}</view>
+          <view class="item-1-2">{{item.price}}</view>
+        </view>
+        <view class="item-2">{{item.position.city}}<text decode="{{true}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>{{item.work_day}}</view>
+        <view class="item-3">
+          <block wx:for="{{item.tags}}" wx:key="id"><text>{{item}}</text></block>
+        </view>
+        <view class="item-4">
+          <view class="item-4-1">
+            <image src="{{baseurl+'/file/download/'+item.company.avatar}}" mode="aspectFill"></image>
+            <view>
+              <view style="margin-left: 10px;font-size: 14px; color: black;">{{item.company.name}}</view>
+              <view style="margin-left: 10px; font-size: 10px;">
+                {{item.company.industry}} {{item.company.scale}}
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</scroll-view>
+  <view class="bottom" bindtap="tianjia"><image src="../../../image/添加.png"></image></view>
+</view>

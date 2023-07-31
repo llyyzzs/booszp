@@ -22,7 +22,7 @@
     <view class="item" bindtap="jl"><image src="../../image/简历.png" mode="aspectFill"></image><text>我的简历</text></view>
     <view class="item" bindtap="bj"><image src="../../image/笔记.png" mode="aspectFill"></image><text>笔记</text></view>
     <view class="item" bindtap="gj"><image src="../../image/工具.png" mode="aspectFill"></image><text>工具</text></view>
-    <view class="item" bindtap="addjob"><image src="../../image/招聘.png" mode="aspectFill"></image><text>我要招聘</text></view>
+    <view class="item" bindtap="addjob"><image src="../../image/招聘.png" mode="aspectFill"></image><text>我的招聘</text></view>
     <view class="item" bindtap="addcompany"><image src="../../image/公司.png" mode="aspectFill"></image><text>添加公司</text></view>
     <view class="item" bindtap=""><image src="../../image/设置.png" mode="aspectFill"></image><text>设置</text></view>
     <view class="section"><button class="btn" disabled="{{!hasLogin}}" bindtap="handleLogout">退出登录</button>  
