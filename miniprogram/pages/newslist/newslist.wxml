@@ -1,18 +1,20 @@
 <view class="contact-list">
   <view wx:for="{{contactList}}" wx:key="index" class="content">
-    <view class="contact-item" bindtap="goToChat" data-id="{{item.conversation_id}}" data-index="{{index}}" bindtouchstart="handleTouchStart" bindtouchmove="handleTouchMove">
+    <view class="contact-item" bindtap="goToChat" data-id="{{item.id}}" data-index="{{index}}" bindtouchstart="handleTouchStart" bindtouchmove="handleTouchMove">
       <view style="position: relative">
-        <image src="{{baseurl+'/file/download/'+item.avatar}}"/>
-        <text class="not-read" wx:if="{{item.not_read!=0}}">{{item.not_read}}</text>
+        <image src="{{item.avatar}}"/>
+        <text class="not-read" wx:if="{{item.count!=0}}">{{item.count}}</text>
       </view>
       <view class="contact-info">
-        <view class="user-name">{{item.chat_name}}</view>
-        <view class="last-message" wx:if="{{item.last_message.type===image}}">[图片]</view>
-        <view class="last-message" wx:else>{{item.last_message.content}}</view>
+        <view class="user-name">{{item.name}}</view>
+        <view class="last-message" wx:if="{{item.type===1}}">[图片]</view>
+        <view class="last-message" wx:else>{{item.description}}
+            <!-- <view >{{item.created}}</view> -->
+        </view>
       </view>
     </view>
     <!-- 可滑动的滑块 -->
-    <view class="note-card-delete-movable" wx:if="{{index === activeIndex}}" bindtap="deleteNote">
+    <view class="note-card-delete-movable" wx:if="{{index === activeIndex}}" bindtap="deleteNote" data-id="{{item.id}}">
       <view class="note-card-delete-view" style="left:{{movableAreaLeft}}px;">
         <view class="note-card-delete-text">删除</view>
       </view>

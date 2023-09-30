@@ -19,7 +19,7 @@ Page({
     // 当前活跃的滑块索引
     activeIndex: -1,
     hidden: true,
-    baseurl:app.globalData.baseurl
+    baseurl: app.globalData.baseurl
   },
   onCardTap(e) {
     const jobId = e.currentTarget.dataset.id
@@ -32,57 +32,6 @@ Page({
       url: "../../wude/addjob/addjob"
     })
   },
-  // 手指触摸事件处理函数
-  handleTouchStart(e) {
-    const { joblist } = this.data;
-    const { currentTarget, touches } = e;
-    // 获取当前触摸的列表项的索引
-    const currentDeleteIndex = Number(currentTarget.dataset.index);
-    // 记录列表项的初始滑动位置和标记删除状态
-    joblist[currentDeleteIndex].startX = touches[0].clientX;
-    joblist[currentDeleteIndex].startY = touches[0].clientY;
-    joblist[currentDeleteIndex].isDeleting = false;
-    this.setData({
-      activeIndex: e.currentTarget.dataset.id,
-      movableAreaLeft: 0,
-      hidden: true,
-      z: -1
-    });
-    console.log(this.data.joblist)
-  },
-
-  // 手指滑动事件处理函数
-  handleTouchMove(e) {
-    const { joblist } = this.data;
-    const { currentTarget, touches } = e;
-    // 获取当前触摸的列表项的索引
-    const currentDeleteIndex = Number(currentTarget.dataset.index);
-    // 滑动距离和方向计算
-    const deltaX = touches[0].clientX - joblist[currentDeleteIndex].startX;
-    const deltaY = touches[0].clientY - joblist[currentDeleteIndex].startY;
-    const absDeltaX = Math.abs(deltaX);
-    const absDeltaY = Math.abs(deltaY);
-    const isHorizontal = absDeltaX > absDeltaY;
-    // 判断是否为水平滑动
-    if (isHorizontal) {
-      // 计算滑块容器的 left 值
-      var movableAreaLeft = -movableAreaWidth;
-      // 更新滑块容器的 left 值和列表数据
-      if (deltaX < 0) {
-        this.setData({
-          movableAreaLeft: movableAreaLeft,
-          hidden: false,
-          z: 1
-        });
-      }
-      else {
-        this.setData({
-          movableAreaLeft: 0,
-          hidden: false
-        });
-      }
-    }
-  },
   deleteNote(e) {
     const index = this.data.activeIndex
     console.log(this.data.joblist[index].id)
@@ -91,7 +40,7 @@ Page({
       method: 'POST',
       data: JSON.stringify({ id: this.data.joblist[this.data.activeIndex].id }),
       header: {
-        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
+        token: wx.getStorageSync('token'),
       },
       success: res => {
         console.log(res.data)
@@ -107,57 +56,38 @@ Page({
     })
 
   },
-  convertTimestampToTime(timestamp) {
-    const date = new Date(timestamp);
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    const hours = String(date.getHours()).padStart(2, '0');
-    const minutes = String(date.getMinutes()).padStart(2, '0');
-    const seconds = String(date.getSeconds()).padStart(2, '0');
 
-    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-  },
-  //获取自己公司信息
-  getmycompany(){
-    wx.request({
-      url: baseurl + '/company/my',
-      method: 'GET',
-      header: {
-        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
-      },
-      success: res => {
-        console.log(res.data)
-        this.setData({
-          companyid:res.data.data.id
-        })
-        this.getjob();
-    }
-  })
-  },
   // 获取招聘信息
   getjob() {
+    console.log(this.data.user.companyId)
     wx.request({
-      url: baseurl + '/job/getCompany',
-      method: 'GET',
-      data:{id:this.data.companyid},
+      url: baseurl + '/bcyy-item/item/get/companyItem',
+      method: 'POST',
+      data: {
+        companyId: this.data.user.companyId,
+        page: 0,
+        size: 10,
+      },
       header: {
-        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
+        token: wx.getStorageSync('token'),
       },
       success: res => {
         console.log(res.data)
         this.setData({
-          joblist:res.data.data
+          joblist: res.data.data
         })
-      }    
+      }
     })
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad() {
-    this.getmycompany()
+    this.setData({
+      user: app.globalData.user
+    })
     console.log(app.globalData.user)
+    this.getjob()
   },
 
   /**
@@ -171,7 +101,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-    this.getmycompany()
+    this.getjob()
   },
 
   /**

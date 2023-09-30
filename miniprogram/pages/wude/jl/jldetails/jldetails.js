@@ -19,15 +19,14 @@ Page({
   },
   getuser(){
     wx.request({
-      url: baseurl + '/user/get',
+      url: baseurl + '/bcyy-user/user/getuser',
       method: 'GET',
       header: {
-        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
+        token: wx.getStorageSync('token'),
       },
       success: res => {
         this.setData({
           user: res.data.data,
-          avatar:res.data.data.avatar,
         })
         // 解析返回数据
         if (res.data.data.degree != "") {
@@ -40,27 +39,6 @@ Page({
         }
         if(res.data.data.birthday!=""){
           this.setData({birthDate:res.data.data.birthday})
-        }
-        if (res.data.data.gender === "") {
-          console.log("gender为空");
-          var gender = "男"
-        }
-        else {
-          var gender = res.data.data.gender
-        }
-        if (gender == "男") {
-          this.setData({
-            user: res.data.data,
-            birthDate: res.data.data.date,
-            checked: true
-          })
-        }
-        else {
-          this.setData({
-            user: res.data.data,
-            birthDate: res.data.data.date,
-            checked: false
-          })
         }
       },
     })
@@ -75,13 +53,12 @@ Page({
     )
   },
   updata(formData) {
-    const token = wx.getStorageSync('token')
     wx.request({
-      url: baseurl + '/resume/update',
+      url: baseurl + '/bcyy-user/user/resume',
       method: 'POST',
       data: formData,
       header: {
-        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
+        token: wx.getStorageSync('token'),
         'content-type': 'application/json'
       },
       success: res => {
@@ -96,11 +73,8 @@ Page({
   onSubmit: function (e) {
     var formData = e.detail.value;
     if (this.data.resume.id != null) {
-      formData.id = this.data.resume.id
+      formData.resumeId = this.data.resume.id
     }
-    formData.address = {};
-    formData.address.city = this.data.city;
-    formData.address.province = this.data.province;
     console.log(formData)
     this.updata(formData)
   },
@@ -111,23 +85,17 @@ Page({
   },
    // 获取简历信息
    getjl(){
-    const token=wx.getStorageSync('token')
     wx.request({
-      url: baseurl+'/resume/get',
+      url: baseurl+'/bcyy-user/user/getResume',
       method:'GET',
       data:{id:this.data.resume.id},
       header:{
-        'Authorization':'Bearer ' + wx.getStorageSync('token'),
+        'token':wx.getStorageSync('token'),
       },
       success:res=>{    
         this.setData({
           resume:res.data.data
         }) 
-      if(res.data.data.address!=""){
-        this.setData({
-          address:res.data.data.address.province+res.data.data.address.city
-        }) 
-      }
        console.log(res.data)
       }
     }) 
@@ -139,7 +107,8 @@ Page({
     const resumeStr = options.resume
     const resume = JSON.parse(resumeStr)
     this.setData({
-      resume: resume
+      resume: resume,
+      user:app.globalData.user
     })
     this.getjl()
     this.getuser()

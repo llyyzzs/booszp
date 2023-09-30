@@ -2,32 +2,32 @@
   <form bindsubmit="onSubmit">
     <view class="input-group">
       <text class="label">头像：</text>
-      <image src="{{avatarUrl}}" mode="aspectFill" bindtap="chooseImage"></image>
+      <image src="{{user.avatar}}" mode="aspectFill" bindtap="chooseImage"></image>
     </view>
     <view class="input-group">
       <text class="label">姓名：</text>
       <input type="text" name="name" value="{{user.name}}" />
     </view>
-    <!-- <view class="input-group">
+    <view class="input-group">
       <text class="label">身份：</text>
-      <input type="text" name="position" value="{{user.position}}" />
-    </view> -->
+      <input type="text" name="standing" value="{{user.standing}}" />
+    </view>
     <view class="input-group">
       <text class="label">性别：</text>
       <radio-group name="gender">
-        <block wx:if="{{checked}}">
+        <block wx:if="{{user.gender}}">
         <label class="radio-label">
-          <radio value="男" checked/>男
+          <radio value="true" checked/>男
         </label>
         <label class="radio-label">
-          <radio value="女" />女
+          <radio value="false" />女
         </label></block>
-        <block wx:else="{{!checked}}">
+        <block wx:else="{{!user.gender}}">
           <label class="radio-label">
-          <radio value="男" />男
+          <radio value="true" />男
         </label>
         <label class="radio-label">
-          <radio value="女" checked/>女
+          <radio value="false" checked/>女
         </label></block>
       </radio-group>
     </view>
@@ -52,10 +52,10 @@
       <view class="select-value">{{selectedValue}}</view>
     </picker>
     </view>
-    <!-- <view class="input-group">
-      <text class="label">家庭住址：</text>
-      <input name="address" value="{{user.address}}"></input>
-    </view> -->
+    <view class="input-group">
+      <text class="label">介绍：</text>
+      <input name="information" value="{{user.information}}"></input>
+    </view>
     <!-- <view class="input-group">
       <text class="label">毕业学校：</text>
       <input name="school" value="{{user.school}}"></input>

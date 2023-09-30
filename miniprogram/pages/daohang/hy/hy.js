@@ -8,23 +8,13 @@ Page({
    * 页面的初始数据
    */
   data: {
-    daohuang: [
-      { id: 1, name: "全部" },
-      { id: 0, name: "互联网" },
-      { id: 2, name: "国有企业" },
-      { id: 3, name: "行业巨头" },
-      { id: 4, name: "中小企业" },
-      { id: 5, name: "众创空间" },
-      { id: 6, name: "高新技术企业" },
-      { id: 7, name: "上市" },
-    ],
-    name: "全部",
+    name: "热门",
     keywords: "",
     page: 1,
     baseurl: baseurl,
-    company: [],
-
+    companyList: [],
   },
+  // 触底加载
   loadMoreData() {
     if (this.data.loading) return; // 防止重复加载
     this.setData({
@@ -37,22 +27,39 @@ Page({
       this.getcompany(this.data.page)
     }, 100);
   },
+  //点击导航栏
   handleNavItemTap: function (e) {
     const name = e.currentTarget.dataset.name
     this.qiehuan(name)
   },
   qiehuan(name) {
-    if(name=="全部"){
-      this.setData({
-        name: name,
-        filteredItems: this.data.company
-      })
-      return
+    if(name==="热门"){
+      this.getcompany(1)
+    }else{
+      this.getcompany(1,this.data.keywords,name)
     }
-    const filteredItems = this.data.company.filter((item) => item.industry.includes(name));
     this.setData({
       name: name,
-      filteredItems: filteredItems
+    })
+  },
+  //获取导航栏
+  gethandleNav(){
+    wx.request({
+      url: baseurl + '/bcyy-search-item/search/company/aggs',
+      method: 'GET',
+      data: {
+        name:"tags"
+      },
+      header: {
+        token: wx.getStorageSync('token'),
+      },
+      success: res => {
+        let daohuang=["热门"].concat(res.data.data)
+        this.setData({
+          nav:daohuang
+        });
+        console.log(this.data.nav)
+      }  
     })
   },
   //跳转到公司详情
@@ -66,35 +73,42 @@ Page({
   onInputChange: function (event) {
     this.setData({ keywords: event.detail.value })
   },
-  getcompany(page) {
+  getcompany(page,key,tags) {
     wx.request({
-      url: baseurl + '/company/search',
-      method: 'GET',
+      url: baseurl + '/bcyy-search-item/search/company/list',
+      method: 'POST',
       data: {
-        keywords: this.data.keywords,
-        page: page
+        key: key,
+        page: page,
+        tags:tags
       },
       header: {
-        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
+        token: wx.getStorageSync('token'),
+        'content-type': 'application/json'
       },
       success: res => {
-        const company=this.data.company.concat(res.data.data)
+        let companyList=[]
+        if(page===1){
+          companyList=res.data.data
+        }else{
+          companyList=this.data.companyList.concat(res.data.data)
+        }
         this.setData({
-          company: company,
+          companyList: companyList,
         })
-        this.qiehuan(this.data.name)
       }
     })
   },
   onSearch: function (e) {
     console.log(this.data.keywords)
-    this.getcompany(1)
+    this.getcompany(1,this.data.keywords)
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad() {
     this.onSearch()
+    this.gethandleNav()
   },
 
   /**

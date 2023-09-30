@@ -2,7 +2,7 @@
   <form bindsubmit="onSubmit">
     <view class="input-group">
       <text class="label">公司名称：</text>
-      <input type="text" name="name" value="{{job.name}}" />
+      <input type="text" name="name" value="{{company.name}}" />
     </view>
     <view class="input-group">
       <text class="label">头像：</text>
@@ -13,25 +13,25 @@
     </view>
     <view class="input-group">
       <text class="label">注册时间：</text>
-      <picker mode="date" name="date" start="1900-01-01" end="{{ currentDate }}" value="{{ birthDate }}" bindchange="onDateChange">
+      <picker mode="date"  start="1900-01-01" end="{{ currentDate }}" value="{{ birthDate }}" bindchange="onDateChange">
         <view class="picker">{{ birthDate }}</view>
       </picker>
     </view>
     <view class="input-group">
       <text class="label">规模：</text>
-      <input type="text" name="scale" />
+      <input type="text" name="scale" value="{{company.scale}}"/>
     </view>
     <view class="input-group">
       <text class="label">注册资本：</text>
-      <input type="text" name="capital" />
+      <input type="text"  value="{{company.information.registered}}"/>
     </view>
     <view class="input-group">
       <text class="label">工作地点：</text>
-      <view bindtap="chooseLocation">{{address}}</view>
+      <view bindtap="chooseLocation">{{details}}</view>
     </view>
     <view class="input-group">
       <text class="label">类型：</text>
-      <input type="text" name="industry" />
+      <input type="text" name="industry" value="{{company.industry}}"/>
     </view>
     <!-- <view class="input-group">
       <text class="label">文件：</text>
@@ -39,7 +39,7 @@
     </view> -->
     <view class="input-group2">
       <text class="label">公司描述：</text>
-      <textarea maxlength="-1" name="description" required></textarea>
+      <textarea maxlength="-1" name="introduce" required value="{{company.introduce}}"></textarea>
     </view>
     <button form-type='submit'>提交</button>
   </form>

@@ -14,180 +14,74 @@ Page({
     isCollected3: false,
     defaultIndex: 0,
     page:1,
-    region: '东莞市',
+    city: '东莞',
     selector1: '不限',
     selector2: '不限',
-    selectorItems1: ['不限', '兼职', '全职'],
+    selectorItems1: [ '兼职', '全职','不限'],
     selectorItems2: ['不限', '3K', '5K', '8K', '10K', '12K', '14K', '15K', '18K', '20K'],
   },
   //搜索点击事件
   onInputChange: function (event) {
     this.setData({ keyword: event.detail.value })
   },
+  //搜索
   onSearch: function (e) {
     console.log(this.data.keyword)
-    wx.request({
-      url: baseurl + '/job/getAll',
-      method: 'GET',
-      data: { 
-      page: 1 ,
-      keywords:this.data.keyword},
-      header: {
-        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
-      },
-      success: res => {
-        this.setData({
-          item: res.data.data,
-        });
-      }
-    })
+    this.getjob(1,this.data.keyword,this.data.type)
   },
   selectorChange1: function (e) {
     let i = e.detail.value;//获得选项的数组下标
-    let selector1 = this.data.selectorItems1[i];//获得选项的值
-    this.setData({ selector1: selector1 });//将选项名称更新到WXML页面上
-    const item = this.data.contentList.filter(item => {
-      const str = item.price;
-      const regex = /^(\d+)/; // 定义一个正则表达式，匹配任意个数字字符
-      const matchArray = regex.exec(str); // 将正则表达式应用在字符串上，返回匹配数组
-      const numberStr = matchArray[1]; // 取出匹配结果中的第一个子串，即前面的数字序列
-      const number = parseInt(numberStr, 10); // 将字符串转换为数字
-      let condition2 = number >= this.data.number
-      if (this.data.selector1 === '不限') {
-        let condition3 = item.position.city === this.data.region;
-        if (this.data.selector2 === '不限') {
-          return (condition3);
-        }
-        else {
-          return (condition2 && condition3);
-        }
-      } else {
-        let condition1 = item.job_type === this.data.selector1;
-        let condition3 = item.position.city === this.data.region;
-        if (this.data.selector2 === '不限') {
-          return (condition1 && condition3);
-        }
-        else {
-          return (condition1 && condition2 && condition3);
-        }
-      }
-    })
     this.setData({
-      item: item,
+      type:i,
+      selector1:this.data.selectorItems1[i]
     })
-  },
-  selectorChange2: function (e) {
-    let i = e.detail.value;//获得选项的数组下标
-    let selector2 = this.data.selectorItems2[i];//获得选项的值
-    const str = selector2;
-    const regex = /^(\d+)/; // 定义一个正则表达式，匹配任意个数字字符
-    const matchArray = regex.exec(str); // 将正则表达式应用在字符串上，返回匹配数组
-    if (matchArray && matchArray.length > 1) {
-      const numberStr = matchArray[1]; // 取出匹配结果中的第一个子串，即前面的数字序列
-      const number = parseInt(numberStr, 10); // 将字符串转换为数字
-      this.setData({ number: number })
-      console.log('提取到的数字是：', number);
-    } else {
-      console.log('字符串内没有数字！');
+    if(i==="2"){
+      this.getjob(1,this.data.keyword,this.data.city)
+    }else{
+      this.getjob(1,this.data.keyword,this.data.city,this.data.type)
     }
-    this.setData({ selector2: selector2 });//将选项名称更新到WXML页面上
-    console.log(this.data.selector2, this.data.selector1, this.data.region);
-    const item = this.data.contentList.filter(item => {
-      if (this.data.selector2 === '不限') {
-        let condition2 = item.job_type === this.data.selector1;
-        let condition3 = item.position.city === this.data.region;
-        if (this.data.selector1 === '不限') {
-          return (condition3);
-        }
-        else {
-          return (condition2 && condition3);
-        }
-      } else {
-        // const salary = item.price.split('-');
-        // let condition1 = salary[0]>=this.data.number
-        const str = item.price;
-        const regex = /^(\d+)/; // 定义一个正则表达式，匹配任意个数字字符
-        const matchArray = regex.exec(str); // 将正则表达式应用在字符串上，返回匹配数组
-        const numberStr = matchArray[1]; // 取出匹配结果中的第一个子串，即前面的数字序列
-        const number = parseInt(numberStr, 10); // 将字符串转换为数字
-        let condition1 = number >= this.data.number
-        let condition2 = item.job_type === this.data.selector1;
-        let condition3 = item.position.city === this.data.region;
-        if (this.data.selector1 === '不限') {
-          return (condition1 && condition3);
-        }
-        else {
-          return (condition1 && condition2 && condition3);
-        }
-      }
-    })
-    this.setData({
-      item: item,
-    })
-    console.log(item)
-  },
-  selectregion:function(str){
-    let region = str;
-    this.setData({ region: region });
-    console.log(this.data.selector2, this.data.selector1, this.data.region);
-    const item = this.data.contentList.filter(item => {
-      if(item.price!=''){
-      const str = item.price;
-      const regex = /^(\d+)/; // 定义一个正则表达式，匹配任意个数字字符
-      const matchArray = regex.exec(str); // 将正则表达式应用在字符串上，返回匹配数组
-      const numberStr = matchArray[1]; // 取出匹配结果中的第一个子串，即前面的数字序列
-      const number = parseInt(numberStr, 10); // 将字符串转换为数字
-      const condition1 = item.job_type === this.data.selector1;
-      let condition2 = number >= this.data.number
-      const condition3 = item.position.city === this.data.region;
-    
-      if (this.data.selector1 === '不限') {
-        if (this.data.selector2 === '不限') {
-          return (condition3)
-        } else {
-          return (condition2 && condition3)
-        }
-      }
-      else {
-        if (this.data.selector2 === '不限') {
-          return (condition1 && condition3)
-        } else {
-          return (condition1 && condition2 && condition3)
-        }
-      }
-    }
-    })
-    this.setData({
-      item: item,
-    })
-    console.log(this.data.item)
-  
   },
   regionChange: function (e) {
-    let str = e.detail.value[1];//获得选择的省市区
-    this.selectregion(str)
+    let str = e.detail.value[1].substring(0, 2);//获得选择的省市区
+    this.setData({ city: str });
+    console.log(this.data.city)
+    this.getjob(1,this.data.keyword,this.data.city,this.data.type)
   },
   tiaozhuan: function (e) {
-    // var id = contentList[e.currentTarget.dataset.id].id
     const id = e.currentTarget.dataset.id
     wx.navigateTo({
       url: `/pages/item/item?id=${id}`,
     })
   },
   // 获取招聘信息
-  getjob() {
+  getjob(page,key,city,type) {
     wx.request({
-      url: baseurl + '/job/getAll',
-      method: 'GET',
+      url: baseurl + '/bcyy-search-item/search/item/list',
+      method: 'POST',
+      data: {
+        page: page,
+        key:key,
+        city:city,
+        type:type
+      },
       header: {
-        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
+        token: wx.getStorageSync('token'),
+        'content-type': 'application/json'
       },
       success: res => {
+        let updatedList =[]
+        if(page===1){
+          updatedList=res.data.data;
+        }else{
+          updatedList = this.data.contentList.concat(res.data.data);
+        }
+        console.log(updatedList)
+        app.globalData.ITEM=updatedList
         this.setData({
-          contentList: res.data.data,
-          loading: false
+          contentList: updatedList,
+          page: page + 1,
+          loading: false,
         });
-        this.selectregion(this.data.region)
       }
     })
   },
@@ -209,9 +103,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function () {
-    // this.setData({
-    //   contentList:app.globalData.ITEM
-    // })
+
   },
 
   /**
@@ -225,8 +117,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    // this.onSearch()
-    this.getjob();
+    this.getjob(1,this.data.keyword,this.data.city,this.data.type);
   },
 
   /**

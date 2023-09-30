@@ -18,7 +18,7 @@
     <view bindtap="onCardTap" data-id="{{index}}" bindtouchstart="handleTouchStart"
     bindtouchmove="handleTouchMove" >
       <view class="note-title">{{item.name}}</view>
-      <view class="note-content">{{item.want_to}}</view>
+      <view class="note-content">{{item.want}}</view>
       <view style="font-weight: 350;font-size: 24rpx;color: rgb(107, 95, 95);">{{item.date}}</view>
     </view> 
   </view>

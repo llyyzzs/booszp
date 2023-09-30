@@ -24,13 +24,14 @@ Page({
       },
     });
   },
-  uploadInfo:function(data){
-    const token = wx.getStorageSync('token')
+    //更新用户
+    uploadInfo:function(data){
+      console.log(data)
     wx.request({
-      url: baseurl + '/user/update',
+      url: baseurl + '/bcyy-user/user/update',
       method: 'POST',
       header: {
-        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
+        'token':wx.getStorageSync('token'),
         'content-type': 'application/json'
       },
       data: data,
@@ -44,26 +45,24 @@ Page({
       }
     })
   },
+  // 上传图片
   uploadImage(imagePath){
     const {user}=this.data
-    console.log(user)
-    const token = wx.getStorageSync('token')       
+    console.log(user)   
     wx.uploadFile({
-      url: baseurl + '/file/upload',
+      url: baseurl + '/bcyy-user/user/image',
       method: 'POST',
       header: {
-        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
+        token: wx.getStorageSync('token'),
       },
       filePath: imagePath,
-      name:"file",
+      name:"multipartFile",
       success:(res) => {
         const json=JSON.parse(res.data)
         this.setData({
           avatar:json.data
         })
         user.avatar=this.data.avatar
-        this.uploadInfo(user)
-        this.getAvatar()
       }
     })
   },
@@ -76,8 +75,6 @@ Page({
     const formData = e.detail.value;
     formData.degree = this.data.selectedValue;
     formData.phone = parseInt(formData.phone)
-    formData.id = this.data.user.id;
-    formData.avatar = this.data.user.avatar
     this.uploadInfo(JSON.stringify(formData))
   },
   onDateChange: function (e) {
@@ -85,23 +82,16 @@ Page({
       birthDate: e.detail.value,
     });
   },
-  getAvatar() {
-    this.setData({
-      avatarUrl: baseurl + '/file/download/' + this.data.user.avatar
-    })
-  },
   getuser(){
-    const token = wx.getStorageSync('token')
     wx.request({
-      url: baseurl + '/user/get',
+      url: baseurl + '/bcyy-user/user/my',
       method: 'GET',
       header: {
-        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
+        token: wx.getStorageSync('token'),
       },
       success: res => {
         this.setData({
           user: res.data.data,
-          avatar:res.data.data.avatar,
         })
         // 解析返回数据
         if (res.data.data.degree != "") {
@@ -115,29 +105,6 @@ Page({
         if(res.data.data.birthday!=""){
           this.setData({birthDate:res.data.data.birthday})
         }
-        if (res.data.data.gender === "") {
-          console.log("gender为空");
-          var gender = "男"
-        }
-        else {
-          var gender = res.data.data.gender
-        }
-        if (gender == "男") {
-          this.setData({
-            user: res.data.data,
-            birthDate: res.data.data.date,
-            checked: true
-          })
-        }
-        else {
-          this.setData({
-            user: res.data.data,
-            birthDate: res.data.data.date,
-            checked: false
-          })
-        }
-        this.getAvatar()
-        
       },
     })
   },

@@ -1,9 +1,7 @@
 // pages/jl/jl.ts
 const app = getApp()
 const baseurl = app.globalData.baseurl
-const token = wx.getStorageSync('token')
 Page({
-
   /**
    * 页面的初始数据
    */
@@ -24,11 +22,11 @@ Page({
   },
   addjob(formData) {
     wx.request({
-      url: baseurl + '/job/update',
+      url: baseurl + '/bcyy-item/item/additem',
       method: 'POST',
       data: formData,
       header: {
-        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
+        token: wx.getStorageSync('token'),
         'content-type': 'application/json'
       },
       success: res => {
@@ -43,15 +41,10 @@ Page({
   },
   onSubmit: function (e) {
     var formData = e.detail.value;
-    formData.position = {};
     if(this.data.id!=null){
-      formData.id=this.data.id
+      formData.itemId=this.data.id
     }
-    formData.position.city = this.data.city;
-    formData.position.province = this.data.province;
-    formData.position.region=this.data.region;
-    formData.position.sub_district="";
-    formData.tags=formData.tags.split(" ")
+    formData.label=formData.label.split(",")
     console.log(formData)
     this.addjob(formData)
   },
@@ -63,22 +56,21 @@ Page({
   //获取招聘信息详情
   getjob(id) {
     wx.request({
-      url: baseurl + '/job/get',
+      url: baseurl + '/bcyy-item/item/get/detail',
       method: 'GET',
       data: {
         id: id
       },
       header: {
-        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
+        token: wx.getStorageSync('token'),
       },
-      success: res => {
-        console.log(res.data.data)       
+      success: res => {    
         this.setData({
           job: res.data.data,
-          address:res.data.data.position.city
         });
       }
     })
+    console.log(this.data.job) 
   },
   /**
    * 生命周期函数--监听页面加载

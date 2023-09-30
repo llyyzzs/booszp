@@ -8,7 +8,7 @@ Page({
    */
   data: {
     orders: [],
-    tabList: ['全部', '已投递', '待沟通', '待面试', '已面试', '已通过'], // 标签筛选项
+    tabList: ['全部', '已投递', '已沟通', '待面试', '已通过'], // 标签筛选项
     activeTabIndex: 0, // 当前激活的标签索引
   },
   onTabTap(e) {
@@ -48,10 +48,10 @@ Page({
     if (wx.getStorageSync('token')) {
       console.log("获取简历投递状态")
       wx.request({
-        url: baseurl + '/jobResume/userGet',
+        url: baseurl + '/bcyy-user/user/getDeliver',
         method: 'GET',
         header: {
-          'Authorization': 'Bearer ' + wx.getStorageSync('token'),
+          token: wx.getStorageSync('token'),
         },
         success: res => {
           console.log(res.data.data)

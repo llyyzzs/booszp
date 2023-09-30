@@ -2,20 +2,20 @@
   <view class="item-top">
     <view class="item-left">
       <view class="item-left1">{{company.name}}</view>
-      <view class="item-left2">{{company.address.name}} {{company.type}} {{yearDiff}}年 {{company.scale}} {{company.is_pass ? '已上市' : '未上市'}}</view>
+      <view class="item-left2">{{company.address.city}} {{company.industry}} {{yearDiff}}年 {{company.scale}} {{company.launch}}</view>
     </view>
     <view class="item-right">
-      <image src="{{baseurl+'/file/download/'+company.avatar}}" mode="aspectFill"></image>
+      <image src="{{company.avatar}}" mode="aspectFill"></image>
     </view>
   </view>
   <view class="item-top1">
-    <view class="item-top1-1"><text>注册资本</text><text style="color: rgb(255, 94, 0);">{{company.capital}}</text></view>
-    <view class="item-top1-1"><text>成立日期</text><text style="color: rgb(255, 94, 0);">{{company.data}}</text></view>
+    <view class="item-top1-1"><text>注册资本</text><text style="color: rgb(255, 94, 0);">{{company.information.registered}}</text></view>
+    <view class="item-top1-1"><text>成立日期</text><text style="color: rgb(255, 94, 0);">{{company.information.time}}</text></view>
   </view>
   <view class="content">
     <view class="title">公司简介</view>
     <view class="intro" >
-      <view><text decode="{{true}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>{{company.description}}</view>
+      <view><text decode="{{true}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>{{company.introduce}}</view>
     </view>
     <view class="title">公司福利</view>
     <scroll-view class="nav-scroll" enable-flex scroll-x="true" scrollbar="true">
@@ -28,7 +28,7 @@
     </scroll-view>
     <view class="title">公司地址</view>
     <view class="gs-dd">
-      <map id="myMap" longitude="{{company.address.longitude}}" latitude="{{company.address.latitude}}"/>
+      <map id="myMap" longitude="{{company.address.position.longitude}}" latitude="{{company.address.position.latitude}}"/>
     </view>
   </view>
 </view>

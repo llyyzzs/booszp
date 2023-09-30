@@ -25,7 +25,7 @@ Page({
       method: 'GET',
       data: { id: id },
       header: {
-        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
+        token: wx.getStorageSync('token'),
       },
       success: res => {
         this.setData({
@@ -40,11 +40,11 @@ Page({
   },
   getjob(page) {
     wx.request({
-      url: baseurl + '/job/getAll',
-      method: 'GET',
+      url: baseurl + '/bcyy-item/item/get/home',
+      method: 'POST',
       data: { page: page },
       header: {
-        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
+        token: wx.getStorageSync('token'),
       },
       success: res => {
         // this.jobdetails(res.data.data[0].id)
@@ -54,6 +54,7 @@ Page({
           loading: false
         });
       }
+      
     })
   },
   /**

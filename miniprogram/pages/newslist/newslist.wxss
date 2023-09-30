@@ -47,7 +47,9 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+  align-items:flex-start;
 }
+
 .note-card-delete-movable {
   display: flex;
   position: absolute;

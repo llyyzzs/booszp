@@ -1,22 +1,16 @@
 <view class="container">
   <form bindsubmit="onSubmit">
     <view class="input-group">
-      <text class="label">名字：</text>
+      <text class="label">简历名字：</text>
       <input type="text" name="name" value="{{resume.name}}" />
     </view>
     <view class="input-group">
       <text class="label">求职意向：</text>
-      <input type="text" name="want_to" value="{{resume.want_to}}" />
-    </view>
-    <view class="input-group">
-      <text class="label">所在城市：</text>
-      <picker mode='region' bindchange='regionChange'>
-        <view class="top-1" >{{address}}</view>
-      </picker>
+      <input type="text" name="want" value="{{resume.want}}"/>
     </view>
     <view class="input-group">
       <text class="label">专业：</text>
-      <input type="text" name="major" value="{{resume.major}}" required />
+      <input type="text" name="major" value="{{resume.major}}" required/>
     </view>
     <view class="input-group2">
       <text class="label">个人优势：</text>
@@ -24,29 +18,28 @@
     </view>
     <view class="input-group2">
       <text class="label">教育经历：</text>
-      <textarea maxlength="-1" name="education_exp" value="{{resume.education_exp}}" required></textarea>
+      <textarea maxlength="-1" name="educationExp" value="{{resume.educationExp}}" required></textarea>
     </view>
 
     <view class="input-group2">
       <text class="label">工作经历：</text>
-      <textarea maxlength="-1" name="work_exp" value="{{resume.work_exp}}" required></textarea>
+      <textarea maxlength="-1" name="workExp" value="{{resume.workExp}}" required></textarea>
     </view>
     <view class="input-group2">
       <text class="label">项目经历：</text>
-      <textarea maxlength="-1" name="projetc_exp" value="{{resume.projetc_exp}}" required></textarea>
+      <textarea maxlength="-1" name="projetcExp" value="{{resume.projetcExp}}" required></textarea>
     </view>
     <view class="input-group2">
       <text class="label">职业技能：</text>
-      <textarea maxlength="-1"  name="skill" value="{{resume.skill}}" required />
+      <textarea maxlength="-1" name="skill" value="{{resume.skill}}" required />
     </view>
-
     <view class="input-group2">
       <text class="label">荣誉与奖励：</text>
       <textarea maxlength="-1" name="certification" value="{{resume.certification}}" required></textarea>
     </view>
     <view class="input-group2">
       <text class="label">自我评价：</text>
-      <textarea maxlength="-1" name="evaluate" value="{{resume.evaluate}}" required></textarea>
+      <textarea maxlength="-1" name="evlauate" value="{{resume.evlauate}}" required></textarea>
     </view>
     <button form-type='submit'>提交</button>
   </form>

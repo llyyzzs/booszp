@@ -8,111 +8,100 @@ Page({
    */
   data: {
     baseurl: baseurl,
-    keyword: '',
+    keywords: '',
     contentList: [], // 初始内容列表为空数组
     page: 1, // 当前页码
     pageSize: 10, // 每页数据量
     loading: false, // 是否正在加载数据标志位
-    daohuang: [{
-        id: 1,
-        name: "热门"
+    tags: "热门"
+  },
+  //获取导航栏
+  gethandleNav(){
+    wx.request({
+      url: baseurl + '/bcyy-search-item/search/item/aggs',
+      method: 'GET',
+      data: {
+        name:"tags",
+        type:1
       },
-      {
-        id: 2,
-        name: "IT"
+      header: {
+        token: wx.getStorageSync('token'),
       },
-      {
-        id: 3,
-        name: "餐饮"
-      },
-      {
-        id: 4,
-        name: "销售"
-      },
-      {
-        id: 5,
-        name: "娱乐"
-      },
-      {
-        id: 6,
-        name: "技术"
-      },
-      {
-        id: 7,
-        name: "运动"
-      },
-      {
-        id: 8,
-        name: "教育"
-      }
-    ],
-    contentList: [{
-      name: "产品经理",
-      price: "",
-      company: {},
-      position: {},
-      tags: [],
-      type: "",
-      jobtype: "",
-    }],
-    name: "热门"
+      success: res => {
+        let daohuang=["热门"].concat(res.data.data)
+        this.setData({
+          nav:daohuang
+        });
+        console.log(this.data.nav)
+      }  
+    })
   },
   //导航栏点击事件
   handleNavItemTap: function (e) {
-    const name = e.currentTarget.dataset.name
-    const filteredItems = this.data.contentList.filter((item) => item.type.includes(name));
+    const tags = e.currentTarget.dataset.name
+    console.log(tags)
     this.setData({
-      name: name,
-      filteredItems: filteredItems
+      tags:tags,
+      contentList:{}
     })
+    if(tags==="热门"){
+      this.getjob(1)
+    }
+    else{
+      this.getjob(1,tags)
+    }
   },
   //搜索点击事件
   onInputChange: function (event) {
     this.setData({
-      keyword: event.detail.value
+      keywords: event.detail.value
     })
   },
-  getjob(page) {
-    const token = wx.getStorageSync('token')
+  getjob(page,tags) {
     wx.request({
-      url: baseurl + '/job/getAll',
-      method: 'GET',
+      url: baseurl + '/bcyy-search-item/search/item/list',
+      method: 'POST',
       data: {
-        page: page
+        page: page,
+        tags:tags,
+        type:1,
       },
       header: {
-        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
+        token: wx.getStorageSync('token'),
+        'content-type': 'application/json'
       },
       success: res => {
-        const updatedList = this.data.contentList.concat(res.data.data);
-        const filteredItems = updatedList.filter((item) => item.type.includes("热门"));
+        let updatedList =[]
+        if(page===1){
+          updatedList=res.data.data;
+        }else{
+          updatedList = this.data.contentList.concat(res.data.data);
+        }
         console.log(updatedList)
         app.globalData.ITEM=updatedList
         this.setData({
           contentList: updatedList,
           page: page + 1,
           loading: false,
-          filteredItems: filteredItems
         });
       }
     })
   },
   onSearch: function (e) {
     console.log(this.data.keyword)
-    const token = wx.getStorageSync('token')
     wx.request({
-      url: baseurl + '/job/getAll',
-      method: 'GET',
+      url: baseurl + '/bcyy-search-item/search/item/list',
+      method: 'POST',
       data: {
         page: 1,
-        keywords: this.data.keyword
+        key: this.data.keywords
       },
       header: {
-        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
+        token: wx.getStorageSync('token'),
       },
       success: res => {
         this.setData({
-          filteredItems: res.data.data,
+          contentList: res.data.data,
         });
       }
     })
@@ -135,11 +124,11 @@ Page({
     // 模拟异步加载更多数据
     setTimeout(() => {
       // 从服务器请求数据
-      this.getjob(this.data.page)
+      this.getjob(this.data.page,this.data.name)
     }, 100);
   },
   onLoad: function (options) {
-
+    
   },
 
   /**
@@ -154,6 +143,7 @@ Page({
    */
   onShow: function () {
     this.getjob(this.data.page);
+    this.gethandleNav()
   },
 
   /**

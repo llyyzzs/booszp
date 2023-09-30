@@ -7,34 +7,35 @@
     <view class="top2">
       <view class="top2-1">
         <image src="../../image/定位.png"></image>
-        <text>{{ITEM.position.city}}</text>
+        <text>{{ITEM.itemCompanyDvo.address.city}}</text>
+        <text>{{ITEM.itemCompanyDvo.address.province}}</text>
       </view>
       <view class="top2-1">
         <image src="../../image/经验.png"></image>
-        <text>{{ITEM.work_experience}}</text>
+        <text>{{ITEM.experience}}</text>
       </view>
       <view class="top2-1">
         <image src="../../image/学历.png"></image>
         <text>{{ITEM.degree}}</text>
       </view>
     </view>
-    <view class="biaoqian">
-      <block wx:for="{{ITEM.tags}}" wx:key="id">
-        <view class="yq"><text>{{item}}</text></view>
-      </block>
-    </view>
   </view>
   <view class="content">
     <view class="gs">
       <view class="gs-mz" bindtap="company">
         <view class="zpz-tx">
-          <image src="{{baseurl+'/file/download/'+company.avatar}}" mode="aspectFill"></image>
+          <image src="{{HR.avatar}}" mode="aspectFill"></image>
         </view>
         <view class="zpz-xx">
-          <text style="font-size: 16px;">{{ITEM.company.name}}</text>
-          <text>{{ITEM.company.industry}} {{ITEM.company.scale}}人</text>
+          <text style="font-size: 16px;">{{HR.name}}</text>
+          <text>{{company.name}} {{HR.standing}}</text>
         </view>
       </view>
+    </view>
+    <view class="biaoqian">
+      <block wx:for="{{ITEM.label}}" wx:key="id">
+        <view class="yq"><text>{{item}}</text></view>
+      </block>
     </view>
     <view class="zw-top">
       <view class="{{name=='工作内容' ? 'zw-top1.active' : 'zw-top1'}}" bindtap="qh" data-name="工作内容">工作内容</view>
@@ -52,10 +53,21 @@
     </block>
   </view>
   <view class="content" style="margin-bottom: 50px;">
-    <text style="font-size: 18px; margin-bottom: 16px;">工作地点</text>
-    <text style="font-size: 16px; margin-bottom: 16px;">{{ITEM.position.province}}{{ITEM.position.city}}{{ITEM.position.region}}</text>
+    <view class="gs" bindtap="company">
+      <view class="gs-mz" bindtap="company">
+        <view class="zpz-tx">
+          <image src="{{company.avatar}}" mode="aspectFill"></image>
+        </view>
+        <view class="zpz-xx">
+          <text style="font-size: 16px;">{{company.name}}</text>
+          <text>{{company.industry}} {{company.scale}} {{company.launch}}</text>
+        </view>
+      </view>
+    </view>
+    <text style="font-size: 18px; margin-bottom: 16px;"></text>
+    <text style="font-size: 16px; margin-bottom: 16px;">{{company.address.details}}</text>
     <view class="gs-dd">
-      <map id="myMap" longitude="{{company.address.longitude}}" latitude="{{company.address.latitude}}"/>
+      <map id="myMap" longitude="{{company.address.position.longitude}}" latitude="{{company.address.position.latitude}}"/>
     </view>
     <view style="margin-top: 20px;margin-bottom: 10px;font-size: 18px;">该公司的其他岗位</view>
     <block wx:for="{{filteredItems}}" wx:key="id">
@@ -64,9 +76,16 @@
           <view class="item-1-1">{{item.name}}</view>
           <view class="item-1-2">{{item.price}}</view>
         </view>
-        <view class="item-2">{{item.position.city}}<text decode="{{true}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>{{item.work_day}}</view>
+        <view class="item-2">{{item.itemCompanyDvo.name}}<text decode="{{true}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>{{item.itemCompanyDvo.scale}}<text decode="{{true}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>{{item.itemCompanyDvo.launch}}
+        </view>
         <view class="item-3">
-          <block wx:for="{{item.tags}}" wx:key="id"><text>{{item}}</text></block>
+          <block wx:for="{{item.label}}" wx:key="id"><text>{{item}}</text></block>
+        </view>
+        <view class="item-4">
+          <view class="item-4-1">
+            <image src="{{item.image}}" mode="aspectFill"></image><text decode="{{true}}">&nbsp;&nbsp;&nbsp;{{item.hrname}}</text>
+          </view>
+          <view class="item-4-2">{{item.itemCompanyDvo.address.city}}</view>
         </view>
       </view>
     </block>

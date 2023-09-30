@@ -69,20 +69,12 @@ Page({
       url: '../../pages/wude/viewresume/viewresume',
     })
   },
-  getAvatar() { 
-    if(this.data.user!=null){
-    this.setData({
-      avatarUrl: baseurl + '/file/download/' + this.data.user.avatar
-    })
-  }
-  },
-  getuser(){
-    const token=wx.getStorageSync('token') 
+  getuser(){ 
     wx.request({
-      url: baseurl+'/user/get',
+      url: baseurl+'/bcyy-user/user/my',
       method:'GET',
       header:{
-        'Authorization':'Bearer ' + wx.getStorageSync('token'),
+        'token':wx.getStorageSync('token'),
       },
       success:res=>{
         this.setData({
@@ -91,7 +83,6 @@ Page({
        })
        app.globalData.user=res.data.data;
        console.log(this.data.user)
-       this.getAvatar()
       } 
     }) 
   },
@@ -103,7 +94,8 @@ Page({
         success:(res)=>{
           if(res.code){
             wx.request({
-              url: baseurl+'/user/login',
+              // url: baseurl+'/user/login',
+              url:baseurl+'/bcyy-user/user/login',
               method:'GET',
               header:{
                 'content-type':'application/x-www-form-urlencoded',
@@ -115,9 +107,10 @@ Page({
               wx.setStorageSync('token', res.data.data)
               console.log(res.data.data)
               this.getuser()              
-                this.getcollection()
-                this.getjobResume()
-                this.boosgetjobResume()             
+              this.getcollection()
+              this.getCommunicate()
+              this.getjobResume()
+              // this.boosgetjobResume()             
               },
             })        
           }
@@ -142,10 +135,10 @@ Page({
   // 获取用户收藏
   getcollection() {
     wx.request({
-      url: baseurl + '/job/collection/getAll',
+      url: baseurl + '/bcyy-user/user/getCollect',
       method: 'GET',
       header: {
-        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
+        token: wx.getStorageSync('token'),
       },
       success: res => {
         if (res.statusCode!=200){
@@ -161,14 +154,37 @@ Page({
     })
   
   },
+  //获取沟通
+  getCommunicate() {
+    wx.request({
+      url: baseurl + '/bcyy-user/user/getCommunicate',
+      method: 'GET',
+      header: {
+        token: wx.getStorageSync('token'),
+      },
+      success: res => {
+        if (res.statusCode!=200){
+          this.setData({
+            gt:0
+          })
+          return
+        }
+        app.globalData.communicate=res.data
+        console.log(app.globalData.communicate)
+        this.setData({
+          gt:res.data.length
+        })
+      }
+    })
+  },
   // 获取简历投递状态
   getjobResume() {
     console.log("获取简历投递状态")
     wx.request({
-      url: baseurl + '/jobResume/userGet',
+      url: baseurl + '/bcyy-user/user/getDeliver',
       method: 'GET',
       header: {
-        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
+        token: wx.getStorageSync('token'),
       },
       success: res => 
       {if (res.statusCode!=200){
@@ -192,7 +208,7 @@ Page({
       url: baseurl + '/jobResume/bossGet',
       method: 'GET',
       header: {
-        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
+        token: wx.getStorageSync('token'),
       },
       success: res => {
         if (res.statusCode!=200){
@@ -235,8 +251,9 @@ Page({
   onShow:function() {
     this.getuser()
       this.getcollection()
+      this.getCommunicate()
       this.getjobResume()
-      this.boosgetjobResume()
+      // this.boosgetjobResume()
   },
 
   /**

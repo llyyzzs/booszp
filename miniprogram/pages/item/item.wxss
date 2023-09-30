@@ -202,7 +202,7 @@
 
 .btn-1 {
   display: flex;
-  width: 60px;
+  width: 65px;
   height: 60%;
   flex-direction: column;
   align-items: center;
@@ -218,7 +218,6 @@
 .btn-1 text {
   font-size: 12px;
   margin-top: 5px;
-
 }
 
 .btn-2 {
@@ -295,6 +294,7 @@
   font-size: 12px;
   height: auto;
   margin-left: 20px;
+  margin-bottom: 10px;
   flex-wrap: wrap;
   color: rgb(112, 110, 110);
 }
@@ -304,4 +304,37 @@
   margin-right: 10px;
   padding: 4px;
   border-radius: 10%;
+}
+
+.item-4 {
+  display: flex;
+  width: 100%;
+  height: auto;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
+  color: rgb(112, 110, 110);
+}
+
+.item-4-1 {
+  display: flex;
+  width: auto;
+  font-size: 12px;
+  margin-left: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
+.item-4-1 image {
+  width: 36px;
+  height: 36px;
+  border-radius: 25%;
+}
+
+.item-4-2 {
+  display: flex;
+  width: auto;
+  font-size: 12px;
+  margin-right: 12px;
+  justify-content: center;
 }

@@ -13,10 +13,10 @@ Page({
   // 获取用户收藏
   getcollection() {
     wx.request({
-      url: baseurl + '/job/collection/getAll',
+      url: baseurl + '/bcyy-user/user/getCollect',
       method: 'GET',
       header: {
-        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
+        token: wx.getStorageSync('token'),
       },
       success: res => {
         console.log(res.data.data)

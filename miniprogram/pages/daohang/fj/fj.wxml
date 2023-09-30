@@ -6,9 +6,9 @@
     </view>
     <view class="top1">
       <picker mode='region' bindchange='regionChange'>
-        <view class="top-1">{{region}}</view>
+        <view class="top-1">{{city}}</view>
       </picker>
-      <picker mode='selector' range='{{selectorItems1}}' bindchange='selectorChange1' value="0">
+      <picker mode='selector' range='{{selectorItems1}}' bindchange='selectorChange1' value="2">
         <view class="top-1">{{selector1}}</view>
       </picker>
       <picker mode='selector' range='{{selectorItems2}}' bindchange='selectorChange2' value="{{defaultIndex}}">
@@ -17,26 +17,22 @@
     </view>
   </view>
   <view class="content">
-    <block wx:for="{{item}}" wx:key="id">
+    <block wx:for="{{contentList}}" wx:key="id">
       <view class="item" bindtap="tiaozhuan" data-id="{{item.id}}">
         <view class="item-1">
           <view class="item-1-1">{{item.name}}</view>
           <view class="item-1-2">{{item.price}}</view>
         </view>
-        <view class="item-2">{{item.position.city}}<text decode="{{true}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>{{item.work_day}}</view>
+        <view class="item-2">{{item.itemCompanyDvo.name}}<text decode="{{true}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>{{item.itemCompanyDvo.scale}}<text decode="{{true}}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</text>{{item.itemCompanyDvo.launch}}
+        </view>
         <view class="item-3">
-          <block wx:for="{{item.tags}}" wx:key="id"><text>{{item}}</text></block>
+          <block wx:for="{{item.label}}" wx:key="id"><text>{{item}}</text></block>
         </view>
         <view class="item-4">
           <view class="item-4-1">
-            <image src="{{baseurl+'/file/download/'+item.company.avatar}}" mode="aspectFill"></image>
-            <view>
-              <view style="margin-left: 10px;font-size: 12px;">{{item.company.name}}</view>
-              <view style="margin-left: 10px; font-size: 10px;">
-                {{item.company.industry}} {{item.company.scale}}
-              </view>
-            </view>
+            <image src="{{item.image}}" mode="aspectFill"></image><text decode="{{true}}">&nbsp;&nbsp;&nbsp;{{item.hrname}}</text>
           </view>
+          <view class="item-4-2">{{item.itemCompanyDvo.address.city}}</view>
         </view>
       </view>
     </block>

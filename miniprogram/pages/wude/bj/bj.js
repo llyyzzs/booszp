@@ -87,15 +87,14 @@ Page({
     }
   },
   deleteNote(e) {
-    const token = wx.getStorageSync('token')
     const index = this.data.activeIndex
     console.log(this.data.noteList[index].id)
     wx.request({
-      url: baseurl + '/note/delete',
-      method: 'POST',
-      data: JSON.stringify({ id: this.data.noteList[this.data.activeIndex].id }),
+      url: baseurl + '/bcyy-user/user/deleteNote',
+      method: 'GET',
+      data: { id: this.data.noteList[this.data.activeIndex].id },
       header: {
-        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
+        token: wx.getStorageSync('token'),
       },
       success: res => {
         console.log(res.data)
@@ -124,12 +123,11 @@ Page({
   },
   // 获取笔记
   getbj() {
-    const token = wx.getStorageSync('token')
     wx.request({
-      url: baseurl + '/note/getAll',
+      url: baseurl + '/bcyy-user/user/getNoteList',
       method: 'GET',
       header: {
-        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
+        token: wx.getStorageSync('token'),
       },
       success: res => {
         console.log(res.data)

@@ -21,7 +21,6 @@ Page({
   },
   startTimer: function () {
     const interval = 30000; // 定时器间隔，60秒一次
-
     // 设置定时器
     const timer = setInterval(function () {
       socketTask.send({
@@ -31,7 +30,6 @@ Page({
         }
       }); // 发送心跳请求
     }, interval);
-
     this.setData({
       timer: timer
     });
@@ -45,16 +43,16 @@ Page({
   },
 
   sendRequest: function () {
-    const token = wx.getStorageSync('token')
     wx.request({
-      url: baseurl + '/chat/getConversations', // 替换成你的请求地址
+      url: baseurl + '/bcyy-chat/chat/getRoom', // 替换成你的请求地址
       method: 'GET', // 请求方法，这里示例使用 GET
       header: {
-        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
+        token: wx.getStorageSync('token'),
       },
       success: (res) => {
+        const contactList = res.data.data.filter((item, index) => item.description !== null);
         this.setData({
-          contactList: res.data.data,
+          contactList: contactList,
         })
       },
       fail: function (error) {
@@ -67,8 +65,16 @@ Page({
      * 切换聊天对象
      */
     const index = event.currentTarget.dataset.index;
-    const id = this.data.contactList[index].conversation_id;
+    const id = this.data.contactList[index].id;
     const avatar = this.data.contactList[index].avatar;
+    this.clearTimer();
+    socketTask.close({
+      data: 'close'
+    })
+    this.setData({
+      socket:false
+    })
+    console.log("关闭连接进入对话框")
     // 进入聊天界面的逻辑 
     wx.navigateTo({
       url: '../news/news?id=' + id + '&avatar=' + avatar,
@@ -139,20 +145,27 @@ Page({
       movableAreaLeft: 0,
       deletableWidth: deletableWidth,
     });
+    console.log(e.currentTarget.dataset.id)
+    this.deleteRoom(e.currentTarget.dataset.id)
   },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-    const token = wx.getStorageSync('token')
-    socketTask = wx.connectSocket({
-      url: baseWsUrl+'/chat/messageNotify',
+ //删除聊天
+  deleteRoom(id){
+    wx.request({
+      url: baseurl+'/bcyy-chat/chat/deleteRoom',
+      data:{id:id},
       header: {
-        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
+        token: wx.getStorageSync('token'),
+      },
+    })
+  },
+  socket(){
+    socketTask = wx.connectSocket({
+      url: baseWsUrl+'/bcyy-webSocket/webSocket/'+app.globalData.user.openid,
+      header: {
+        token: wx.getStorageSync('token'),
       },
       success: (res) => {
-        console.log(res);
+        console.log(res,"连接成功");
       },
       fail: (res) => console.log(res)
     })
@@ -161,6 +174,12 @@ Page({
       this.sendRequest()
     })
     this.startTimer();
+  },
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
+    this.socket()
   },
 
   /**
@@ -173,6 +192,9 @@ Page({
    */
   onShow() {
     this.sendRequest()
+    if(!this.data.socket){
+      this.socket()
+    }
   },
 
   /**
@@ -191,6 +213,7 @@ Page({
     socketTask.close({
       data: 'close'
     })
+    console.log("关闭连接")
   },
 
   /**

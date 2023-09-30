@@ -40,30 +40,19 @@ Page({
       { src: "../../image/餐补.png", name: "餐补" },
       { src: "../../image/车.png", name: "免费班车" },
     ],
-    // item:{
-    //   name:"",
-    //   avatar:"",
-    //   city:"",
-    //   type:"",
-    //   date:"", 
-    //   scale:"",
-    //   user:{},
-    //   capital:"",
-    //   address:{},
-    // }
   },
   // 获取公司详情
   getcompany(id) {
     wx.request({
-      url: baseurl + '/company/get',
+      url: baseurl + '/bcyy-company/company/get/detail',
       method: 'GET',
       data: { id: id },
       header: {
-        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
+        token: wx.getStorageSync('token'),
       },
       success: res => {
         var currentDate = new Date();
-        var yearDiff = currentDate.getFullYear() - new Date(res.data.data.data).getFullYear();
+        var yearDiff = currentDate.getFullYear() - new Date(res.data.data.information.time).getFullYear();
         console.log(res.data.data,yearDiff)
         this.setData({
           company:res.data.data,

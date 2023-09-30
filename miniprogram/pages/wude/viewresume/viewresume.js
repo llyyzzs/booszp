@@ -29,7 +29,7 @@ Page({
         status:status
       },
       header: {
-        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
+        token: wx.getStorageSync('token'),
       },
       success: res => {
         console.log(res)
@@ -76,10 +76,10 @@ Page({
     if(wx.getStorageSync('token')){
     console.log("获取简历投递状态")
     wx.request({
-      url: baseurl + '/jobResume/bossGet',
+      url: baseurl + '/bcyy-user/user/getDeliver',
       method: 'GET',
       header: {
-        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
+        token: wx.getStorageSync('token'),
       },
       success: res => {
         if(res.statusCode!=200){

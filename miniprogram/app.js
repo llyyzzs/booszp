@@ -30,7 +30,9 @@ App({
     avatar:null,
     ITEM:null,
     company:null,
-    baseurl:'https://294u2z7697.imdo.co',
-    baseWsUrl:'wss://294u2z7697.imdo.co'
+    // baseurl:'https://294u2z7697.imdo.co',
+    baseurl:'http://localhost:51601',
+    baseWsUrl:'ws://127.0.0.1:51601',
+    communicate:null
   }
 })

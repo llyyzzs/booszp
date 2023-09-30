@@ -9,6 +9,7 @@ Page({
    */
   data: {
     address: '选择地点',
+    details:'选择',
     currentDate: new Date().toISOString().slice(0, 10), // 当前日期
     birthDate: new Date().toISOString().slice(0, 10), // 出生日期
   },
@@ -19,10 +20,28 @@ Page({
       success: res=> {
         console.log(res)
         that.setData({
-          name: res.name,
-          address: res.address,
+          details: res.address+res.name,
           latitude: res.latitude,
           longitude: res.longitude
+        })
+      }
+    })
+  },
+  getCompany(){
+    wx.request({
+      url: baseurl + '/bcyy-company/company/get/detail',
+      method: 'GET',
+      data: {id:app.globalData.user.companyId},
+      header: {
+        token: wx.getStorageSync('token'),
+      },
+      success: res => {
+        console.log(res.data.data)
+        this.setData({
+          company:res.data.data,
+          avatar:res.data.data.avatar,
+          birthDate:res.data.data.information.time,
+          details:res.data.data.address.details
         })
       }
     })
@@ -34,27 +53,27 @@ Page({
     wx.chooseImage({
       count: 1,
       success: (res) => {
-        this.setData({avatar:res.tempFilePaths[0]})
-        console.log(this.data.avatar)
         this.uploadImage(res.tempFilePaths[0])
       },
     });
   },
-  uploadImage(imagePath){
-    const token = wx.getStorageSync('token')       
+  // 上传图片
+  uploadImage(imagePath){ 
     wx.uploadFile({
-      url: baseurl + '/file/upload',
+      url: baseurl + '/bcyy-company/company/imageUpload',
       method: 'POST',
       header: {
-        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
+        token: wx.getStorageSync('token'),
       },
       filePath: imagePath,
-      name:"file",
+      name:"multipartFile",
       success:(res) => {
-        const json=JSON.parse(res.data)
+        let avatarlur=JSON.parse(res.data) 
+        console.log(avatarlur,8)
         this.setData({
-          avatarurl:json.data
+          avatar:avatarlur.data,
         })
+        console.log(this.data.avatar)
       }
     })
   },
@@ -70,11 +89,11 @@ Page({
   },
   addcompany(formData) {
     wx.request({
-      url: baseurl + '/company/update',
+      url: baseurl + '/bcyy-company/company/addcompany',
       method: 'POST',
       data: formData,
       header: {
-        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
+        token: wx.getStorageSync('token'),
         'content-type': 'application/json'
       },
       success: res => {
@@ -89,12 +108,14 @@ Page({
   },
   onSubmit: function (e) {
     var formData = e.detail.value;
-    this.uploadImage(this.data.avatar)
-    formData.address = {};
-    formData.address.name = this.data.address;
-    formData.address.latitude = this.data.latitude;
-    formData.address.longitude=this.data.longitude;
-    formData.avatar=this.data.avatarurl
+    formData.avatar=this.data.avatar;
+    formData.address=this.data.company.address;
+    formData.address.details=this.data.details;
+    formData.address.position.longitude=this.data.longitude;
+    formData.address.position.latitude=this.data.latitude;
+    if(this.data.company){
+      formData.companyId=this.data.company.id
+    }
     console.log(formData)
     this.addcompany(formData)
   },
@@ -108,7 +129,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
+    this.getCompany();
   },
 
   /**

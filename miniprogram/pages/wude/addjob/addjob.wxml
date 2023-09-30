@@ -10,24 +10,25 @@
     </view>
     <view class="input-group" >
     <text class="label">工作类型：</text>
-      <radio-group name="job_type">
+      <radio-group name="type">
       <label class="radio-label">
-          <radio value="全职" checked/>全职
+          <radio value="1" checked/>全职
         </label>
         <label class="radio-label">
-          <radio value="兼职" />兼职
+          <radio value="0" />兼职
         </label>
       </radio-group>
     </view>
     <view class="input-group">
       <text class="label">岗位类型：</text>
-      <input type="text" name="type" value="{{job.type}}" />
+      <input type="text" name="tags" value="{{job.tags}}" />
     </view>
     <view class="input-group">
       <text class="label">工作地点：</text>
-      <picker mode='region' bindchange='regionChange'>
+      <!-- <picker mode='region' bindchange='regionChange'>
         <view class="top-1" >{{address}}</view>
-      </picker>
+      </picker> -->
+      <input type="text" value="{{job.itemCompanyDvo.address.details}}" disabled="true"/>
     </view>
     <view class="input-group">
       <text class="label">学历要求：</text>
@@ -35,11 +36,11 @@
     </view>
     <view class="input-group">
       <text class="label">工作经验要求：</text>
-      <input type="text" name="work_experience" value="{{job.work_experience}}" />
+      <input type="text" name="experience" value="{{job.experience}}" />
     </view>
     <view class="input-group">
       <text class="label">岗位标签：</text>
-      <input type="text" name="tags" value="{{job.tages}}"/>
+      <input type="text" name="label" value="{{job.label}}"/>
     </view>
     <view class="input-group2">
       <text class="label">工作内容：</text>

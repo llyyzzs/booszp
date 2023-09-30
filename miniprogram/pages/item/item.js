@@ -6,9 +6,6 @@ Page({
    * 页面的初始数据
    */
   data: {
-    ITEM: {
-      id: "1"
-    },
     bm: "../../image/未报名.png",
     sc: "../../image/收藏.png",
     defaultIndex: 0,
@@ -16,6 +13,7 @@ Page({
     baseurl: baseurl,
     state: false,
     collectID: "",
+    communicate:app.globalData.communicate,
     markers: [{
       id: 1,
       latitude: 23.1314,
@@ -27,13 +25,7 @@ Page({
       }
     }],
   },
-  getRandomSF: function () {
-    var sf = ["HR", "人事经理", "部长"];
-    var randomIndex = Math.floor(Math.random() * sf.length);
-    this.setData({
-      sf: sf[randomIndex]
-    })
-  },
+
   // 切换招聘展示内容
   qh: function (e) {
     const name = e.currentTarget.dataset.name
@@ -66,21 +58,21 @@ Page({
   },
   // 跳转到公司详情信息
   company: function (e) {
-    const id = this.data.ITEM.company.id
+    const id = this.data.company.id
     wx.navigateTo({
       url: `/pages/company/company?id=${id}`,
     })
   },
   // 获取公司其他招聘信息
-  getcompanyjob() {
+  getcompanyjob(id) {
     wx.request({
-      url: baseurl + '/job/getCompany',
-      method: 'GET',
+      url: baseurl + '/bcyy-item/item/get/companyItem',
+      method: 'POST',
       header: {
-        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
+        token: wx.getStorageSync('token'),
       },
       data: {
-        id: this.data.ITEM.company.id
+        companyId: id
       },
       success: res => {
         console.log(res.data)
@@ -93,53 +85,75 @@ Page({
   // 获取招聘信息详情
   getjob(id) {
     wx.request({
-      url: baseurl + '/job/get',
+      url: baseurl + '/bcyy-item/item/get/detail',
       method: 'GET',
       data: {
         id: id
       },
       header: {
-        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
+        token: wx.getStorageSync('token'),
       },
       success: res => {
         console.log(res.data.data)
-        this.getcollection()
-        this.getjobResume()
+        this.getcollection(id)
+        this.getcompany(res.data.data.itemCompanyDvo.id)
+        this.getUser(res.data.data.hrId)
+        this.getCommunicate()
+        // this.getjobResume()
         this.getjl()
         this.setData({
           ITEM: res.data.data,
           // latitude: res.data.data.company.address.latitude,
           // longitude: res.data.data.company.address.longitude
         });
-        this.getcompanyjob()
-        this.getRandomSF()
-        this.getcompany(res.data.data.company.id)
+        // this.getcompanyjob()
+        // this.getRandomSF()
       }
     })
   },
   // 获取公司详情
   getcompany(id) {
     wx.request({
-      url: baseurl + '/company/get',
+      url: baseurl + '/bcyy-company/company/get/detail',
       method: 'GET',
       data: {
         id: id
       },
       header: {
-        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
+        token: wx.getStorageSync('token'),
       },
       success: res => {
         console.log(res.data.data)
         this.setData({
           company: res.data.data
         })
+        this.getcompanyjob(id)
       }
     })
+  },
+  //获取HR信息
+  getUser(id){
+    wx.request({
+      url: baseurl+'/bcyy-user/user/get/user',
+      method:'GET',
+      header:{
+        'token':wx.getStorageSync('token'),
+      },
+      data:{
+        openId:id
+      },
+      success:res=>{
+        this.setData({
+          HR:res.data.data,
+       })
+       console.log(this.data.HR)
+      } 
+    }) 
   },
   // 获取收藏状态
   sc: function () {
     if (this.data.isCollected) {
-      this.deletecollection(this.data.collectID)
+      this.deletecollection(this.data.ITEM.id)
       this.setData({
         sc: "../../image/收藏.png",
         isCollected: !this.data.isCollected
@@ -152,79 +166,106 @@ Page({
       })
     }
   },
+  //简历选择
   select: function (e) {
     const resumeid = this.data.resume[e.detail.value].id
     console.log(resumeid)
     this.postjobResume(resumeid)
   },
-
+  //立刻沟通
   gt: function () {
+    console.log(this.data.communicate)
+    // 遍历communicate数组，查找roomId等于目标roomId的对象
+    for (var i = 0; i < this.data.communicate.length; i++) {
+      var item = this.data.communicate[i];
+      if (item.itemId === this.data.ITEM.id) {
+        // 找到匹配的对象
+        wx.navigateTo({
+          url: '../news/news?id=' + item.roomId + '&avatar=' + this.data.HR.avatar+'&receiverId='+this.data.HR.openid,
+        })
+        // 或者进行其他操作
+        return; // 如果只需要找到第一个匹配对象，可以使用break语句提前结束循环
+      }
+    }
     wx.request({
-      url: baseurl + '/chat/getConversationID',
+      url: baseurl + '/bcyy-chat/chat/addRoom',
       header: {
-        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
+        token: wx.getStorageSync('token'),
       },
       data: {
-        userID: this.data.company.user.id
+        itemId:this.data.ITEM.id,
       },
       success: res => {
         // 进入聊天界面的逻辑 
         wx.navigateTo({
-          url: '../news/news?id=' + res.data.data + '&avatar=' + this.data.company.user.avatar,
+          url: '../news/news?id=' + res.data.data + '&avatar=' + this.data.HR.avatar+'&receiverId='+this.data.HR.openid,
         })
       }
     });
   },
   // 获取用户收藏
-  getcollection() {
+  getcollection(id) {
     if (wx.getStorageSync('token')) {
       wx.request({
-        url: baseurl + '/job/collection/getAll',
+        url: baseurl + '/bcyy-user/user/getCollectOne',
         method: 'GET',
         header: {
-          'Authorization': 'Bearer ' + wx.getStorageSync('token'),
+          token: wx.getStorageSync('token'),
+        },
+        data:{
+          itemId:id
         },
         success: res => {
           console.log(res.data.data)
-          const isCollected = res.data.data.filter(item => item.job.id === this.data.ITEM.id)
-          console.log(isCollected)
-          if (isCollected.length > 0) {
-            res.data.data.forEach(item => {
-              if (item.job.id == this.data.ITEM.id) {
-                this.setData({
-                  collectID: item.id
-                })
-              }
-            });
+          this.setData({
+            isCollected:res.data.data
+          })
+          if (res.data.data) {
             this.setData({
               sc: "../../image/收藏2.png",
-              isCollected: true
             })
           } else {
             this.setData({
               sc: "../../image/收藏.png",
-              isCollected: false
             })
           }
         }
       })
     }
   },
+  //获取沟通
+  getCommunicate(){
+    wx.request({
+      url: baseurl + '/bcyy-user/user/getCommunicate',
+      method: 'GET',
+      header: {
+        token: wx.getStorageSync('token'),
+      },
+      success: res => {      
+        app.globalData.communicate=res.data
+        console.log(app.globalData.communicate)
+        this.setData({
+          communicate:res.data
+        })
+      }
+    })
+  
+  },
   // 新增用户收藏
-  addcollection(job_id) {
+  addcollection(id) {
     if (wx.getStorageSync('token')) {
       wx.request({
-        url: baseurl + '/job/collection/add',
-        method: 'POST',
+        url: baseurl + '/bcyy-user/user/addCollect',
+        method: 'GET',
         header: {
-          'Authorization': 'Bearer ' + wx.getStorageSync('token'),
+          token: wx.getStorageSync('token'),
           'content-type': 'application/json'
         },
         data: {
-          job_id
+          id
         },
         success: (res) => {
-          console.log(this.data.user)
+          console.log(res)
         }
       })
     }
@@ -233,13 +274,13 @@ Page({
   deletecollection(id) {
     if (wx.getStorageSync('token')) {
       wx.request({
-        url: baseurl + '/job/collection/delete',
-        method: 'POST',
+        url: baseurl + '/bcyy-user/user/deleteCollect',
+        method: 'GET',
         data: {
           'id': id
         },
         header: {
-          'Authorization': 'Bearer ' + wx.getStorageSync('token'),
+          token: wx.getStorageSync('token'),
         },
         success: res => {
           console.log(res.data.data)
@@ -255,7 +296,7 @@ Page({
         url: baseurl + '/jobResume/userGet',
         method: 'GET',
         header: {
-          'Authorization': 'Bearer ' + wx.getStorageSync('token'),
+          token: wx.getStorageSync('token'),
         },
         success: res => {
           console.log(res.data.data)
@@ -280,10 +321,10 @@ Page({
   getjl() {
     if (wx.getStorageSync('token')) {
       wx.request({
-        url: baseurl + '/resume/getAll',
+        url: baseurl + '/bcyy-user/user/getResumeList',
         method: 'GET',
         header: {
-          'Authorization': 'Bearer ' + wx.getStorageSync('token'),
+          token: wx.getStorageSync('token'),
         },
         success: res => {
           const resumeList = res.data.data.map(item => item.name);
@@ -303,7 +344,7 @@ Page({
         url: baseurl + '/jobResume/post',
         method: 'POST',
         header: {
-          'Authorization': 'Bearer ' + wx.getStorageSync('token'),
+          token: wx.getStorageSync('token'),
         },
         data: {
           job_id: this.data.ITEM.id,

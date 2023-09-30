@@ -96,11 +96,11 @@ Page({
     const index = this.data.activeIndex
     console.log(this.data.resumeList[index].id)
     wx.request({
-      url: baseurl + '/resume/delete',
-      method: 'POST',
-      data: JSON.stringify({ id: this.data.resumeList[this.data.activeIndex].id }),
+      url: baseurl + '/bcyy-user/user/deleteResume',
+      method: 'GET',
+      data: { id: this.data.resumeList[this.data.activeIndex].id },
       header: {
-        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
+        token: wx.getStorageSync('token'),
       },
       success: res => {
         console.log(res.data)
@@ -118,12 +118,11 @@ Page({
   },
   // 获取所有简历信息
   getjl(){
-    const token=wx.getStorageSync('token')
     wx.request({
-      url: baseurl+'/resume/getAll',
+      url: baseurl+'/bcyy-user/user/getResumeList',
       method:'GET',
       header:{
-        'Authorization':'Bearer ' + wx.getStorageSync('token'),
+        'token':wx.getStorageSync('token'),
       },
       success:res=>{    
         this.setData({

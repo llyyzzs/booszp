@@ -102,67 +102,7 @@
   width: 100rpx;
   height: 100rpx;
 }
-.note-card-delete-movable {
-  position: absolute;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  z-index: 1;
-  transition: all 0.3s;
-}
 
-.note-card-delete-view {
-  position: absolute;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  width: 60px;
-  background-color: #f00;
-  color: #fff;
-  display: flex;
-  border-radius: 12px;
-  justify-content: center;
-  align-items: center;
-  transition: all 0.3s ease-out;
-}
-
-.note-card-delete-text {
-  font-size: 28rpx;
-}
-
-.note-card-delete {
-  position: absolute;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  width: 60px;
-  border-radius: 12px;
-  transition: all 0.3s ease-out;
-}
-/* 滑块从右侧弹出的动画效果 */
-.note-card-delete-movable {
-  transition: all 0.3s;
-}
-
-.note-card-delete-view {
-  transform: translateX(120rpx);
-}
-
-/* 滑块弹回原位置的动画效果 */
-.note-card-delete-movable.reset {
-  transition: all 0.3s;
-}
-
-.note-card-delete-view.reset {
-  transform: translateX(0);
-}
-
-/* 列表项删除时的淡出效果 */
-.note-card.deleted {
-  animation-name: note-card-delete-animation;
-  animation-duration: 0.3s;
-  animation-fill-mode: both;
-}
 .item {
   display: flex;
   width: 100%;
@@ -173,67 +113,57 @@
   justify-content: center;
   align-items: center;
 }
-.item-1 {
+.item-1{
   display: flex;
   width: 100%;
   height: auto;
   justify-content: space-between;
   margin-bottom: 10px;
 }
-
-.item-1-1 {
+.item-1-1{
   display: flex;
   width: auto;
   font-size: 18px;
   margin-left: 10px;
 }
-
-.item-1-2 {
+.item-1-2{
   width: auto;
   font-size: 18px;
   margin-right: 12px;
   color: rgba(10, 184, 77, 0.986);
 }
-
-.item-2 {
+.item-2{
   display: flex;
   width: 100%;
   height: auto;
-  font-size: 12px;
+  font-size: 10px;
   margin-left: 20px;
   margin-bottom: 10px;
   color: rgb(112, 110, 110);
 }
-
-.item-3 {
+.item-3{
   display: flex;
   width: 100%;
-  font-size: 12px;
+  font-size: 11px;
   height: auto;
   margin-left: 20px;
   margin-bottom: 10px;
   flex-wrap: wrap;
   color: rgb(112, 110, 110);
 }
-
-.item-3 text {
-  background-color: rgb(238, 236, 236);
+.item-3 text{
+  background-color:rgb(238, 236, 236);
   margin-right: 10px;
-  padding: 4px;
-  border-radius: 10%;
 }
-
-.item-4 {
+.item-4{
   display: flex;
   width: 100%;
   height: auto;
   justify-content: space-between;
-  flex-direction: row;
+  margin-bottom: 10px;
   align-items: center;
-  color: rgb(112, 110, 110);
 }
-
-.item-4-1 {
+.item-4-1{
   display: flex;
   width: auto;
   font-size: 12px;
@@ -241,14 +171,12 @@
   justify-content: center;
   align-items: center;
 }
-
-.item-4-1 image {
-  width: 36px;
-  height: 36px;
-  border-radius: 25%;
+.item-4-1 image{
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
 }
-
-.item-4-2 {
+.item-4-2{
   display: flex;
   width: auto;
   font-size: 12px;

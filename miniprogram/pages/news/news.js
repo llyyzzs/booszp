@@ -11,6 +11,7 @@ Page({
   data: {
     baseurl: app.globalData.baseurl,
     myAvatar: app.globalData.user.avatar,
+    userId:app.globalData.user.openid,
     // 消息列表
     messageList: [],
     // 输入框内容
@@ -34,58 +35,74 @@ Page({
       toView: 'dibu'
     })
   },
-  messageRead: function () {
-    wx.request({
-      url: baseurl + '/chat/messagesRead',
-      data: {
-        conversation_id: this.data.id
-      },
-      header: {
-        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
-      },
-      success: (res) => {
-        this.getMessage(this.data.id)
-      }
-    })
-  },
+  // messageRead: function () {
+  //   wx.request({
+  //     url: baseurl + '/bcyy-chat/chat/getMessage',
+  //     data: {
+  //       roomId: this.data.id
+  //     },
+  //     header: {
+  //       token: wx.getStorageSync('token'),
+  //     },
+  //     success: (res) => {
+  //       this.getMessage(this.data.id)
+  //     }
+  //   })
+  // },
   getMessage: function (id) {
     wx.request({
-      url: baseurl + '/chat/getMessages',
+      url: baseurl + '/bcyy-chat/chat/getMessage',
       data: {
-        conversation_id: id
+        roomId: id
       },
       header: {
-        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
+        token: wx.getStorageSync('token'),
       },
       success: (res) => {
         if (res.data.data == null) {
           return
         }
-        if (res.data.data.length > this.data.messageList.length) {
+        if (res.data.data.length > 0) {
           this.setData({
             messageList: res.data.data,
           }, () => {
             this.getScollBottom()
           })
         }
+        let message=this.data.messageList[0]
+        if(message){
+        if(message.receiverId!=app.globalData.user.openid){
+          this.setData({
+            receiverId:message.receiverId
+          })
+        }else{
+          this.setData({
+            receiverId:app.globalData.user.openid
+          })
+        }
+      }
         this.setData({
           messageList: res.data.data,
           inputVal: ""
         })
+        console.log(this.data.messageList)
       }
     })
   },
+  //发送消息
   sendMessage: function (content, type) {
     let message = {
-      conversation_id: this.data.id,
+      chatRoomId: this.data.id,
       type: type,
       content: content,
+      receiverId: this.data.receiverId,
+      senderId: app.globalData.user.openid,
     };
     wx.request({
-      url: baseurl + '/chat/sendMessage',
+      url: baseurl + '/bcyy-chat/chat/send',
       method: 'POST',
       header: {
-        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
+        token: wx.getStorageSync('token'),
       },
       data: message,
       success: res => {
@@ -101,7 +118,7 @@ Page({
     if (this.data.inputVal === "") {
       return;
     }
-    this.sendMessage(this.data.inputVal, 'text')
+    this.sendMessage(this.data.inputVal, 0)
     this.setData({
       inputVal: ""
     })
@@ -110,27 +127,63 @@ Page({
   /**
    * 选择图片事件
    */
+  /**
+   * 选择图片事件
+   */
   chooseImage: function () {
-    wx.chooseMedia({
+    wx.chooseImage({
       count: 1,
       success: (res) => {
-        wx.uploadFile({
-          filePath: res.tempFiles[0].tempFilePath,
-          name: 'file',
-          url: baseurl + '/file/upload',
-          header: {
-            'Authorization': 'Bearer ' + wx.getStorageSync('token'),
-          },
-          success: (data) => {
-            res = JSON.parse(data.data)
-            console.log(res.data)
-            this.sendMessage(res.data, 'image')
-          }
-        })
+        this.uploadImage(res.tempFilePaths[0])
       },
     });
+  },
+  // 上传图片
+  uploadImage(imagePath){ 
+    wx.uploadFile({
+      url: baseurl + '/bcyy-company/company/imageUpload',
+      method: 'POST',
+      header: {
+        token: wx.getStorageSync('token'),
+      },
+      filePath: imagePath,
+      name:"multipartFile",
+      success:(res) => {
+        let avatarlur=JSON.parse(res.data) 
+        this.setData({
+          avatar:avatarlur.data,
+        })
+        console.log(this.data.avatar)
+        this.sendMessage(this.data.avatar,1)
+      }
+    })
     app.globalData.messageList = this.data.messageList
   },
+  // chooseImage: function () {
+  //   wx.chooseMedia({
+  //     count: 1,
+  //     success: (res) => {
+  //       wx.uploadFile({
+  //         url: baseurl + '/bcyy-company/company/imageUpload',
+  //         method: 'POST',
+  //         header: {
+  //           token: wx.getStorageSync('token'),
+  //         },
+  //         filePath: imagePath,
+  //         name:"multipartFile",
+  //         success:(res) => {
+  //           let avatarlur=JSON.parse(res.data) 
+  //           console.log(avatarlur,8)
+  //           this.setData({
+  //             avatar:avatarlur.data,
+  //           })
+  //           console.log(this.data.avatar)
+  //         }
+  //       })
+  //     },
+  //   });
+  //   app.globalData.messageList = this.data.messageList
+  // },
   previewImage: function (event) {
     let currentUrl = [event.currentTarget.dataset.src]
     wx.previewImage({
@@ -139,7 +192,6 @@ Page({
   },
   startTimer: function () {
     const interval = 20000; // 定时器间隔，单位为毫秒
-
     // 设置定时器
     const timer = setInterval(function () {
       socketTask.send({
@@ -149,7 +201,6 @@ Page({
         }
       }); // 发送心跳请求
     }, interval);
-
     this.setData({
       timer: timer
     });
@@ -166,18 +217,20 @@ Page({
   onLoad: function (options) {
     const {
       id,
-      avatar
+      avatar,
+      receiverId
     } = options;
     this.setData({
       id: id,
       otherAvatar: avatar,
       myAvatar: app.globalData.user.avatar,
+      receiverId:receiverId
     })
-    const token = wx.getStorageSync('token')
+    this.getMessage(id)
     socketTask = wx.connectSocket({
-      url: baseWsUrl + '/chat/messageNotify',
+      url: baseWsUrl+'/bcyy-webSocket/webSocket/'+app.globalData.user.openid,
       header: {
-        'Authorization': 'Bearer ' + wx.getStorageSync('token'),
+        token: wx.getStorageSync('token'),
       },
       success: (res) => {
         console.log(res);
@@ -186,7 +239,7 @@ Page({
     })
     socketTask.onMessage((res) => {
       console.log(res)
-      this.messageRead(id);
+      this.getMessage(id);
     })
     this.startTimer()
   },
@@ -222,6 +275,7 @@ Page({
     socketTask.close({
       data: 'close'
     })
+    console.log("关闭连接")
   },
 
   /**

@@ -21,13 +21,12 @@ Page({
     )
   },
   updata(formData){
-    const token = wx.getStorageSync('token')
     wx.request({
-      url: baseurl+'/resume/update',
+      url: baseurl+'/bcyy-user/user/resume',
       method:'POST',
       data:formData,
       header:{
-        'Authorization':'Bearer ' + wx.getStorageSync('token'),
+        'token':wx.getStorageSync('token'),
         'content-type': 'application/json'
       },
       success:res=>{     
@@ -42,9 +41,6 @@ Page({
   },
   onSubmit: function (e) {
     var formData = e.detail.value;
-    formData.address={};
-    formData.address.city=this.data.city;
-    formData.address.province=this.data.province;
     console.log(formData)
     this.updata(formData)
   },
